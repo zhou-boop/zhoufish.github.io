@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AWD学习日记一</title>
+    <url>/2023/03/17/AWD%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>AWD到时方恨不会，进一年两年没有打线下赛了，脚本也没有了，工具也没有。赶紧跟着大佬复习一波，做一下笔记。</p>
+<h1 id="关于AWD"><a href="#关于AWD" class="headerlink" title="关于AWD"></a>关于AWD</h1><p><strong>AWD</strong>: Attack With Defence，一般比赛中每个队伍维护两台服务器，一个web和一个pwn。web服务器中存在多个漏洞，利用漏洞攻击其他队伍可以进行得分，修复漏洞可以避免被其他队伍攻击失分。</p>
+<ul>
+<li>战队有自己的初始分数；</li>
+<li>flag在主办方的设定下每隔一定时间，时间一般5-10分钟刷新一轮；</li>
+<li>其他队伍提交你的flag，你的队伍扣分，他加分；</li>
+<li>动态积分制，每一轮的分数会下降，直到最低；</li>
+<li>主办方会对每个队伍的网站或服务进行check，服务宕机扣除本轮flag分数；</li>
+<li>战队不能攻击主办方</li>
+<li>一般分配Web服务器，服务器（多数为Linux）某处存在flag（一般在根目录下）；</li>
+<li>分配的pwn服务器，服务器多为ubantu，需要本地提权后再用户提权。</li>
+</ul>
+<ol>
+<li>域渗透：也可以叫内网渗透，Windows AD 域环境，更贴近实战</li>
+<li>高地模式：每只队伍服务器可以访问，没有权限，需要自己去获取权限。同时存在高地服务器，不属于任何一支队伍，每只队伍竞争高地服务器权限。</li>
+</ol>
+<p>详细参考：<a href="https://ctf-wiki.github.io/ctf-wiki/introduction/mode/#-attack-defense">https://ctf-wiki.github.io/ctf-wiki/introduction/mode/#-attack-defense</a></p>
+<hr>
+<h1 id="Attack-With-Defence"><a href="#Attack-With-Defence" class="headerlink" title="Attack With Defence"></a>Attack With Defence</h1><p>回忆过去的经验，打AWD比赛有几点需要注意：</p>
+<ul>
+<li>准备好一些自己熟悉常用的脚本，最起码是练习时可以使用的</li>
+<li>漏洞搜索能力，主办方出题都估计是现有漏洞，有本事0day也可以属于你</li>
+<li>快速反应能力与代码编写能力</li>
+</ul>
+<h2 id="修改ssh密码"><a href="#修改ssh密码" class="headerlink" title="修改ssh密码"></a>修改ssh密码</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd username</span><br><span class="line"><span class="comment"># 输入密码确认即可</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改数据库密码及备份数据库"><a href="#修改数据库密码及备份数据库" class="headerlink" title="修改数据库密码及备份数据库"></a>修改数据库密码及备份数据库</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 登录 mysql 终端，运行：</span><br><span class="line">mysql&gt; set password=password(&#x27;new password&#x27;);</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">2. 修改 mysql user 表</span><br><span class="line">mysql&gt;use mysql;</span><br><span class="line">mysql&gt;update user set password=password(&#x27;new password&#x27;) where user=&#x27;root&#x27;;</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">3. 使用 GRANT 语句</span><br><span class="line">mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &#x27;root&#x27;@&#x27;127.0.0.1&#x27; IDENTIFIED BY &#x27;new password&#x27; WITH GRANT OPTION;</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">4. mysqladmin</span><br><span class="line">[root@ubuntu]# mysqladmin -u root password &quot;new password&quot;;（注意双引号或不加）</span><br></pre></td></tr></table></figure>
+
+<p>数据库恢复，在mysql终端执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 命令格式：source FILE_PATH</span><br><span class="line">source ~/db.sql（原数据库需存在）</span><br></pre></td></tr></table></figure>
+
+<h2 id="源码备份"><a href="#源码备份" class="headerlink" title="源码备份"></a>源码备份</h2><p>备份！备份！备份！</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打包目录</span></span><br><span class="line">tar -zcvf archive_name.tar.gz directory_to_compress</span><br><span class="line"><span class="comment"># 解包</span></span><br><span class="line">tar -zxvf archive_name.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="查找后门"><a href="#查找后门" class="headerlink" title="查找后门"></a>查找后门</h2><p>用D盾扫描备份的文件，查找预留后门，第一时间删除自己靶机上的后门，也可以利用批量脚本后门攻击其他靶机。</p>
+]]></content>
+      <categories>
+        <category>AWD</category>
+      </categories>
+      <tags>
+        <tag>-AWD -渗透</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo搭建个人博客教程</title>
     <url>/2023/03/16/Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
@@ -82,7 +128,7 @@
         <category>Hexo</category>
       </categories>
       <tags>
-        <tag>博客,前端</tag>
+        <tag>-博客 -前端</tag>
       </tags>
   </entry>
 </search>
