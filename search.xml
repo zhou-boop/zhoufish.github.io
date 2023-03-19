@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>AWD学习日记一</title>
-    <url>/2023/03/17/AWD%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80/</url>
+    <url>/posts/2fe68c90.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>AWD到时方恨不会，进一年两年没有打线下赛了，脚本也没有了，工具也没有。赶紧跟着大佬复习一波，做一下笔记。</p>
 <h1 id="关于AWD"><a href="#关于AWD" class="headerlink" title="关于AWD"></a>关于AWD</h1><p><strong>AWD</strong>: Attack With Defence，一般比赛中每个队伍维护两台服务器，一个web和一个pwn。web服务器中存在多个漏洞，利用漏洞攻击其他队伍可以进行得分，修复漏洞可以避免被其他队伍攻击失分。</p>
 <ul>
@@ -43,12 +43,12 @@
         <category>AWD</category>
       </categories>
       <tags>
-        <tag>-AWD -渗透</tag>
+        <tag>渗透</tag>
       </tags>
   </entry>
   <entry>
     <title>Hexo搭建个人博客教程</title>
-    <url>/2023/03/16/Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/</url>
+    <url>/posts/6e27c1a7.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
 <h1 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h1><h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>1.基础软件与工具的安装</p>
 <ul>
@@ -123,12 +123,87 @@
 <p>第三步：重新部署一下</p>
 <p>在 <strong>Github</strong> 查看 <strong>CNAME</strong> 文件以及网址。</p>
 <p>输入域名就可以直接登录网站了。</p>
+<h1 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h1><h2 id="Hexo-博客生成永久链接"><a href="#Hexo-博客生成永久链接" class="headerlink" title="Hexo 博客生成永久链接"></a>Hexo 博客生成永久链接</h2><p>Hexo 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
+<p>修改链接有助于别人记录，方便自己随时修改文章的内容，只要不改变 footer-matter 中的 id 值，那么文章链接永远不会变。</p>
+<p><strong>安装插件</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改配置文件</strong></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="comment">## 此处可以自己设置</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink/</span> </span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
+
+<p>在文件中增加配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># abbrlink config</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line">  <span class="attr">alg:</span> <span class="string">crc32</span>      <span class="comment">#support crc16(default) and crc32</span></span><br><span class="line">  <span class="attr">rep:</span> <span class="string">hex</span>        <span class="comment">#support dec(default) and hex</span></span><br><span class="line">  <span class="attr">drafts:</span> <span class="literal">false</span>   <span class="comment">#(true)处理草稿,(false)不处理草稿. false(default) </span></span><br><span class="line">  <span class="comment"># 从目录树生成类别</span></span><br><span class="line">  <span class="comment"># depth: 要生成的目录树的最大深度，应该&gt; 0</span></span><br><span class="line">  <span class="attr">auto_category:</span></span><br><span class="line">     <span class="attr">enable:</span> <span class="literal">true</span>  <span class="comment">#true(default)</span></span><br><span class="line">     <span class="attr">depth:</span>        <span class="comment">#3(default)</span></span><br><span class="line">     <span class="attr">over_write:</span> <span class="literal">false</span> </span><br><span class="line">  <span class="attr">auto_title:</span> <span class="literal">false</span> <span class="comment">#启用自动标题，它可以根据路径自动填充标题</span></span><br><span class="line">  <span class="attr">auto_date:</span> <span class="literal">false</span> <span class="comment">#启用自动日期，它可以根据今天的时间自动填充日期</span></span><br><span class="line">  <span class="attr">force:</span> <span class="literal">false</span> <span class="comment">#启用强制模式，在这种模式下，插件将忽略缓存，并为每个帖子计算缩写链接，即使它已经有缩写链接。 这只会更新 abbrlink 而不是其他前面的变量。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>样式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crc16 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/66c8.html</span><br><span class="line"></span><br><span class="line">crc16 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/65535.html</span><br><span class="line">#32</span><br><span class="line">crc32 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/8ddf18fb.html</span><br><span class="line"></span><br><span class="line">crc32 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/1690090958.html</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>github地址：<a href="https://github.com/Rozbo/hexo-abbrlink">hexo-abbrlink</a></p>
+</blockquote>
+<h2 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h2><p>主题配置文件，关键字：<strong>menu</strong>，删除前面的注释就可以启用</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">/resources/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-download</span>   <span class="comment">#资源</span></span><br><span class="line">  <span class="attr">tools:</span> <span class="string">/tools/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-briefcase</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable / Disable menu icons / item badges.</span></span><br><span class="line"><span class="attr">menu_settings:</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">badges:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>“||”前面是目标链接，后面是图标名称，主题使用图标来自<a href="http://www.fontawesome.com.cn/faicons/#web-application">图标库 - Font Awesome 中文网</a>，可以自己搜索图标使用</p>
+<p>新添加的菜单需要翻译对应的中文，打开theme/next/languages/zh-CN.yml，在menu下设置：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">首页</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">归档</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">分类</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">标签</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">资源</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">搜索</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录下，执行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;categories&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;tags&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;about&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;resources&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录sources文件夹下会生成categories、tags、about、resources四个文件，每个文件中有一个<code>index.md</code>文件，修改内容分别如下：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#例子</span></span><br><span class="line">title: 标签</span><br><span class="line">date: 2019-06-29 11:35:42   # 时间随意</span><br><span class="line">type: &quot;tags&quot;                # 类型一定要为tags</span><br><span class="line">comments: false             # 提示这个页面不需要加载评论</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
       <tags>
-        <tag>-博客 -前端</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Win10使用优化</title>
+    <url>/posts/f970716d.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
+<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
+
+<p><strong>关闭计划任务</strong></p>
+<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
+<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
+
+<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
+<p>然后如图所示，点开服务。</p>
+<p><strong>关闭并禁用这些服务</strong></p>
+<p><strong>Connected User Experiences and Telemetry</strong></p>
+<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
+<p><strong>Diagnostic Execution Service</strong></p>
+<p>系统诊断执行服务 没什么卵用</p>
+<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
+<p>家庭组服务，没什么卵用.</p>
+<p><strong>windows server</strong></p>
+<p>如果不经常使用系统搜索就关闭它</p>
+<p><strong>Program CompatibilityAssistant Service</strong></p>
+<p>兼容助手服务，</p>
+<p><strong>SecurityCenter</strong></p>
+<p>安全中心服务，直接禁用</p>
+<p><strong>SysMain</strong></p>
+<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
+<p>以上服务全部禁用。</p>
+<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
+<p>只勾选：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
+
+<p>顺便设置下 系统启动设置</p>
+]]></content>
+      <categories>
+        <category>win系统</category>
+      </categories>
+      <tags>
+        <tag>win10</tag>
       </tags>
   </entry>
 </search>
