@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Win10使用优化</title>
+    <url>/posts/f970716d.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
+<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
+
+<p><strong>关闭计划任务</strong></p>
+<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
+<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
+
+<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
+<p>然后如图所示，点开服务。</p>
+<p><strong>关闭并禁用这些服务</strong></p>
+<p><strong>Connected User Experiences and Telemetry</strong></p>
+<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
+<p><strong>Diagnostic Execution Service</strong></p>
+<p>系统诊断执行服务 没什么卵用</p>
+<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
+<p>家庭组服务，没什么卵用.</p>
+<p><strong>windows server</strong></p>
+<p>如果不经常使用系统搜索就关闭它</p>
+<p><strong>Program CompatibilityAssistant Service</strong></p>
+<p>兼容助手服务，</p>
+<p><strong>SecurityCenter</strong></p>
+<p>安全中心服务，直接禁用</p>
+<p><strong>SysMain</strong></p>
+<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
+<p>以上服务全部禁用。</p>
+<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
+<p>只勾选：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
+
+<p>顺便设置下 系统启动设置</p>
+]]></content>
+      <categories>
+        <category>win系统</category>
+      </categories>
+      <tags>
+        <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo搭建个人博客教程</title>
     <url>/posts/6e27c1a7.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
@@ -130,49 +173,6 @@
       </categories>
       <tags>
         <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Win10使用优化</title>
-    <url>/posts/f970716d.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
-<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
-
-<p><strong>关闭计划任务</strong></p>
-<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
-<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
-
-<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
-<p>然后如图所示，点开服务。</p>
-<p><strong>关闭并禁用这些服务</strong></p>
-<p><strong>Connected User Experiences and Telemetry</strong></p>
-<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
-<p><strong>Diagnostic Execution Service</strong></p>
-<p>系统诊断执行服务 没什么卵用</p>
-<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
-<p>家庭组服务，没什么卵用.</p>
-<p><strong>windows server</strong></p>
-<p>如果不经常使用系统搜索就关闭它</p>
-<p><strong>Program CompatibilityAssistant Service</strong></p>
-<p>兼容助手服务，</p>
-<p><strong>SecurityCenter</strong></p>
-<p>安全中心服务，直接禁用</p>
-<p><strong>SysMain</strong></p>
-<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
-<p>以上服务全部禁用。</p>
-<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
-<p>只勾选：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
-
-<p>顺便设置下 系统启动设置</p>
-]]></content>
-      <categories>
-        <category>win系统</category>
-      </categories>
-      <tags>
-        <tag>win10</tag>
       </tags>
   </entry>
   <entry>
